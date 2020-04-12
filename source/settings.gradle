@@ -1,0 +1,2 @@
+rootProject.name='Device Silencing App'
+include ':app'
