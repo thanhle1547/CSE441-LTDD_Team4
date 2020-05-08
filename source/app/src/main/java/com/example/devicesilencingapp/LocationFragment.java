@@ -22,10 +22,9 @@ public class LocationFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_location,container,false);
 
-        context = this;
-        lv_Location = (ListView)findViewById(R.id.lv_location);
+        View view = inflater.inflate(R.layout.fragment_location,container,false);
+        lv_Location = (ListView) view.findViewById(R.id.lv_location);
         for(int i= 0; i <10; i++)
         {
             MDLocation mdlc = new MDLocation("trang thai " + i,"ten dia diem : " + i, "dia diem "+ i,"img");
@@ -33,5 +32,6 @@ public class LocationFragment extends Fragment {
         }
         adapter = new AdapterLocation(context, list);
         lv_Location.setAdapter(adapter);
+        return view;
     }
 }
