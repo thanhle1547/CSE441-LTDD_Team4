@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
+import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -25,11 +25,13 @@ public class LocationFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_location,container,false);
         lv_Location = (ListView) view.findViewById(R.id.lv_location);
+        list = new ArrayList<Object>();
         for(int i= 0; i <10; i++)
         {
             MDLocation mdlc = new MDLocation("trang thai " + i,"ten dia diem : " + i, "dia diem "+ i,"img");
             list.add(mdlc);
         }
+        context = getActivity();
         adapter = new AdapterLocation(context, list);
         lv_Location.setAdapter(adapter);
         return view;

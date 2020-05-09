@@ -2,14 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 <item
     android:id="@+id/nav_location"
-    android:icon="@drawable/ic_location"
-    android:title="Location"/>
+    android:icon="@drawable/ic_location"/>
 <item
     android:id="@+id/nav_time"
-    android:icon="@drawable/ic_time"
-    android:title="Time"/>
+    android:icon="@drawable/ic_time"/>
 <item
     android:id="@+id/nav_settings"
-    android:icon="@drawable/ic_settings"
-    android:title="Settings"/>
+    android:icon="@drawable/ic_settings"/>
 </menu>
