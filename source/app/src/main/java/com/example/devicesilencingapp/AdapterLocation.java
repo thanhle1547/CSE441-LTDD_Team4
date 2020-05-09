@@ -13,12 +13,23 @@ public class AdapterLocation extends ArrayList<Object> {
     private Context context;
     private ArrayList<?>  listData;
 
-    public AdapterLocation(Context context, ArrayList<Object> data) {
-        super(context, R.layout.list_item_location, data);
-        // TODO Auto-generated constructor stub
+    public AdapterLocation(Context context, ArrayList<?> listData) {
         this.context = context;
-        this.listData = data;
+        this.listData = listData;
     }
+//
+//    public AdapterLocation(int initialCapacity, Context context, ArrayList<Object> listData) {
+//        super(initialCapacity);
+//        this.context = context;
+//        this.listData = listData;
+//    }
+
+//    public AdapterLocation(Context context, ArrayList<Object> data) {
+//        super(context, R.layout.list_item_location, data);
+//        // TODO Auto-generated constructor stub
+//        this.context = context;
+//        this.listData = data;
+//    }
 
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
