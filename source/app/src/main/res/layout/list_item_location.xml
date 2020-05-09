@@ -4,59 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/design_default_color_secondary">
+    android:padding="15dp"
+    android:background="@drawable/bkg_item_rounded_rect">
 
     <ImageView
-        android:id="@+id/imglogo"
-        android:layout_width="110sp"
-        android:layout_height="90sp"
+        android:id="@+id/ic_bkg"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/bkg_ic_rounded_rect"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_location"
-        tools:ignore="VectorDrawableCompat" />
+        app:layout_constraintTop_toTopOf="@+id/tv_location_label"
+        app:layout_constraintVertical_bias="0.533" />
 
     <ImageView
-        android:id="@+id/a"
-        android:layout_width="20dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toEndOf="@+id/imglogo"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tendiadiem"
-        app:srcCompat="@drawable/ic_location"
-        tools:ignore="VectorDrawableCompat" />
+        android:id="@+id/ic_subject"
+  android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+app:layout_constraintBottom_toBottomOf="@+id/ic_bkg"
+app:layout_constraintEnd_toEndOf="@+id/ic_bkg"
+app:layout_constraintStart_toStartOf="@+id/ic_bkg"
+        app:layout_constraintTop_toTopOf="@+id/ic_bkg"
+    app:srcCompat="@drawable/ic_marker"
+tools:ignore="VectorDrawableCompat" />
 
     <TextView
-        android:id="@+id/tv_tendiadiem"
-        android:layout_width="169dp"
-        android:layout_height="26dp"
-        android:text="Ten dia diem"
-        android:textColor="#607D8B"
-        android:textSize="20sp"
+        android:id="@+id/tv_location_label"
+        android:layout_width="wrap_content"
+        android:maxWidth="150dp"
+        android:layout_height="wrap_content"
+        android:text="Nhãn địa điểm"
+        android:textColor="@color/blue_grey_500"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.083"
-        app:layout_constraintStart_toEndOf="@+id/imglogo"
+        app:layout_constraintHorizontal_bias="0.165"
+        app:layout_constraintStart_toEndOf="@+id/ic_bkg"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/ic_near_me"
+        android:layout_width="20dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintStart_toEndOf="@+id/ic_bkg"
+        app:layout_constraintTop_toBottomOf="@+id/tv_location_label"
+        app:srcCompat="@drawable/ic_near_me"
+        tools:ignore="VectorDrawableCompat" />
     <TextView
         android:id="@+id/tv_diadiem"
-        android:layout_width="172dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:maxWidth="130dp"
+        android:layout_height="wrap_content"
         android:text="Thanh Xuân"
-        android:textColor="#006FFF"
+        android:textColor="@color/cyan_300"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="1dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintStart_toEndOf="@+id/a"
-        app:layout_constraintTop_toTopOf="@+id/a" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ic_near_me"
+        app:layout_constraintTop_toTopOf="@+id/ic_near_me" />
 
     <TextView
         android:id="@+id/tv_trangthai"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Đang Bật"
-        android:textColor="#BA68C8"
+        android:text="@string/turning_on"
+        android:textColor="@color/deep_purple_300"
+        android:textSize="16sp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.934"
-        app:layout_constraintStart_toEndOf="@+id/imglogo"
-        tools:layout_editor_absoluteY="26dp" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/ic_subject"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
