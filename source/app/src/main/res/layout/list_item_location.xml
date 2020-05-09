@@ -4,22 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentEnd="false"
-    android:background="@color/design_default_color_background"
-    android:padding="12px"
-    android:paddingStart="40px"
-    android:paddingLeft="40px"
-    android:paddingTop="40px"
-    android:paddingEnd="40px"
-    android:paddingRight="40px"
-    android:paddingBottom="40px">
+    android:background="@color/design_default_color_secondary">
 
     <ImageView
         android:id="@+id/imglogo"
-        android:layout_width="47dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="110sp"
+        android:layout_height="90sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_location"
@@ -29,8 +19,9 @@
         android:id="@+id/a"
         android:layout_width="20dp"
         android:layout_height="22dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="@+id/tv_tendiadiem"
+        app:layout_constraintStart_toEndOf="@+id/imglogo"
         app:layout_constraintTop_toBottomOf="@+id/tv_tendiadiem"
         app:srcCompat="@drawable/ic_location"
         tools:ignore="VectorDrawableCompat" />
@@ -41,11 +32,9 @@
         android:layout_height="26dp"
         android:text="Ten dia diem"
         android:textColor="#607D8B"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.083"
         app:layout_constraintStart_toEndOf="@+id/imglogo"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,16 +42,12 @@
         android:id="@+id/tv_diadiem"
         android:layout_width="172dp"
         android:layout_height="20dp"
-
-        android:layout_marginBottom="15dp"
         android:text="Thanh Xuân"
         android:textColor="#006FFF"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.078"
+        app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toEndOf="@+id/a"
-        app:layout_constraintTop_toTopOf="@+id/a"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/a" />
 
     <TextView
         android:id="@+id/tv_trangthai"
@@ -70,9 +55,8 @@
         android:layout_height="wrap_content"
         android:text="Đang Bật"
         android:textColor="#BA68C8"
-        app:layout_constraintBottom_toTopOf="@+id/tv_diadiem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.934"
         app:layout_constraintStart_toEndOf="@+id/imglogo"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tendiadiem" />
+        tools:layout_editor_absoluteY="26dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

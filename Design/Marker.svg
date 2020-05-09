@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_6" data-name="Rectangle 6" width="40" height="40" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Marker" clip-path="url(#clip-path)">
+    <g id="Marker_Material_Filled_24" data-name="Marker_Material Filled_24" transform="translate(5.929 0.475)">
+      <g id="Group_1" data-name="Group 1" transform="translate(0 0)">
+        <path id="Path_1" data-name="Path 1" d="M36.333,9A13.834,13.834,0,0,0,22.5,22.834c0,9.881,13.834,25.691,13.834,25.691s13.834-15.81,13.834-25.691A13.834,13.834,0,0,0,36.333,9h0m0,18.774a4.941,4.941,0,1,1,4.941-4.941,4.94,4.94,0,0,1-4.941,4.941" transform="translate(-22.5 -9)" fill="#e53935"/>
+      </g>
+    </g>
+  </g>
+</svg>

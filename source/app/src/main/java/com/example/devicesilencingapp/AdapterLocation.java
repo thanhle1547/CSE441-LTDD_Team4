@@ -31,9 +31,9 @@ public class AdapterLocation extends ArrayAdapter<Object> {
         row = inflater.inflate(R.layout.list_item_location, parent, false);
         MDLocation mdl = (MDLocation) data;
         TextView tv_trangthai = (TextView) row.findViewById(R.id.tv_trangthai);
-        TextView tv_tdd = (TextView) row.findViewById(R.id.tv_tendiadiem);
+        TextView tv_tdd = (TextView) row.findViewById(R.id.tv_location_label);
         TextView tv_dd = (TextView) row.findViewById(R.id.tv_diadiem);
-        ImageView img = (ImageView) row.findViewById(R.id.imglogo);
+        ImageView img = (ImageView) row.findViewById(R.id.ic_subject);
         tv_trangthai.setText(mdl.getTrangthai());
         tv_tdd.setText(mdl.getTendiadiem());
         tv_dd.setText(mdl.getDiadiem());
