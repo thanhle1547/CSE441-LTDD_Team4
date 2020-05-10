@@ -19,6 +19,28 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_nav"
         android:layout_below="@+id/tv_ddcb"/>
+
+    <ImageView
+        android:id="@+id/ic_bkg1"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignStart="@+id/btclickadd"
+        android:layout_alignTop="@+id/btclickadd"
+        android:layout_alignEnd="@+id/btclickadd"
+        android:layout_alignBottom="@+id/btclickadd"
+        android:src="@drawable/bkg_ic_rounded_rect" />
+
+    <ImageButton
+        android:id="@+id/btclickadd"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="90dp"
+        android:background="@drawable/ic_plus_ios" />
+
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"

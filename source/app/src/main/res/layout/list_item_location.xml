@@ -21,14 +21,14 @@
 
     <ImageView
         android:id="@+id/ic_subject"
-  android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-app:layout_constraintBottom_toBottomOf="@+id/ic_bkg"
-app:layout_constraintEnd_toEndOf="@+id/ic_bkg"
-app:layout_constraintStart_toStartOf="@+id/ic_bkg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_bkg"
+        app:layout_constraintEnd_toEndOf="@+id/ic_bkg"
+        app:layout_constraintStart_toStartOf="@+id/ic_bkg"
         app:layout_constraintTop_toTopOf="@+id/ic_bkg"
-    app:srcCompat="@drawable/ic_marker"
-tools:ignore="VectorDrawableCompat" />
+        app:srcCompat="@drawable/ic_marker"
+        tools:ignore="VectorDrawableCompat" />
 
     <TextView
         android:id="@+id/tv_location_label"
