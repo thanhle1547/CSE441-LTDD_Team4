@@ -64,33 +64,36 @@ public class LocationFragment extends Fragment{
         return view;
     }
     private void dialogclickitemlocation(String a){
-        Dialog dialogclickitem= new Dialog(getActivity());
-        dialogclickitem.setContentView(R.layout.clickitemlocation);
-        final ImageView battatLocation = (ImageView)dialogclickitem.findViewById(R.id.battatLocation);
-        final LinearLayout sualocation = (LinearLayout)dialogclickitem.findViewById(R.id.sualocation);
-        final LinearLayout xoalocation = (LinearLayout)dialogclickitem.findViewById(R.id.xoalocation);
-        battatLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "bat tat", Toast.LENGTH_SHORT).show();
-            }
-        });
-        sualocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "sua", Toast.LENGTH_SHORT).show();
-            }
-        });
-        xoalocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "xoa", Toast.LENGTH_SHORT).show();
-            }
-        });
-        Window window = dialogclickitem.getWindow();
-        WindowManager.LayoutParams wlp = window.getAttributes();
-        wlp.gravity = Gravity.BOTTOM;
-        dialogclickitem.show();
+
+        itemclick_BottomSheetDialogFragment clickitem = itemclick_BottomSheetDialogFragment.newInstance();
+        clickitem.show(getFragmentManager(),"clickitemlocation");
+//        Dialog dialogclickitem= new Dialog(getActivity());
+//        dialogclickitem.setContentView(R.layout.clickitemlocation);
+//        final ImageView battatLocation = (ImageView)dialogclickitem.findViewById(R.id.battatLocation);
+//        final LinearLayout sualocation = (LinearLayout)dialogclickitem.findViewById(R.id.sualocation);
+//        final LinearLayout xoalocation = (LinearLayout)dialogclickitem.findViewById(R.id.xoalocation);
+//        battatLocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(context, "bat tat", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        sualocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(context, "sua", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        xoalocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(context, "xoa", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        Window window = dialogclickitem.getWindow();
+//        WindowManager.LayoutParams wlp = window.getAttributes();
+//        wlp.gravity = Gravity.BOTTOM;
+//        dialogclickitem.show();
     }
 
 }

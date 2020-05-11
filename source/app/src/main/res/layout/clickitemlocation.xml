@@ -5,16 +5,20 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bkg_add">
+    android:paddingTop="12dp"
+    android:background="@drawable/background_shet"
+>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:paddingTop="12dp">
 
         <ImageView
             android:id="@+id/battatLocation"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             app:srcCompat="@drawable/ic_trangthaibat" />
 
         <TextView
@@ -23,26 +27,18 @@
             android:layout_height="wrap_content"
             android:paddingLeft="30dp"
             android:text="Trạng Thái"
-            android:textSize="30dp"
-            android:layout_marginRight="50dp"/>
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="40dp"
-
-            android:textSize="30dp" />
+            android:textSize="22dp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:id="@+id/sualocation"
-        android:paddingBottom="20dp">
+        android:paddingBottom="12dp">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
+            android:layout_width="21dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_map_editing" />
@@ -51,19 +47,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sửa"
-            android:textSize="30dp"
+            android:textSize="22dp"
             android:layout_marginLeft="20dp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
-        android:id="@+id/xoalocation"
-        android:paddingBottom="20dp">
+        android:id="@+id/xoalocation">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
+            android:layout_width="21dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_delete_bin" />
@@ -72,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Xóa"
-            android:textSize="30dp"
+            android:textSize="22dp"
             android:layout_marginLeft="20dp" />
     </LinearLayout>
 
