@@ -9,15 +9,16 @@
 
     <ImageView
         android:id="@+id/ic_bkg"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:src="@drawable/bkg_ic_rounded_rect"
+        android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_location_label"
-        app:layout_constraintVertical_bias="0.533" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <ImageView
         android:id="@+id/ic_subject"
@@ -45,14 +46,16 @@
 
     <ImageView
         android:id="@+id/ic_near_me"
-        android:layout_width="20dp"
-        android:layout_height="22dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.088"
         app:layout_constraintStart_toEndOf="@+id/ic_bkg"
-        app:layout_constraintTop_toBottomOf="@+id/tv_location_label"
+        app:layout_constraintTop_toTopOf="@+id/tv_diadiem"
         app:srcCompat="@drawable/ic_near_me"
         tools:ignore="VectorDrawableCompat" />
+
     <TextView
         android:id="@+id/tv_diadiem"
         android:layout_width="wrap_content"
@@ -60,12 +63,12 @@
         android:layout_height="wrap_content"
         android:text="Thanh Xuân"
         android:textColor="@color/cyan_300"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/ic_near_me"
-        app:layout_constraintTop_toTopOf="@+id/ic_near_me" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_location_label" />
 
     <TextView
         android:id="@+id/tv_trangthai"
@@ -75,7 +78,7 @@
         android:textColor="@color/deep_purple_300"
         android:textSize="16sp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/ic_subject"
