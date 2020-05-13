@@ -10,4 +10,7 @@
     <string name="add_current_location">Thêm địa điểm hiện tại</string>
     <string name="add_new_location">Thêm địa điểm mới</string>
     <string name="add_new_time">Thêm thời gian</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
