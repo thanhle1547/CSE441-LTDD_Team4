@@ -2,71 +2,48 @@ package com.example.devicesilencingapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import android.app.Dialog;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.example.devicesilencingapp.libs.Fab;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener;
+import com.gordonwong.materialsheetfab.MaterialSheetFab;
+import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
 
-public class MainActivity extends AppCompatActivity {
-
-	ImageButton clickadd;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+	private Toolbar toolbar;
+	private MaterialSheetFab materialSheetFab;
+	private int statusBarColor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		clickadd = (ImageButton)findViewById(R.id.btclickadd);
-		clickadd.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				DialogAdd();
-			}
-		});
+
+		setupToolbar();
+		setupFab();
+
 		BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
 		bottomNav.setOnNavigationItemSelectedListener(navListener);
 		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, new LocationFragment()).commit();
 	}
-	private void DialogAdd(){
-		final Dialog dialog = new Dialog(this);
-		dialog.setContentView(R.layout.clickadd_fragment);
-		final LinearLayout addvtht = (LinearLayout)dialog.findViewById(R.id.addvtht);
-		final LinearLayout adddd = (LinearLayout)dialog.findViewById(R.id.adddiadiem);
-		final LinearLayout addtime = (LinearLayout)dialog.findViewById(R.id.addtime);
-		addvtht.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Toast.makeText(MainActivity.this, "tạo intent add vi tri hien tai", Toast.LENGTH_SHORT).show();
-			}
-		});
-		adddd.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Toast.makeText(MainActivity.this, "tạo intent add dia diem moi", Toast.LENGTH_SHORT).show();
-			}
-		});
-		addtime.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Toast.makeText(MainActivity.this, "tạo intent add time", Toast.LENGTH_SHORT).show();
-			}
-		});
-		Window window = dialog.getWindow();
-		WindowManager.LayoutParams wlp = window.getAttributes();
-		wlp.gravity = Gravity.BOTTOM | Gravity.RIGHT;
-		wlp.x = 40;   //x position
-		wlp.y = 90;   //y position
-		dialog.show();
+
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.fab_sheet_item_add_current_location:
+				break;
+			case R.id.fab_sheet_item_add_new_location:
+				break;
+			case R.id.fab_sheet_item_add_new_time:
+				break;
+		}
 	}
 
 	private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener(){
@@ -76,12 +53,18 @@ public class MainActivity extends AppCompatActivity {
 			switch (item.getItemId()) {
 				case R.id.nav_location:
 					selectFragment = new LocationFragment();
+					toolbar.setTitle(R.string.your_location);
+					toolbar.setPopupTheme(R.style.ColorPrimary);
 					break;
 				case R.id.nav_time:
 					selectFragment = new TimeFragment();
+					toolbar.setTitle(R.string.time);
+					toolbar.setPopupTheme(R.style.ColorSecondary);
 					break;
 				case R.id.nav_settings:
 					selectFragment = new SettingsFragment();
+					toolbar.setTitle(R.string.settings);
+					toolbar.setPopupTheme(R.style.ColorTertiary);
 					break;
 			}
 			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, selectFragment).commit();
@@ -89,4 +72,54 @@ public class MainActivity extends AppCompatActivity {
 		}
 	};
 
+	private void setupToolbar(){
+		toolbar = findViewById(R.id.toolbar);
+		toolbar.setTitle(R.string.your_location);
+		toolbar.setPopupTheme(R.style.ColorPrimary);
+		setSupportActionBar(toolbar);
+	}
+
+	/**
+	 * Sets up the Floating action button.
+	 */
+	private void setupFab(){
+		Fab fab = (Fab) findViewById(R.id.fab);
+		View sheetView = findViewById(R.id.fab_sheet);
+		View overlay = findViewById(R.id.overlay);
+		int sheetColor = getResources().getColor(R.color.white);
+		int fabColor = getResources().getColor(R.color.grey_600);
+
+		// Create material sheet FAB
+		materialSheetFab = new MaterialSheetFab<>(fab, sheetView, overlay, sheetColor, fabColor);
+
+		// Set material sheet event listener
+		materialSheetFab.setEventListener(new MaterialSheetFabEventListener() {
+			@Override
+			public void onShowSheet() {
+				// Save current status bar color
+				statusBarColor = getStatusBarColor();
+				// Set darker status bar color to match the dim overlay
+				setStatusBarColor(getResources().getColor(R.color.theme_primary_dark2));
+			}
+
+			@Override
+			public void onHideSheet() {
+				// Restore status bar color
+				setStatusBarColor(statusBarColor);
+			}
+		});
+
+		// Set material sheet item click listeners
+		findViewById(R.id.fab_sheet_item_add_current_location).setOnClickListener(this);
+		findViewById(R.id.fab_sheet_item_add_new_location).setOnClickListener(this);
+		findViewById(R.id.fab_sheet_item_add_new_time).setOnClickListener(this);
+	}
+
+	private int getStatusBarColor() {
+		return getWindow().getStatusBarColor();
+	}
+
+	private void setStatusBarColor(int color) {
+		getWindow().setStatusBarColor(color);
+	}
 }

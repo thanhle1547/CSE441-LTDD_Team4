@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24.027" viewBox="0 0 24 24.027">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.147" y1="0.192" x2="0.932" y2="0.858" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#f08"/>
+      <stop offset="1" stop-color="#7b7bff"/>
+    </linearGradient>
+  </defs>
+  <path id="Plus_iOS_Glyph_100" data-name="Plus_iOS Glyph_100" d="M24.455,12.371A2,2,0,0,0,22.485,14.4v8h-8a2,2,0,1,0,0,4h8v8a2,2,0,1,0,4,0v-8h8a2,2,0,1,0,0-4h-8v-8a2,2,0,0,0-2.029-2.027Z" transform="translate(-12.485 -12.371)" fill="url(#linear-gradient)"/>
+</svg>

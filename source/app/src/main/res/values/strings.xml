@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">Device Silencing App</string>
+
+    <string name="your_location">Địa điểm của bạn</string>
+    <string name="time">Thời gian</string>
+    <string name="settings">Cài đặt</string>
+
     <string name="turning_on">Đang bật</string>
+
+    <string name="add_current_location">Thêm địa điểm hiện tại</string>
+    <string name="add_new_location">Thêm địa điểm mới</string>
+    <string name="add_new_time">Thêm thời gian</string>
 </resources>

@@ -1,53 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tv_ddcb"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:textColor="#006FFF"
-        android:text="Địa Điểm Của Bạn"/>
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin" />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <FrameLayout
         android:id="@+id/fragment_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_nav"
-        android:layout_below="@+id/tv_ddcb"/>
+        android:layout_below="@id/app_bar"
+        android:layout_above="@id/bottom_nav"/>
 
-    <ImageView
-        android:id="@+id/ic_bkg1"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_alignStart="@+id/btclickadd"
-        android:layout_alignTop="@+id/btclickadd"
-        android:layout_alignEnd="@+id/btclickadd"
-        android:layout_alignBottom="@+id/btclickadd"
-        android:src="@drawable/bkg_ic_rounded_rect" />
-
-    <ImageButton
-        android:id="@+id/btclickadd"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="90dp"
-        android:background="@drawable/ic_plus_ios" />
-
+    <include
+        android:id="@+id/include"
+        layout="@layout/app_fab"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_nav"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#006FFF"
         android:layout_alignParentBottom="true"
-        app:itemTextColor="#fff"
+        android:background="#006FFF"
         app:itemIconTint="#fff"
-        app:menu="@menu/bottom_nav"/>
+        app:itemTextColor="#fff"
+        app:menu="@menu/bottom_nav" />
 </RelativeLayout>
