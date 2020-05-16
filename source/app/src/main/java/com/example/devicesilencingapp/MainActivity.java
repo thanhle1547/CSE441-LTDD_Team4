@@ -1,11 +1,5 @@
 package com.example.devicesilencingapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +8,11 @@ import com.example.devicesilencingapp.libs.Fab;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 	private Toolbar toolbar;
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			Fragment selectFragment = null;
 			switch (item.getItemId()) {
 				case R.id.nav_location:
-					selectFragment = new LocationFragment();
+					selectFragment =  new LocationFragment();
 					toolbar.setTitle(R.string.your_location);
 					toolbar.setPopupTheme(R.style.ColorPrimary);
 					break;

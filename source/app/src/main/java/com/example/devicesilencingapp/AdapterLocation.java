@@ -7,17 +7,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.ArrayList;
+
+import com.example.devicesilencingapp.models.LocationModel;
 
 import java.util.ArrayList;
 
-public class AdapterLocation extends ArrayAdapter<Object> {
+public class AdapterLocation extends ArrayAdapter<LocationModel> {
     private Context context;
-    private ArrayList<?>  listData;
+    private ArrayList<LocationModel>  listData;
 
 
 
-    public AdapterLocation(Context context, ArrayList<Object> data) {
+    public AdapterLocation(Context context, ArrayList<LocationModel> data) {
         super(context, R.layout.list_item_location, data);
         // TODO Auto-generated constructor stub
         this.context = context;
