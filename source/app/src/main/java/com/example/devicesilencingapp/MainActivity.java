@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.devicesilencingapp.libs.Fab;
+import com.example.devicesilencingapp.location.fragments.LocationListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 		BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
 		bottomNav.setOnNavigationItemSelectedListener(navListener);
-		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, new LocationFragment()).commit();
+		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, LocationListFragment.newInstance()).commit();
 	}
 
 
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			Fragment selectFragment = null;
 			switch (item.getItemId()) {
 				case R.id.nav_location:
-					selectFragment =  new LocationFragment();
+					selectFragment = LocationListFragment.newInstance();
 					toolbar.setTitle(R.string.your_location);
 					toolbar.setPopupTheme(R.style.ColorPrimary);
 					break;

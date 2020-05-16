@@ -9,10 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.devicesilencingapp.AdapterLocation;
-import com.example.devicesilencingapp.MDLocation;
+import com.example.devicesilencingapp.adapters.AdapterLocation;
 import com.example.devicesilencingapp.R;
-import com.example.devicesilencingapp.itemclick_BottomSheetDialogFragment;
 import com.example.devicesilencingapp.location.LocationListViewModel;
 import com.example.devicesilencingapp.models.LocationModel;
 
@@ -42,7 +40,7 @@ public class LocationListFragment extends Fragment {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
 	                         @Nullable Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.location_list_fragment, container, false);
+		return inflater.inflate(R.layout.fragment_location_list, container, false);
 	}
 
 	@Override
@@ -96,10 +94,10 @@ public class LocationListFragment extends Fragment {
 		mViewModel = ViewModelProviders.of(this).get(LocationListViewModel.class);
 
 		lv_Location = (ListView) view.findViewById(R.id.lv_location);
-		data = new ArrayList<Object>();
+		data = new ArrayList<>();
 		for(int i= 0; i <10; i++)
 		{
-			MDLocation mdlc = new MDLocation("trang thai " + i,"ten dia diem : " + i, "dia diem "+ i,"img");
+			LocationModel mdlc = new LocationModel("trang thai " + i,"ten dia diem : " + i, "dia diem "+ i,"img");
 			data.add(mdlc);
 		}
 		context = getActivity();
