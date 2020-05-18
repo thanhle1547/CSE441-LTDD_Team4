@@ -30,6 +30,10 @@ import com.example.devicesilencingapp.services.GPSTrackerService;
 
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link LocationDetailFragment#newInstance} factory method to
