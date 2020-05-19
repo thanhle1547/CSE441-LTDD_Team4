@@ -7,6 +7,7 @@ import android.view.View;
 import com.example.devicesilencingapp.libs.Fab;
 import com.example.devicesilencingapp.location.fragments.LocationDetailFragment;
 import com.example.devicesilencingapp.location.fragments.LocationListFragment;
+import com.example.devicesilencingapp.settings.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
@@ -39,7 +40,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.fab_sheet_item_add_current_location:
-				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, LocationDetailFragment.newInstance()).commit();
+				getSupportFragmentManager().beginTransaction()
+						.replace(
+								R.id.fragment_main,
+								LocationDetailFragment.newInstance(LocationDetailFragment.ACTION_ADD))
+						.commit();
 				break;
 			case R.id.fab_sheet_item_add_new_location:
 				break;
