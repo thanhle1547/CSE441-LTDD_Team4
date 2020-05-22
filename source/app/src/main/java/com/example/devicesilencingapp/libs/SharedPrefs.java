@@ -21,6 +21,10 @@ public class SharedPrefs {
 		return mInstance;
 	}
 
+	public SharedPreferences getSharedPrefs() {
+		return mSharedPreferences;
+	}
+
 	@SuppressWarnings("unchecked")
 	public <T> T get(String key, Class<T> anonymousClass) {
 		if (anonymousClass == String.class) {
