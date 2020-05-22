@@ -114,7 +114,6 @@ public class LocationListFragment extends Fragment {
 
 				Toast.makeText(context, "getDiadiem"+ location.getDiadiem() + "getImg"+ location.getImg(), Toast.LENGTH_SHORT).show();
 				dialogclickitemlocation(location.getDiadiem());
-
 			}
 		});
 	}

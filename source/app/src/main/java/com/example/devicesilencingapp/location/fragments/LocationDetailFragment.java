@@ -1,16 +1,20 @@
 package com.example.devicesilencingapp.location.fragments;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -21,38 +25,47 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.devicesilencingapp.R;
 import com.example.devicesilencingapp.libs.LocationUtils;
+import com.example.devicesilencingapp.libs.SharedPrefs;
 import com.example.devicesilencingapp.location.LocationListViewModel;
 import com.example.devicesilencingapp.models.LocationModel;
-import com.example.devicesilencingapp.services.GPSTrackerService;
+import com.example.devicesilencingapp.location.service.GPSTrackerService;
 
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link LocationDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LocationDetailFragment extends Fragment implements View.OnClickListener {
+public class LocationDetailFragment extends Fragment
+		implements View.OnClickListener,
+					SharedPreferences.OnSharedPreferenceChangeListener {
     public static final int ACTION_ADD = 0;
     public static final int ACTION_EDIT = 1;
 
     private static final String ARG_ACTION = "action";
+	private static final int REQUEST_CODE_PERMISSION = 2;
+	private final String LOCATION_PERMISSION = Manifest.permission.ACCESS_FINE_LOCATION;
 
     private LocationListViewModel mViewModel;
-    private LocationModel mLlocationModel;
+    private LocationModel mLlocation;
 
-    private GPSTrackerService mGpsTrackerService = null;
+	private SharedPreferences sharedPreferences;
+	private GPSTrackerService mGpsTrackerService = null;
     // Theo dõi trạng thái ràng buộc của service.
     private boolean mBound = false;
     // The BroadcastReceiver used to listen from broadcasts from the service.
     private Receiver receiver;
+    private int action;
+
+    private Button btn_location_action;
+    private TextView tv_addresss;
 
     // Theo dõi trạng thái kêt nối của service.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -70,18 +83,17 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
         }
     };
 
+    // TODO: Resolve problem: Inner class may be 'static'
     private class GeocoderHandler extends Handler {
         @Override
         public void handleMessage(Message message) {
             String locationAddress;
-            switch (message.what) {
-                case 1:
-                    Bundle bundle = message.getData();
-                    locationAddress = bundle.getString("address");
-                    break;
-                default:
-                    locationAddress = null;
-            }
+	        if (message.what == 1) {
+		        Bundle bundle = message.getData();
+		        locationAddress = bundle.getString("address");
+	        } else {
+		        locationAddress = null;
+	        }
             tv_address.setText(locationAddress);
         }
     }
@@ -126,9 +138,21 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
         super.onCreate(savedInstanceState);
         receiver = new Receiver();
         mViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(LocationListViewModel.class);
+
+        // Kiểm tra xem người dùng đã thu hồi lại quyền chưa
+	    if (isLocationUpdating() && !checkPermissions())
+		    requestPermissions();
     }
 
-    @Override
+	@Override
+	public void onStart() {
+		super.onStart();
+
+		sharedPreferences = SharedPrefs.getInstance().getSharedPrefs();
+		sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+	}
+
+	@Override
     public void onResume() {
         super.onResume();
         LocalBroadcastManager.getInstance(getContext())
@@ -137,8 +161,8 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onPause() {
-        super.onPause();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
+        super.onPause();
     }
 
     @Override
@@ -153,37 +177,41 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
         super.onViewCreated(view, savedInstanceState);
         // TODO: anh xa
 
-        if (getArguments().getInt(ARG_ACTION) == ACTION_ADD)
-            mLlocationModel = new LocationModel();
+	    action = getArguments().getInt(ARG_ACTION);
+
+        if (action == ACTION_ADD) {
+	        mLlocation = new LocationModel();
+	        mGpsTrackerService.requestLocationUpdates();
+        }
         else {
-            mLlocationModel = mViewModel.getSelectedItem().getValue();
+            mLlocation = mViewModel.getSelectedItem().getValue();
+            // TODO: set values for views
         }
 
         // TODO: set OnclickListener event for buttons
-    }
+	    btn_location_action = (Button) view.findViewById(R.id.btn_location_action);
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+	    btn_location_action.setOnClickListener(this);
+	    ((Button) view.findViewById(R.id.btn_action)).setOnClickListener(this);
+	    ((Button) view.findViewById(R.id.btn_cancel)).setOnClickListener(this);
+
+	    setButtonsState(isLocationUpdating());
     }
 
     @Override
     public void onStop() {
         if (mBound) {
-            // Unbind from the service. This signals to the service that this activity is no longer
-            // in the foreground, and the service can respond by promoting itself to a foreground
-            // service.
-            mGpsTrackerService.removeLocationUpdates();
-            getActivity().unbindService(mServiceConnection);
             mBound = false;
+            mGpsTrackerService.removeLocationUpdates();
         }
-        super.onStop();
+	    sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+	    super.onStop();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_get_location:
+            case R.id.btn_location_action:
                 if (mGpsTrackerService == null) {
                     // Bind to the service. If the service is in foreground mode, this signals to the service
                     // that since this activity is in the foreground, the service can exit foreground mode.
@@ -192,17 +220,98 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
                             mServiceConnection,
                             Context.BIND_AUTO_CREATE
                     );
-                    mGpsTrackerService.requestLocationUpdates();
+                }
+                if (isLocationUpdating()) {
+	                mGpsTrackerService.requestLocationUpdates();
+                } else {
+                	mGpsTrackerService.removeLocationUpdates();
                 }
                 break;
             case R.id.btn_action:
+            	// TODO: insert/update data to db
+	            DBHelper helper = new DBHelper(getActivity().getApplicationContext());
+
+	            mLlocation.setDiadiem(tv_addresss.getText().toString());
+
+	            if (action == ACTION_ADD) {
+	            	long id = helper.addLocation(mLlocation);
+	            	mLlocation.setId(id);
+	            	mViewModel.setNewItem(mLlocation);
+	            } else {
+	            	helper.editLocation(mLlocation);
+	            	mViewModel.setSelectedItem(mLlocation);
+	            }
+
+	            removeThis();
                 break;
             case R.id.btn_cancel:
+            	removeThis();
                 break;
         }
     }
 
-    public void removeThis() {
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		if (requestCode == REQUEST_CODE_PERMISSION)
+			if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+				Toast.makeText(
+						getContext(),
+						"Please grant location permission",
+						Toast.LENGTH_SHORT)
+						.show();
+			else {
+				setButtonsState(false);
+				mGpsTrackerService.removeLocationUpdates();
+			}
+	}
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		if (key.equals(GPSTrackerService.KEY_REQUESTING_LOCATION_UPDATES))
+			setButtonsState(SharedPrefs.getInstance().get(GPSTrackerService.KEY_REQUESTING_LOCATION_UPDATES, Boolean.class));
+	}
+
+	private boolean checkPermissions() {
+		return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, LOCATION_PERMISSION);
+	}
+
+	private void requestPermissions() {
+		// Provide an additional rationale to the user. This would happen if the user denied the
+		// request previously, but didn't check the "Don't ask again" checkbox.
+		if (ActivityCompat.shouldShowRequestPermissionRationale(this, LOCATION_PERMISSION)) {
+			ActivityCompat.requestPermissions(this, new String[] { LOCATION_PERMISSION }, REQUEST_CODE_PERMISSION);
+		} else {
+			// Request permission. It's possible this can be auto answered if device policy
+			// sets the permission in a given state or the user denied the permission
+			// previously and checked "Never ask again".
+			ActivityCompat.requestPermissions(
+					getActivity(),
+					new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+					REQUEST_CODE_PERMISSION
+			);
+		}
+	}
+
+	/**
+	 * Returns true if requesting location updates, otherwise returns false.
+	 */
+	private boolean isLocationUpdating() {
+		return SharedPrefs.getInstance().get(GPSTrackerService.KEY_REQUESTING_LOCATION_UPDATES, Boolean.class);
+	}
+
+	private void setButtonsState(boolean requestingLocationUpdates) {
+		if (requestingLocationUpdates) {
+			btn_location_action.setText(R.string.stop_location_update);
+			btn_location_action.setTextColor(R.color.white);
+			btn_location_action.setBackgroundColor(R.color.red_600);
+		} else {
+			// TODO: set inactive button style
+			btn_location_action.setText(R.string.update_current_location);
+			btn_location_action.setBackgroundColor(R.color.red_600);
+		}
+	}
+
+    private void removeThis() {
         // Hủy tất cả các fragment cũng đang được gắn cùng vào trong FrameLayout
         getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
     }

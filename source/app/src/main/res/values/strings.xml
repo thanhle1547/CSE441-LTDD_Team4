@@ -41,7 +41,11 @@
     <string name="geofence_transition_exited">Exited</string>
     <string name="unknown_geofence_transition">Unknown Transition</string>
 
-    <!--  Preferences  -->
+    <!-- Location -->
+    <string name="update_current_location">Cập nhật vị trí hiện tại</string>
+    <string name="stop_location_update">Dừng cập nhật vị trí</string>
+
+    <!-- Preferences -->
     <string name="customize_status">Tùy chỉnh trạng thái</string>
     <string name="switch_summary">Ấn vào để bật hoặc tắt</string>
 
