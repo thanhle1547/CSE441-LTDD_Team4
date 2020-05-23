@@ -3,7 +3,6 @@ package com.example.devicesilencingapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
@@ -11,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.devicesilencingapp.libs.Fab;
+import com.example.devicesilencingapp.time.fragments.TimeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;

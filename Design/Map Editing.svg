@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_583" data-name="Rectangle 583" width="40" height="40" transform="translate(64 949)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Map_Editing" data-name="Map Editing" transform="translate(-64 -949)" clip-path="url(#clip-path)">
+    <g id="Map_Editing_Material_Filled_24" data-name="Map Editing_Material Filled_24" transform="translate(64 949)">
+      <g id="Group_14" data-name="Group 14" transform="translate(0)">
+        <path id="Path_12" data-name="Path 12" d="M16.369,5a1.826,1.826,0,0,0-.647.138L6.2,9.059A1.964,1.964,0,0,0,5,10.882V38.333a1.911,1.911,0,0,0,2.612,1.823L16.488,36.5,27.25,40.191l0,0a1.849,1.849,0,0,0,1.31-.038l.993-.41L25.338,35.4l-8.91-3.06V9.075l.06-.027,11.369,3.9V24.608h3.809a3.757,3.757,0,0,1,2.694,1.149l4.925,5.071V6.965a1.911,1.911,0,0,0-2.612-1.823L27.8,8.8,22.15,6.857v0L17.027,5.1a1.851,1.851,0,0,0-.658-.1M27.857,28.529v3.922l9.8,10.091,3.809-3.922-9.8-10.091H27.857M42.816,40.007l-3.809,3.922,1.9,1.961a.934.934,0,0,0,1.347,0l2.463-2.535a1,1,0,0,0,0-1.386l-1.9-1.961" transform="translate(-5 -4.999)" fill="#607d8b"/>
+      </g>
+    </g>
+  </g>
+</svg>
