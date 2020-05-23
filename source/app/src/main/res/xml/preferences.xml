@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<!--
+    android:key: thuộc tính này được sử dụng để lấy giá trị trong đối tượng SharedPreferences.
+-->
+    <PreferenceCategory android:title="@string/customize_status">
+        <SwitchPreference
+            android:key="app_status"
+            android:title="@string/app"
+            android:summary="@string/switch_summary"
+            android:defaultValue="true"
+            android:summaryOn="@string/is_on"
+            android:summaryOff="@string/is_off"
+            />
+
+        <SwitchPreference
+            android:key="location_status"
+            android:title="@string/location"
+            android:summary="@string/switch_summary"
+            android:defaultValue="true"
+            android:summaryOn="@string/is_on"
+            android:summaryOff="@string/is_off"
+            />
+
+        <SwitchPreference
+            android:key="schedule_status"
+            android:title="@string/schedule"
+            android:summary="@string/switch_summary"
+            android:defaultValue="true"
+            android:summaryOn="@string/is_on"
+            android:summaryOff="@string/is_off"
+            />
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,19 +1,21 @@
 package com.example.devicesilencingapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.devicesilencingapp.libs.Fab;
-import com.example.devicesilencingapp.time.fragments.TimeFragment;
+import com.example.devicesilencingapp.location.fragments.LocationDetailFragment;
+import com.example.devicesilencingapp.location.fragments.LocationListFragment;
+import com.example.devicesilencingapp.settings.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 	private Toolbar toolbar;
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 		BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
 		bottomNav.setOnNavigationItemSelectedListener(navListener);
-		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, new LocationFragment()).commit();
+		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, LocationListFragment.newInstance()).commit();
 	}
 
 
@@ -38,6 +40,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.fab_sheet_item_add_current_location:
+				getSupportFragmentManager().beginTransaction()
+						.replace(
+								R.id.fragment_main,
+								LocationDetailFragment.newInstance(LocationDetailFragment.ACTION_ADD))
+						.commit();
 				break;
 			case R.id.fab_sheet_item_add_new_location:
 				break;
@@ -52,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			Fragment selectFragment = null;
 			switch (item.getItemId()) {
 				case R.id.nav_location:
-					selectFragment = new LocationFragment();
+					selectFragment = LocationListFragment.newInstance();
 					toolbar.setTitle(R.string.your_location);
 					toolbar.setPopupTheme(R.style.ColorPrimary);
 					break;

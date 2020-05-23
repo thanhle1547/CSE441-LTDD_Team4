@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">Device Silencing App</string>
 
+    <string name="app">Ứng dụng</string>
+    <string name="app_is_on">%1$s đang bật</string>
+    <string name="location">Vị trí</string>
+    <string name="schedule">Lịch trình</string>
+
+    <string name="launch_app">Mở ứng dụng</string>
+    <string name="is_on">Đang bật</string>
+    <string name="is_off">Đang tắt</string>
+    <string name="stop">Dừng</string>
+
     <string name="your_location">Địa điểm của bạn</string>
     <string name="time">Thời gian</string>
     <string name="settings">Cài đặt</string>
@@ -11,6 +21,32 @@
     <string name="add_new_location">Thêm địa điểm mới</string>
     <string name="add_new_time">Thêm thời gian</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="monitoring_your_location">Đang theo dõi vị trí của bạn</string>
+
+    <!-- Geofence Error strings -->
+    <string name="geofence_not_available">Geofence service is not available now</string>
+    <string name="geofence_too_many_geofences">Your app has registered too many geofences</string>
+    <string name="geofence_too_many_pending_intents">
+        You have provided too many PendingIntents to the addGeofences() call
+    </string>
+    <string name="unknown_geofence_error">
+        Unknown error: the Geofence service is not available now
+    </string>
+    <string name="geofence_transition_invalid_type">
+        Geofence transition error: invalid transition type %1$d
+    </string>
+
+    <!-- Transition type strings -->
+    <string name="geofence_transition_entered">Entered</string>
+    <string name="geofence_transition_exited">Exited</string>
+    <string name="unknown_geofence_transition">Unknown Transition</string>
+
+    <!-- Location -->
+    <string name="update_current_location">Cập nhật vị trí hiện tại</string>
+    <string name="stop_location_update">Dừng cập nhật vị trí</string>
+
+    <!-- Preferences -->
+    <string name="customize_status">Tùy chỉnh trạng thái</string>
+    <string name="switch_summary">Ấn vào để bật hoặc tắt</string>
+
 </resources>

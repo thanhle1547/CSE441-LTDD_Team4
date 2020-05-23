@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".location.fragments.LocationDetailFragment">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:title="Chỉnh sửa địa điểm"
+            app:titleTextColor="@color/blue_500"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/tttt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="81dp">
+
+        <Switch
+            android:id="@+id/sw_battatLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp" />
+
+        <TextView
+            android:id="@+id/tv_trangthai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_toEndOf="@+id/tvtt"
+            android:text="@string/turning_on"
+            android:textColor="#BA68C8"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvtt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="Trạng Thái : "
+            android:textColor="#BA68C8"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/viewlct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tttt"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bkg_item_rounded_rect"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
+
+
+        <Button
+            android:id="@+id/bt_thaydoi"
+            android:layout_width="140dp"
+            android:layout_height="29dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bkg_bt"
+            android:text="Thay Bằng vị Trí Hiện Tại"
+            android:textColor="@color/blue_grey_500"
+            android:textSize="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.995"
+            app:layout_constraintStart_toEndOf="@+id/ic_subject"
+            app:layout_constraintTop_toTopOf="@+id/ic_bkg" />
+
+        <ImageView
+            android:id="@+id/ic_near_me"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.043"
+            app:layout_constraintStart_toEndOf="@+id/ic_bkg"
+            app:layout_constraintTop_toTopOf="@+id/tv_diadiem"
+            app:srcCompat="@drawable/ic_near_me"
+            tools:ignore="VectorDrawableCompat" />
+
+        <ImageView
+            android:id="@+id/ic_bkg"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/bkg_ic_rounded_rect"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.023"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.202" />
+        <ImageView
+            android:id="@+id/ic_subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/ic_bkg"
+            app:layout_constraintEnd_toEndOf="@+id/ic_bkg"
+            app:layout_constraintStart_toStartOf="@+id/ic_bkg"
+            app:layout_constraintTop_toTopOf="@+id/ic_bkg"
+            app:srcCompat="@drawable/ic_marker"
+            tools:ignore="VectorDrawableCompat" />
+
+        <TextView
+            android:id="@+id/tv_diadiem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:maxWidth="130dp"
+            android:text="Thanh Xuân"
+            android:textColor="@color/cyan_300"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.038"
+            app:layout_constraintStart_toEndOf="@+id/ic_near_me"
+            app:layout_constraintTop_toTopOf="@+id/ic_bkg" />
+
+        <TextView
+            android:id="@+id/tv_location_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="170dp"
+            android:text="51'00'04'7'N 51.00'04'7'E"
+            android:textColor="@color/cyan_300"
+            app:layout_constraintBottom_toBottomOf="@+id/ic_bkg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/ic_near_me"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.786" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/viewedit"
+        android:layout_width="match_parent"
+        android:layout_height="177dp"
+        android:layout_below="@+id/viewlct"
+        android:layout_marginTop="21dp">
+
+        <EditText
+            android:id="@+id/nhan"
+            android:layout_width="170dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:textColor="#DF000000"
+            android:background="#244D96D1"
+            android:ems="10"
+            app:layout_constraintStart_toStartOf="@+id/edt_tendiadiem"
+            app:layout_constraintTop_toTopOf="@+id/tv_nhan" />
+
+        <EditText
+            android:id="@+id/edt_tendiadiem"
+            android:layout_width="170dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:background="#244D96D1"
+            android:ems="10"
+            android:textColor="#DF000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_tendiadiem" />
+
+        <EditText
+            android:id="@+id/edt_bkkv"
+            android:layout_width="170dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:textColor="#DF000000"
+            android:background="#244D96D1"
+            android:ems="10"
+            app:layout_constraintStart_toStartOf="@+id/nhan"
+            app:layout_constraintTop_toTopOf="@+id/tv_bkkv" />
+
+        <TextView
+            android:id="@+id/tv_tendiadiem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tv_bkkv"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:text="Tên Địa Điểm"
+            android:textColor="@color/pink"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_bkkv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Bán Kính Khu Vực"
+            android:textColor="@color/pink"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_nhan"
+            app:layout_constraintTop_toBottomOf="@+id/tv_nhan" />
+
+        <TextView
+            android:id="@+id/tv_nhan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Nhãn Địa Điểm"
+            android:textColor="@color/pink"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_tendiadiem"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tendiadiem" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/view_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp">
+
+        <Button
+            android:id="@+id/bt_themsua"
+            android:layout_width="209dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bkg_bt"
+            android:text="Thêm/Sửa"
+            android:textColor="@color/design_default_color_on_secondary"
+            android:textSize="10dp" />
+
+        <Button
+            android:id="@+id/bt_huy"
+            android:layout_width="214dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bkg_bt"
+            android:text="Huỷ"
+            android:textColor="@color/design_default_color_on_secondary"
+            android:textSize="10dp" />
+    </LinearLayout>
+
+</RelativeLayout>

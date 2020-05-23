@@ -1,11 +1,12 @@
-package com.example.devicesilencingapp;
-
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+package com.example.devicesilencingapp.location.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.devicesilencingapp.R;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,17 +22,4 @@ public class itemclick_BottomSheetDialogFragment extends BottomSheetDialogFragme
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.clickitemlocation,container,false);
     }
-
-//    @Override
-//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//        view.findViewById(R.id.battatLocation).setOnClickListener(this);
-//        view.findViewById(R.id.sualocation).setOnClickListener(this);
-//        view.findViewById(R.id.xoalocation).setOnClickListener(this);
-//    }
-//
-//    @Override
-//    public void onClick(View view) {
-//
-//    }
 }

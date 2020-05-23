@@ -1,4 +1,4 @@
-package com.example.devicesilencingapp;
+package com.example.devicesilencingapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,17 +7,19 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.ArrayList;
+
+import com.example.devicesilencingapp.R;
+import com.example.devicesilencingapp.models.LocationModel;
 
 import java.util.ArrayList;
 
-public class AdapterLocation extends ArrayAdapter<Object> {
+public class AdapterLocation extends ArrayAdapter<LocationModel> {
     private Context context;
-    private ArrayList<?>  listData;
+    private ArrayList<LocationModel>  listData;
 
 
 
-    public AdapterLocation(Context context, ArrayList<Object> data) {
+    public AdapterLocation(Context context, ArrayList<LocationModel> data) {
         super(context, R.layout.list_item_location, data);
         // TODO Auto-generated constructor stub
         this.context = context;
@@ -29,7 +31,7 @@ public class AdapterLocation extends ArrayAdapter<Object> {
         LayoutInflater inflater = (LayoutInflater) context .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         Object data = listData.get(position);
         row = inflater.inflate(R.layout.list_item_location, parent, false);
-        MDLocation mdl = (MDLocation) data;
+        LocationModel mdl = (LocationModel) data;
         TextView tv_trangthai = (TextView) row.findViewById(R.id.tv_trangthai);
         TextView tv_tdd = (TextView) row.findViewById(R.id.tv_location_label);
         TextView tv_dd = (TextView) row.findViewById(R.id.tv_diadiem);
