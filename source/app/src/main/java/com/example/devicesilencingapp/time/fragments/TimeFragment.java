@@ -8,28 +8,27 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-
-import com.example.devicesilencingapp.AdapterLocation;
-import com.example.devicesilencingapp.AdapterTime;
 import com.example.devicesilencingapp.R;
+import com.example.devicesilencingapp.db.DBHelper;
 import com.example.devicesilencingapp.time.TimeViewModal;
-import com.example.devicesilencingapp.time.modal.ScheduleModal;
+import com.example.devicesilencingapp.time.adapters.AdapterTime;
+import com.example.devicesilencingapp.time.timeModel;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 //hien thi list view va xu li click vao item
 public class TimeFragment extends Fragment {
     Context context;
-    private ScheduleModal oldSelected; //ktra du lieu co thay doi k
+    private timeModel oldSelected; //ktra du lieu co thay doi k
     private AdapterTime adapter;// quan li item trong list
-    private ArrayList<ScheduleModal> data; //du lieu tu csdl
+    private ArrayList<timeModel> data; //du lieu tu csdl
     private TimeViewModal viewModal; //quan sat du lieu dc chon
     private ListView listView;
 
@@ -52,23 +51,20 @@ public class TimeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModal = new ViewModelProvider(this).get(TimeViewModal.class);
         listView = (ListView) view.findViewById(R.id.lv_time);
+
         DBHelper helper = new DBHelper(getActivity());
-        try{
-            data = helper.getAllSchedule();
-        }
-        catch (NoSuchFieldException e){
-            e.printStackTrace();
-        }
+        data = helper.getAlarms();
+
         context = getActivity();
         adapter = new AdapterTime(context, data);
-        viewModal.setScheduleList(data);
+        viewModal.settimeModelList(data);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ScheduleModal schedule = (ScheduleModal) data.get(position);
-                oldSelected = schedule;
-                viewModal.setSelected(schedule);//luu du lieu dc chon
+                timeModel timeModel = (timeModel) data.get(position);
+                oldSelected = timeModel;
+                viewModal.setSelected(timeModel);//luu du lieu dc chon
 
             }
         });
@@ -79,30 +75,30 @@ public class TimeFragment extends Fragment {
     //quan sat du lieu
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModal.getScheduleList().observe(getViewLifecycleOwner(), new Observer<ArrayList<ScheduleModal>>() {
+        viewModal.gettimeModelList().observe(getViewLifecycleOwner(), new Observer<ArrayList<timeModel>>() {
             @Override
-            public void onChanged(ArrayList<ScheduleModal> scheduleModals) {
-                data = scheduleModals;
+            public void onChanged(ArrayList<timeModel> timeModel) {
+                data = timeModel;
                 adapter.clear();
-                adapter.addAll(scheduleModals);
+                adapter.addAll(timeModel);
                 adapter.notifyDataSetChanged();
             }
         });
 
         //quan sat cai dc chon
-        viewModal.getSelected().observe(getViewLifecycleOwner(), new Observer<ScheduleModal>() {
+        viewModal.getSelected().observe(getViewLifecycleOwner(), new Observer<timeModel>() {
             @Override
-            public void onChanged(ScheduleModal scheduleModal) {
-                if(Objects.deepEquals(scheduleModal, oldSelected)){
+            public void onChanged(timeModel timeModel) {
+                if(Objects.deepEquals(timeModel, oldSelected)){
                     return;
                 }
                 int index = data.indexOf(oldSelected);
-                if(scheduleModal == null){
+                if(timeModel == null){
                     data.remove(index);
                     adapter.remove(oldSelected);
                 }
                 else {
-                    data.set(index, scheduleModal);
+                    data.set(index, timeModel);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -110,10 +106,10 @@ public class TimeFragment extends Fragment {
 
         //quan sat cai dc them
 
-        viewModal.getNewItem().observe(getViewLifecycleOwner(), new Observer<ScheduleModal>() {
+        viewModal.getNewItem().observe(getViewLifecycleOwner(), new Observer<timeModel>() {
             @Override
-            public void onChanged(ScheduleModal scheduleModal) {
-                data.add(scheduleModal);
+            public void onChanged(timeModel timeModel) {
+                data.add(timeModel);
                 adapter.notifyDataSetChanged();
             }
         });

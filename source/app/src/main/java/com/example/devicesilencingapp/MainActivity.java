@@ -8,6 +8,7 @@ import com.example.devicesilencingapp.libs.Fab;
 import com.example.devicesilencingapp.location.fragments.LocationDetailFragment;
 import com.example.devicesilencingapp.location.fragments.LocationListFragment;
 import com.example.devicesilencingapp.settings.SettingsFragment;
+import com.example.devicesilencingapp.time.fragments.TimeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 					toolbar.setPopupTheme(R.style.ColorPrimary);
 					break;
 				case R.id.nav_time:
-					selectFragment = new TimeFragment();
+					selectFragment = TimeFragment.newInstance();
 					toolbar.setTitle(R.string.time);
 					toolbar.setPopupTheme(R.style.ColorSecondary);
 					break;

@@ -1,23 +1,22 @@
 package com.example.devicesilencingapp.time.adapters;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.example.devicesilencingapp.R;
-import com.example.devicesilencingapp.time.modal.ScheduleModal;
+import com.example.devicesilencingapp.time.timeModel;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 //file quan li items
-public class AdapterTime extends ArrayAdapter<ScheduleModal> {
-    ArrayList<ScheduleModal> dataSet;
+public class AdapterTime extends ArrayAdapter<timeModel> {
+    ArrayList<timeModel> dataSet;
     Context mContext;
 
     public Context getContext() {
@@ -29,8 +28,8 @@ public class AdapterTime extends ArrayAdapter<ScheduleModal> {
         TextView tv_status;
     }
 
-    public AdapterTime(@NonNull Context context,   ArrayList<ScheduleModal> dataSet ) {
-        super(context, resource);
+    public AdapterTime(@NonNull Context context, ArrayList<timeModel> dataSet ) {
+        super(context, R.layout.item_time);
         this.mContext = context;
         this.dataSet = dataSet;
     }
@@ -38,7 +37,7 @@ public class AdapterTime extends ArrayAdapter<ScheduleModal> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ScheduleModal scheduleModal = getItem(position);
+        timeModel timeModel = getItem(position);
         ViewHolder viewHolder;
         if(convertView == null){
             viewHolder = new ViewHolder();
@@ -54,11 +53,17 @@ public class AdapterTime extends ArrayAdapter<ScheduleModal> {
         }
 
         //gan noi dung
-        viewHolder.tv_time.setText(scheduleModal.getStart_time() + " - " +scheduleModal.getEnd_time());
-        String[] array = scheduleModal.getDates().split("");
-        String dates = TextUtils.join(",",array);
-        viewHolder.tv_date.setText((dates));
-        viewHolder.tv_status.setText(getContext().getString( scheduleModal.getStatus()? R.string.is_on : R.string.is_off));
+        viewHolder.tv_time.setText(timeModel.getTimeHour() + " - " +timeModel.getTimeMinute());
+
+
+        StringBuilder repeatingDays = new StringBuilder();
+        for (int i = 0; i<7; ++i) {
+            repeatingDays.append(timeModel.getRepeatingDay(i)).append(",");
+        }
+//        boolean[] array = timeModel.getRepeatingDays();
+//        String dates = TextUtils.join(",",array);
+        viewHolder.tv_date.setText((repeatingDays));
+        viewHolder.tv_status.setText(getContext().getString( timeModel.isEnabled()? R.string.is_on : R.string.is_off));
         return convertView;
     }
 }
