@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.devicesilencingapp.App;
+import com.example.devicesilencingapp.models.UserLocationModel;
 import com.example.devicesilencingapp.time.timeModel;
 
 import java.util.ArrayList;
@@ -14,29 +16,58 @@ import androidx.annotation.Nullable;
 
 public class DBHelper extends SQLiteOpenHelper {
 	private static final String DB_NAME = "table_contacts";
-	private static final int DB_VERSION = 1;
-	private static final String TABLE_ = "";
+	private static final int    DB_VERSION = 1;
+	private static final String TABLE_USER_LOCATION = "user_location";
 	private static final String TABLE_Time = "table_time";
+
+	private static final String LOCATION_ID = "id";
+	private static final String LOCATION_NAME = "name";
+	private static final String LOCATION_ADDRESS = "address";
+	private static final String LOCATION_LABEL = "label";
+	private static final String LOCATION_LONGITUDE = "longitude";
+	private static final String LOCATION_LATITUDE = "latitude";
+	private static final String LOCATION_RADIUS = "radius";
+	private static final String LOCATION_EXPIRATION = "expiration";
+	private static final String LOCATION_STATUS = "status";
+
+	private static DBHelper instance;
+	private SQLiteDatabase db;
 
 	public DBHelper(@Nullable Context context) {
 		super(context, DB_NAME, null, DB_VERSION);
 	}
 
+	public static synchronized DBHelper getInstance() {
+		if (instance == null)
+			instance = new DBHelper(App.self().getApplicationContext());
+		return instance;
+	}
+
 	/**
 	 * Called when the database is created for the first time.
-	 * @see https://developer.android.com/reference/android/database/sqlite/SQLiteOpenHelper
-	 *
-	 * Android SQLite Primary Key Auto Increment
-	 * @see http://www.androidph.com/2012/01/android-sqlite-primary-key-auto.html
+	 * @see <a href="https://developer.android.com/reference/android/database/sqlite/SQLiteOpenHelper">
+	 *          SQLiteOpenHelper
+	 *      </a>
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL("create table "+TABLE_Time+" (id integer primary key AUTOINCREMENT,gio TEXT,phut TEXT,nhaclai TEXT,battat BOOLEAN)");
+		db.execSQL("create table "+TABLE_Time+" (id integer primary key,gio TEXT,phut TEXT,nhaclai TEXT,battat BOOLEAN)");
 
-//		String CREATE_TABLE = String.format(
-//				"CREATE TABLE if not exists %s (%s INTERGER Primary key, %s TEXT, %s TEXT, %s BLOD, %s TEXT)",
-//				TABLE_NAME, KEY_ID, KEY_NAME, KEY_PHONE_NUMBER, KEY_AVATAR, KEY_EMAIL);
-//		db.execSQL(CREATE_TABLE);
+		db.execSQL(String.format(
+				"CREATE TABLE if not exists %s " +
+						"(%s INTEGER Primary key, %s TEXT, %s TEXT, %s INTEGER, " +
+						" %s REAL, %s REAL, %s INTEGER, %s INTEGER, %s INTEGER) ",
+				TABLE_USER_LOCATION,
+				LOCATION_ID,
+				LOCATION_NAME,
+				LOCATION_ADDRESS,
+				LOCATION_LABEL,
+				LOCATION_LONGITUDE,
+				LOCATION_LATITUDE,
+				LOCATION_RADIUS,
+				LOCATION_EXPIRATION,
+				LOCATION_STATUS
+		));
 	}
 
 	/**
@@ -45,12 +76,28 @@ public class DBHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//		String DROP_TABLE = String.format("DROP TABLE if exists %s", TABLE_NAME);
-//		db.execSQL(DROP_TABLE);
-//
-//		onCreate(db);
+		db.execSQL(String.format("DROP TABLE if exists %s", TABLE_USER_LOCATION));
+
+		onCreate(db);
 	}
 
+	/**
+	 * Called by the garbage collector on an object when garbage collection determines
+	 * that there are no more references to the object.
+	 *
+	 * {@inheritDoc}
+	 * @throws Throwable
+	 */
+	@Override
+	protected void finalize() throws Throwable {
+		if (instance != null)
+			instance.close();
+
+		super.finalize();
+	}
+
+
+	/* --------  Schedule  -------- */
 	//Insert
 	public long insertTBTime (timeModel model) {
 		ContentValues values = populateContent(model);
@@ -58,9 +105,9 @@ public class DBHelper extends SQLiteOpenHelper {
 	}
 
 	// update
-	public long updateTime(timeModel model) {
+	public void updateTime(timeModel model) {
 		ContentValues values = populateContent(model);
-		return getWritableDatabase().update("table_time", values, "table_time.id+  = ?", new String[] {String.valueOf(model.id)});
+		getWritableDatabase().update("table_time", values, "table_time.id+  = ?", new String[] {String.valueOf(model.id)});
 	}
 	//delete
 	public Integer deleteTBTime (Integer id) {
@@ -130,4 +177,62 @@ public class DBHelper extends SQLiteOpenHelper {
 		return values;
 	}
 
+
+	/* --------  Location  -------- */
+	public void editLocationStatus(UserLocationModel model) {
+		db = this.getWritableDatabase();
+
+		ContentValues value = new ContentValues();
+		value.put(LOCATION_ID, model.getId());
+		value.put(LOCATION_STATUS, model.getStatus());
+
+		db.update(TABLE_USER_LOCATION, LOCATION_ID + " = ?", new String[] { String.valueOf(id) })
+	}
+
+	public void removeLocation(long id) {
+		db = this.getWritableDatabase();
+		db.delete(TABLE_USER_LOCATION, LOCATION_ID + " = ?", new String[] { String.valueOf(id) });
+	}
+
+	public ArrayList<UserLocationModel> getAllLocations() {
+		ArrayList<UserLocationModel> result = new ArrayList<>();
+		db = this.getReadableDatabase();
+		String QUERY = "SELECT * FROM " + TABLE_USER_LOCATION;
+		Cursor cursor = db.rawQuery(QUERY, null);
+
+		if (cursor.moveToFirst())
+			do {
+				result.add(populateUserLocationModel(cursor));
+			} while (cursor.moveToNext());
+		cursor.close();
+		return result;
+	}
+
+	public ArrayList<UserLocationModel> getActiveLocations() {
+		ArrayList<UserLocationModel> result = new ArrayList<>();
+		db = this.getReadableDatabase();
+		String QUERY = String.format("SELECT * FROM %s WHERE %s >= ?", TABLE_USER_LOCATION, LOCATION_ID);
+		Cursor cursor = db.rawQuery(QUERY, new String[] { String.valueOf(1) });
+
+		if (cursor.moveToFirst())
+			do {
+				result.add(populateUserLocationModel(cursor));
+			} while (cursor.moveToNext());
+		cursor.close();
+		return result;
+	}
+
+	private UserLocationModel populateUserLocationModel(Cursor cursor) {
+		return new UserLocationModel(
+				cursor.getLong(0),
+				cursor.getString(1),
+				cursor.getString(2),
+				cursor.getInt(3),
+				cursor.getDouble(4),
+				cursor.getDouble(5),
+				cursor.getInt(6),
+				cursor.getInt(7),
+				cursor.getInt(8) != 0
+		);
+	}
 }
