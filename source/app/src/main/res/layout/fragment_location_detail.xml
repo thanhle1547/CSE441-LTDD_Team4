@@ -6,34 +6,23 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".location.fragments.LocationDetailFragment">
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fff">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin"
-            app:title="Chỉnh sửa địa điểm"
-            app:titleTextColor="@color/blue_500"/>
-    </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
         android:id="@+id/tttt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="81dp">
+        android:layout_marginTop="24dp">
 
-        <Switch
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/sw_battatLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="10dp"
+            android:theme="@style/Switch"
+            android:layout_centerVertical="true"
+            />
 
         <TextView
             android:id="@+id/tv_trangthai"
@@ -43,16 +32,18 @@
             android:layout_toEndOf="@+id/tvtt"
             android:text="@string/turning_on"
             android:textColor="#BA68C8"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_centerVertical="true" />
 
         <TextView
             android:id="@+id/tvtt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:text="Trạng Thái : "
             android:textColor="#BA68C8"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -60,19 +51,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tttt"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="22dp"
         android:background="@drawable/bkg_item_rounded_rect"
         android:paddingTop="15dp"
         android:paddingBottom="15dp">
 
 
         <Button
-            android:id="@+id/bt_thaydoi"
-            android:layout_width="140dp"
+            android:id="@+id/btn_location_action"
+            android:layout_width="wrap_content"
             android:layout_height="29dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/bkg_bt"
-            android:text="Thay Bằng vị Trí Hiện Tại"
+            android:text="@string/update_current_location"
             android:textColor="@color/blue_grey_500"
             android:textSize="10dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,6 +75,7 @@
             android:id="@+id/ic_near_me"
             android:layout_width="wrap_content"
             android:layout_height="16dp"
+            android:layout_marginTop="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.043"
             app:layout_constraintStart_toEndOf="@+id/ic_bkg"
@@ -123,12 +115,12 @@
             android:text="Thanh Xuân"
             android:textColor="@color/cyan_300"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.038"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/ic_near_me"
             app:layout_constraintTop_toTopOf="@+id/ic_bkg" />
 
         <TextView
-            android:id="@+id/tv_location_label"
+            android:id="@+id/tv_lnglat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="170dp"
@@ -145,9 +137,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/viewedit"
         android:layout_width="match_parent"
-        android:layout_height="177dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/viewlct"
-        android:layout_marginTop="21dp">
+        android:layout_marginTop="22dp">
 
         <EditText
             android:id="@+id/nhan"
@@ -228,22 +220,22 @@
         android:layout_marginBottom="0dp">
 
         <Button
-            android:id="@+id/bt_themsua"
-            android:layout_width="209dp"
+            android:id="@+id/btn_action"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/bkg_bt"
-            android:text="Thêm/Sửa"
+            android:text="@string/add"
             android:textColor="@color/design_default_color_on_secondary"
-            android:textSize="10dp" />
+            android:layout_weight="1"/>
 
         <Button
-            android:id="@+id/bt_huy"
-            android:layout_width="214dp"
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/bkg_bt"
-            android:text="Huỷ"
+            android:text="@string/cancel"
             android:textColor="@color/design_default_color_on_secondary"
-            android:textSize="10dp" />
+            android:layout_weight="1"/>
     </LinearLayout>
 
 </RelativeLayout>

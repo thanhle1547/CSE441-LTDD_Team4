@@ -113,15 +113,15 @@ public class LocationListFragment extends Fragment {
 				mViewModel.setSelectedItem(location);
 
 				Toast.makeText(context, "getDiadiem"+ location.getDiadiem() + "getImg"+ location.getImg(), Toast.LENGTH_SHORT).show();
-				dialogclickitemlocation(location.getDiadiem());
+				dialogclickitemlocation();
 			}
 		});
 	}
 
-	private void dialogclickitemlocation(String a){
+	private void dialogclickitemlocation(){
 
 		itemclick_BottomSheetDialogFragment clickitem = itemclick_BottomSheetDialogFragment.newInstance();
-		clickitem.show(getFragmentManager(),"clickitemlocation");
+		clickitem.show(getChildFragmentManager(), clickitem.getTag());
 	}
 
 }
