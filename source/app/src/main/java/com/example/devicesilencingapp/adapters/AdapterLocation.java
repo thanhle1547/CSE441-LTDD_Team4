@@ -9,17 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.devicesilencingapp.R;
-import com.example.devicesilencingapp.models.LocationModel;
+import com.example.devicesilencingapp.models.UserLocationModel;
 
 import java.util.ArrayList;
 
-public class AdapterLocation extends ArrayAdapter<LocationModel> {
+public class AdapterLocation extends ArrayAdapter<UserLocationModel> {
     private Context context;
-    private ArrayList<LocationModel>  listData;
+    private ArrayList<UserLocationModel>  listData;
 
 
 
-    public AdapterLocation(Context context, ArrayList<LocationModel> data) {
+    public AdapterLocation(Context context, ArrayList<UserLocationModel> data) {
         super(context, R.layout.list_item_location, data);
         // TODO Auto-generated constructor stub
         this.context = context;
@@ -31,7 +31,7 @@ public class AdapterLocation extends ArrayAdapter<LocationModel> {
         LayoutInflater inflater = (LayoutInflater) context .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         Object data = listData.get(position);
         row = inflater.inflate(R.layout.list_item_location, parent, false);
-        LocationModel mdl = (LocationModel) data;
+        UserLocationModel mdl = (UserLocationModel) data;
         TextView tv_trangthai = (TextView) row.findViewById(R.id.tv_trangthai);
         TextView tv_tdd = (TextView) row.findViewById(R.id.tv_location_label);
         TextView tv_dd = (TextView) row.findViewById(R.id.tv_diadiem);

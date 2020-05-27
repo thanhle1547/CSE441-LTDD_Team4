@@ -14,6 +14,11 @@ public class UserLocationModel {
 	public UserLocationModel() {
 	}
 
+	public UserLocationModel(String name, String address) {
+		this.name = name;
+		this.address = address;
+	}
+
 	public UserLocationModel(long id, String name, String address, int label, double longitude, double latitude, int radius, int expiration, boolean status) {
 		this.id = id;
 		this.name = name;

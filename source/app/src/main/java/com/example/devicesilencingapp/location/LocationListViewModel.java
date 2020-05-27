@@ -1,6 +1,6 @@
 package com.example.devicesilencingapp.location;
 
-import com.example.devicesilencingapp.models.LocationModel;
+import com.example.devicesilencingapp.models.UserLocationModel;
 
 import java.util.ArrayList;
 
@@ -9,10 +9,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class LocationListViewModel extends ViewModel {
-    private MutableLiveData<ArrayList<LocationModel>> locationList;
-    private MutableLiveData<LocationModel> selected;
+    private MutableLiveData<ArrayList<UserLocationModel>> locationList;
+    private MutableLiveData<UserLocationModel> selected;
 
-    private MutableLiveData<LocationModel> newItem;
+    private MutableLiveData<UserLocationModel> newItem;
 
     public LocationListViewModel() {
         locationList = new MutableLiveData<>();
@@ -20,27 +20,27 @@ public class LocationListViewModel extends ViewModel {
         newItem = new MutableLiveData<>();
     }
 
-    public MutableLiveData<ArrayList<LocationModel>> getLocationList() {
+    public MutableLiveData<ArrayList<UserLocationModel>> getLocationList() {
         return locationList;
     }
 
-    public void setLocationList(ArrayList<LocationModel> location_list) {
+    public void setLocationList(ArrayList<UserLocationModel> location_list) {
         locationList.setValue(location_list);
     }
 
-    public MutableLiveData<LocationModel> getSelectedItem() {
+    public MutableLiveData<UserLocationModel> getSelectedItem() {
         return selected;
     }
 
-    public void setSelectedItem(@Nullable LocationModel contact) {
+    public void setSelectedItem(@Nullable UserLocationModel contact) {
         selected.setValue(contact);
     }
 
-    public MutableLiveData<LocationModel> getNewItem() {
+    public MutableLiveData<UserLocationModel> getNewItem() {
         return newItem;
     }
 
-    public void setNewItem(LocationModel newItem) {
+    public void setNewItem(UserLocationModel newItem) {
         this.newItem.setValue(newItem);
     }
 }

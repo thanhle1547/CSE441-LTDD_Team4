@@ -33,7 +33,7 @@ import com.example.devicesilencingapp.R;
 import com.example.devicesilencingapp.libs.LocationUtils;
 import com.example.devicesilencingapp.libs.SharedPrefs;
 import com.example.devicesilencingapp.location.LocationListViewModel;
-import com.example.devicesilencingapp.models.LocationModel;
+import com.example.devicesilencingapp.models.UserLocationModel;
 import com.example.devicesilencingapp.location.service.GPSTrackerService;
 
 import java.util.Objects;
@@ -54,7 +54,7 @@ public class LocationDetailFragment extends Fragment
 	private final String LOCATION_PERMISSION = Manifest.permission.ACCESS_FINE_LOCATION;
 
     private LocationListViewModel mViewModel;
-    private LocationModel mLlocation;
+    private UserLocationModel mLlocation;
 
 	private SharedPreferences sharedPreferences;
 	private GPSTrackerService mGpsTrackerService = null;
@@ -180,7 +180,7 @@ public class LocationDetailFragment extends Fragment
 	    action = getArguments().getInt(ARG_ACTION);
 
         if (action == ACTION_ADD) {
-	        mLlocation = new LocationModel();
+	        mLlocation = new UserLocationModel();
 	        mGpsTrackerService.requestLocationUpdates();
         }
         else {
