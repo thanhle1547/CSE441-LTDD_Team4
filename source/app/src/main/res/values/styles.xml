@@ -51,5 +51,16 @@
         <item name="android:textColor">@color/grey_600</item>
         <item name="android:drawablePadding">@dimen/sheet_item_image_spacing</item>
     </style>
+
+    <style name="Switch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/enable_thumb_grey</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">#f1f1f1</item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">@color/disable_foreground_grey</item>
+    </style>
     
 </resources>

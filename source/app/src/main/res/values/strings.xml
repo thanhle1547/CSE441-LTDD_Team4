@@ -9,6 +9,11 @@
     <string name="launch_app">Mở ứng dụng</string>
     <string name="is_on">Đang bật</string>
     <string name="is_off">Đang tắt</string>
+
+    <!-- Action -->
+    <string name="add">Thêm</string>
+    <string name="edit">Sửa</string>
+    <string name="cancel">Hủy</string>
     <string name="stop">Dừng</string>
 
     <string name="your_location">Địa điểm của bạn</string>
