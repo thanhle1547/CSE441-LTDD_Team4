@@ -10,13 +10,15 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin" />
+            app:layout_collapseMode="pin"
+            app:titleTextColor="@color/blue_500" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
@@ -25,6 +27,12 @@
         android:layout_height="match_parent"
         android:layout_below="@id/app_bar"
         android:layout_above="@id/bottom_nav"/>
+
+    <FrameLayout
+        android:id="@+id/fragment_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/app_bar"/>
 
     <include
         android:id="@+id/include"

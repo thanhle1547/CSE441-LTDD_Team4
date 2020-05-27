@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			case R.id.fab_sheet_item_add_current_location:
 				getSupportFragmentManager().beginTransaction()
 						.replace(
-								R.id.fragment_main,
+								R.id.fragment_detail,
 								LocationDetailFragment.newInstance(LocationDetailFragment.ACTION_ADD))
 						.commit();
 				break;
