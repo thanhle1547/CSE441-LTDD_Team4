@@ -45,11 +45,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 						.replace(
 								R.id.fragment_detail,
 								LocationDetailFragment.newInstance(LocationDetailFragment.ACTION_ADD))
+						.addToBackStack(null)
 						.commit();
+				materialSheetFab.hideSheet();
 				break;
 			case R.id.fab_sheet_item_add_new_location:
+				materialSheetFab.hideSheet();
 				break;
 			case R.id.fab_sheet_item_add_new_time:
+				materialSheetFab.hideSheet();
 				break;
 		}
 	}
