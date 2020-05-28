@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.example.devicesilencingapp.adapters.AdapterLocation;
 import com.example.devicesilencingapp.R;
+import com.example.devicesilencingapp.db.DBHelper;
 import com.example.devicesilencingapp.location.LocationListViewModel;
 import com.example.devicesilencingapp.models.UserLocationModel;
 
@@ -93,12 +94,7 @@ public class LocationListFragment extends Fragment {
 		mViewModel = ViewModelProviders.of(this).get(LocationListViewModel.class);
 
 		lv_Location = (ListView) view.findViewById(R.id.lv_location);
-		data = new ArrayList<>();
-		for(int i= 0; i <10; i++)
-		{
-			UserLocationModel mdlc = new UserLocationModel("ten dia diem : " + i, "dia diem "+ i);
-			data.add(mdlc);
-		}
+		data = DBHelper.getInstance().getAllLocations();
 		context = getActivity();
 		adapter = new AdapterLocation(context, data);
 		mViewModel.setLocationList(data);

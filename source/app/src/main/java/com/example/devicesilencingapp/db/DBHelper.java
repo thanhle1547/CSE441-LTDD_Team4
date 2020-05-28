@@ -31,7 +31,6 @@ public class DBHelper extends SQLiteOpenHelper {
 	private static final String LOCATION_STATUS = "status";
 
 	private static DBHelper instance;
-	private SQLiteDatabase db;
 
 	public DBHelper(@Nullable Context context) {
 		super(context, DB_NAME, null, DB_VERSION);
@@ -179,26 +178,46 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 	/* --------  Location  -------- */
-	public void editLocationStatus(UserLocationModel model) {
-		db = this.getWritableDatabase();
+	public long addLocation(UserLocationModel model) {
+		return this.getWritableDatabase()
+				.insert(TABLE_USER_LOCATION, null, populateUserLocationContent(model));
+	}
 
+	public void editLocation(UserLocationModel model) {
+		this.getWritableDatabase()
+				.update(
+						TABLE_USER_LOCATION,
+						populateUserLocationContent(model),
+						LOCATION_ID + " = ?",
+						new String[] { String.valueOf(model.getId()) }
+				);
+	}
+
+	public void editLocationStatus(UserLocationModel model) {
 		ContentValues value = new ContentValues();
-		value.put(LOCATION_ID, model.getId());
 		value.put(LOCATION_STATUS, model.getStatus());
 
-		db.update(TABLE_USER_LOCATION, LOCATION_ID + " = ?", new String[] { String.valueOf(id) })
+		this.getWritableDatabase().update(
+			TABLE_USER_LOCATION,
+			value,
+			LOCATION_ID + " = ?",
+			new String[] { String.valueOf( model.getId()) }
+		);
 	}
 
 	public void removeLocation(long id) {
-		db = this.getWritableDatabase();
-		db.delete(TABLE_USER_LOCATION, LOCATION_ID + " = ?", new String[] { String.valueOf(id) });
+		this.getWritableDatabase()
+				.delete(
+						TABLE_USER_LOCATION,
+						LOCATION_ID + " = ?",
+						new String[] { String.valueOf(id) }
+				);
 	}
 
 	public ArrayList<UserLocationModel> getAllLocations() {
 		ArrayList<UserLocationModel> result = new ArrayList<>();
-		db = this.getReadableDatabase();
 		String QUERY = "SELECT * FROM " + TABLE_USER_LOCATION;
-		Cursor cursor = db.rawQuery(QUERY, null);
+		Cursor cursor = this.getReadableDatabase().rawQuery(QUERY, null);
 
 		if (cursor.moveToFirst())
 			do {
@@ -210,9 +229,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	public ArrayList<UserLocationModel> getActiveLocations() {
 		ArrayList<UserLocationModel> result = new ArrayList<>();
-		db = this.getReadableDatabase();
 		String QUERY = String.format("SELECT * FROM %s WHERE %s >= ?", TABLE_USER_LOCATION, LOCATION_ID);
-		Cursor cursor = db.rawQuery(QUERY, new String[] { String.valueOf(1) });
+		Cursor cursor = this.getReadableDatabase().rawQuery(QUERY, new String[] { String.valueOf(1) });
 
 		if (cursor.moveToFirst())
 			do {
@@ -220,6 +238,20 @@ public class DBHelper extends SQLiteOpenHelper {
 			} while (cursor.moveToNext());
 		cursor.close();
 		return result;
+	}
+
+	private ContentValues populateUserLocationContent(UserLocationModel model) {
+		ContentValues values = new ContentValues();
+		values.put(LOCATION_NAME, model.getName());
+		values.put(LOCATION_ADDRESS, model.getAddress());
+		values.put(LOCATION_LABEL, model.getLabel());
+		values.put(LOCATION_LONGITUDE, model.getLongitude());
+		values.put(LOCATION_LATITUDE, model.getLatitude());
+		values.put(LOCATION_RADIUS, model.getRadius());
+		values.put(LOCATION_EXPIRATION, model.getExpiration());
+		values.put(LOCATION_STATUS, model.getStatus());
+
+		return values;
 	}
 
 	private UserLocationModel populateUserLocationModel(Cursor cursor) {

@@ -32,13 +32,13 @@ public class AdapterLocation extends ArrayAdapter<UserLocationModel> {
         Object data = listData.get(position);
         row = inflater.inflate(R.layout.list_item_location, parent, false);
         UserLocationModel mdl = (UserLocationModel) data;
-        TextView tv_trangthai = (TextView) row.findViewById(R.id.tv_trangthai);
+        TextView tv_trangthai = (TextView) row.findViewById(R.id.tv_status);
         TextView tv_tdd = (TextView) row.findViewById(R.id.tv_location_label);
-        TextView tv_dd = (TextView) row.findViewById(R.id.tv_diadiem);
-        ImageView img = (ImageView) row.findViewById(R.id.ic_subject);
-        tv_trangthai.setText(mdl.getTrangthai());
-        tv_tdd.setText(mdl.getTendiadiem());
-        tv_dd.setText(mdl.getDiadiem());
+        TextView tv_dd = (TextView) row.findViewById(R.id.tv_address);
+        ImageView img = (ImageView) row.findViewById(R.id.iv_subject);
+        tv_trangthai.setText(context.getString(mdl.getStatus() ? R.string.is_on : R.string.is_off));
+        tv_tdd.setText(mdl.getName());
+        tv_dd.setText(mdl.getAddress());
         return row;
     }
 }

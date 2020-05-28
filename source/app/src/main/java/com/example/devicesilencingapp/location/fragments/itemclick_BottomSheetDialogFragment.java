@@ -19,6 +19,9 @@ import androidx.lifecycle.ViewModelProvider;
 public class itemclick_BottomSheetDialogFragment extends BottomSheetDialogFragment
         implements View.OnClickListener {
 
+    private UserLocationModel model;
+    private LocationListViewModel viewModel;
+
     public itemclick_BottomSheetDialogFragment() {
         // Required empty public constructor
     }
@@ -36,7 +39,10 @@ public class itemclick_BottomSheetDialogFragment extends BottomSheetDialogFragme
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(LocationListViewModel.class);
+        model = viewModel.getSelectedItem().getValue();
 
+        ((SwitchCompat) view.findViewById(R.id.sw_status)).setChecked(model.getStatus());
         view.findViewById(R.id.btn_action).setOnClickListener(this);
     }
 
@@ -44,12 +50,12 @@ public class itemclick_BottomSheetDialogFragment extends BottomSheetDialogFragme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_action:
-                UserLocationModel model = getSelected();
                 SwitchCompat switchCompat = (SwitchCompat) v;
 
                 model.setStatus(switchCompat.isChecked());
 
                 DBHelper.getInstance().editLocationStatus(model);
+                viewModel.setSelectedItem(model);
                 break;
             case R.id.btn_edit:
                 dismiss();
@@ -60,14 +66,10 @@ public class itemclick_BottomSheetDialogFragment extends BottomSheetDialogFragme
                         .commit();
                 break;
             case R.id.btn_delete:
-                DBHelper.getInstance().removeLocation(getSelected().getId());
+                DBHelper.getInstance().removeLocation(model.getId());
+                viewModel.setSelectedItem(model);
                 dismiss();
                 break;
         }
-    }
-
-    private UserLocationModel getSelected() {
-        LocationListViewModel viewModel = new ViewModelProvider(this).get(LocationListViewModel.class);
-        return viewModel.getSelectedItem().getValue();
     }
 }
