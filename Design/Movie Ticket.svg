@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 50 50">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_9" data-name="Rectangle 9" width="50" height="50" transform="translate(23 23)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Movie_Ticket" data-name="Movie Ticket" transform="translate(-23 -23)" clip-path="url(#clip-path)">
+    <path id="Path_8" data-name="Path 8" d="M10.5,11a5.015,5.015,0,0,0-5,5V26a5,5,0,1,1,0,10V46a5.015,5.015,0,0,0,5,5h40a5.015,5.015,0,0,0,5-5V36a5,5,0,1,1,0-10V16a5.015,5.015,0,0,0-5-5h-40m20,7L34,26.249,43,27l-6.748,6,2,8.5L30.5,37l-7.749,4.751,2-8.75L18,27l9-.752L30.5,18" transform="translate(17.5 17)" fill="#fdd835"/>
+  </g>
+</svg>
