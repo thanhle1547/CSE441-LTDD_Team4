@@ -74,6 +74,8 @@ public class LocationListFragment extends Fragment {
 				}
 
 				// Update the data
+				adapter.clear();
+				adapter.addAll(data);
 				adapter.notifyDataSetChanged();
 			}
 		});
@@ -82,6 +84,8 @@ public class LocationListFragment extends Fragment {
 			@Override
 			public void onChanged(UserLocationModel locationModel) {
 				data.add(locationModel);
+				adapter.clear();
+				adapter.addAll(data);
 				adapter.notifyDataSetChanged();
 			}
 		});
@@ -95,7 +99,7 @@ public class LocationListFragment extends Fragment {
 
 		lv_Location = (ListView) view.findViewById(R.id.lv_location);
 		data = DBHelper.getInstance().getAllLocations();
-		context = getActivity();
+		context = getActivity().getApplicationContext();
 		adapter = new AdapterLocation(context, data);
 		mViewModel.setLocationList(data);
 		lv_Location.setAdapter(adapter);
