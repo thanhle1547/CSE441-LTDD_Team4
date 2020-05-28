@@ -42,7 +42,7 @@ public class TimeMBSFragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_time_mbs, container, false);
+        return inflater.inflate(R.layout.fragment_time_mbs_item, container, false);
     }
 
     @Override

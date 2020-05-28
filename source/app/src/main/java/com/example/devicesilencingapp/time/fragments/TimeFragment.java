@@ -57,7 +57,7 @@ public class TimeFragment extends Fragment {
 
         context = getActivity();
         adapter = new AdapterTime(context, data);
-        viewModal.settimeModelList(data);
+//        viewModal.settimeModelList(data);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
