@@ -15,6 +15,7 @@
 
         <SwitchPreference
             android:key="location_status"
+            android:dependency="app_status"
             android:title="@string/location"
             android:summary="@string/switch_summary"
             android:defaultValue="true"
@@ -24,6 +25,7 @@
 
         <SwitchPreference
             android:key="schedule_status"
+            android:dependency="app_status"
             android:title="@string/schedule"
             android:summary="@string/switch_summary"
             android:defaultValue="true"

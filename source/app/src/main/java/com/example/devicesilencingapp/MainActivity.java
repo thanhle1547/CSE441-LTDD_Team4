@@ -8,6 +8,7 @@ import com.example.devicesilencingapp.libs.Fab;
 import com.example.devicesilencingapp.location.fragments.LocationDetailFragment;
 import com.example.devicesilencingapp.location.fragments.LocationListFragment;
 import com.example.devicesilencingapp.settings.SettingsFragment;
+import com.example.devicesilencingapp.time.fragments.TimeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
@@ -42,13 +43,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			case R.id.fab_sheet_item_add_current_location:
 				getSupportFragmentManager().beginTransaction()
 						.replace(
-								R.id.fragment_main,
+								R.id.fragment_detail,
 								LocationDetailFragment.newInstance(LocationDetailFragment.ACTION_ADD))
+						.addToBackStack(null)
 						.commit();
+				materialSheetFab.hideSheet();
 				break;
 			case R.id.fab_sheet_item_add_new_location:
+				materialSheetFab.hideSheet();
 				break;
 			case R.id.fab_sheet_item_add_new_time:
+				materialSheetFab.hideSheet();
 				break;
 		}
 	}
@@ -64,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 					toolbar.setPopupTheme(R.style.ColorPrimary);
 					break;
 				case R.id.nav_time:
-					selectFragment = new TimeFragment();
+					selectFragment = TimeFragment.newInstance();
 					toolbar.setTitle(R.string.time);
 					toolbar.setPopupTheme(R.style.ColorSecondary);
 					break;

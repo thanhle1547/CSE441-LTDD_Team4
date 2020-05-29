@@ -16,7 +16,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
         preference = getPreferenceScreen().getSharedPreferences();
         preference.registerOnSharedPreferenceChangeListener(this);
@@ -39,13 +38,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         switch (key) {
             case KEY_APP_STATUS:
-                if (sharedPreferences.getBoolean(KEY_APP_STATUS, false)) {
-                    findPreference(KEY_LOCATION_STATUS).setEnabled(false);
-                    findPreference(KEY_SCHEDULE_STATUS).setEnabled(false);
-                } else {
-                    findPreference(KEY_LOCATION_STATUS).setEnabled(true);
-                    findPreference(KEY_SCHEDULE_STATUS).setEnabled(true);
-                }
+            	// TODO: Dừng cả 2 service
                 break;
             case KEY_LOCATION_STATUS:
                 // TODO: Dừng service geofence

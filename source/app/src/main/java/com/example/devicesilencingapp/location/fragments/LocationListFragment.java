@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.devicesilencingapp.adapters.AdapterLocation;
 import com.example.devicesilencingapp.R;
+import com.example.devicesilencingapp.db.DBHelper;
 import com.example.devicesilencingapp.location.LocationListViewModel;
-import com.example.devicesilencingapp.models.LocationModel;
+import com.example.devicesilencingapp.models.UserLocationModel;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -26,9 +26,9 @@ import androidx.lifecycle.ViewModelProviders;
 public class LocationListFragment extends Fragment {
 
 	Context context;
-	private LocationModel oldSelected;
+	private UserLocationModel oldSelected;
 	private AdapterLocation adapter;
-	private ArrayList<LocationModel> data;
+	private ArrayList<UserLocationModel> data;
 	private LocationListViewModel mViewModel;
 
 	private ListView lv_Location;
@@ -46,9 +46,9 @@ public class LocationListFragment extends Fragment {
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		mViewModel.getLocationList().observe(getViewLifecycleOwner(), new Observer<ArrayList<LocationModel>>() {
+		mViewModel.getLocationList().observe(getViewLifecycleOwner(), new Observer<ArrayList<UserLocationModel>>() {
 			@Override
-			public void onChanged(ArrayList<LocationModel> locationModelArrayList) {
+			public void onChanged(ArrayList<UserLocationModel> locationModelArrayList) {
 				data = locationModelArrayList;
 				adapter.clear();
 				adapter.addAll(locationModelArrayList);
@@ -56,9 +56,9 @@ public class LocationListFragment extends Fragment {
 			}
 		});
 
-		mViewModel.getSelectedItem().observe(getViewLifecycleOwner(), new Observer<LocationModel>() {
+		mViewModel.getSelectedItem().observe(getViewLifecycleOwner(), new Observer<UserLocationModel>() {
 			@Override
-			public void onChanged(LocationModel locationModel) {
+			public void onChanged(UserLocationModel locationModel) {
 				if (Objects.deepEquals(locationModel, oldSelected))
 					return;
 
@@ -74,14 +74,18 @@ public class LocationListFragment extends Fragment {
 				}
 
 				// Update the data
+				adapter.clear();
+				adapter.addAll(data);
 				adapter.notifyDataSetChanged();
 			}
 		});
 
-		mViewModel.getNewItem().observe(getViewLifecycleOwner(), new Observer<LocationModel>() {
+		mViewModel.getNewItem().observe(getViewLifecycleOwner(), new Observer<UserLocationModel>() {
 			@Override
-			public void onChanged(LocationModel locationModel) {
+			public void onChanged(UserLocationModel locationModel) {
 				data.add(locationModel);
+				adapter.clear();
+				adapter.addAll(data);
 				adapter.notifyDataSetChanged();
 			}
 		});
@@ -94,13 +98,8 @@ public class LocationListFragment extends Fragment {
 		mViewModel = ViewModelProviders.of(this).get(LocationListViewModel.class);
 
 		lv_Location = (ListView) view.findViewById(R.id.lv_location);
-		data = new ArrayList<>();
-		for(int i= 0; i <10; i++)
-		{
-			LocationModel mdlc = new LocationModel("trang thai " + i,"ten dia diem : " + i, "dia diem "+ i,"img");
-			data.add(mdlc);
-		}
-		context = getActivity();
+		data = DBHelper.getInstance().getAllLocations();
+		context = getActivity().getApplicationContext();
 		adapter = new AdapterLocation(context, data);
 		mViewModel.setLocationList(data);
 		lv_Location.setAdapter(adapter);
@@ -108,20 +107,19 @@ public class LocationListFragment extends Fragment {
 		lv_Location.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-				LocationModel location = (LocationModel) data.get(i);
+				UserLocationModel location = data.get(i);
 				oldSelected = location;
 				mViewModel.setSelectedItem(location);
 
-				Toast.makeText(context, "getDiadiem"+ location.getDiadiem() + "getImg"+ location.getImg(), Toast.LENGTH_SHORT).show();
-				dialogclickitemlocation(location.getDiadiem());
+				dialogclickitemlocation();
 			}
 		});
 	}
 
-	private void dialogclickitemlocation(String a){
+	private void dialogclickitemlocation(){
 
 		itemclick_BottomSheetDialogFragment clickitem = itemclick_BottomSheetDialogFragment.newInstance();
-		clickitem.show(getFragmentManager(),"clickitemlocation");
+		clickitem.show(getChildFragmentManager(), clickitem.getTag());
 	}
 
 }

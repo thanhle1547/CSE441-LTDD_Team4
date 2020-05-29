@@ -9,6 +9,11 @@
     <string name="launch_app">Mở ứng dụng</string>
     <string name="is_on">Đang bật</string>
     <string name="is_off">Đang tắt</string>
+
+    <!-- Action -->
+    <string name="add">Thêm</string>
+    <string name="edit">Sửa</string>
+    <string name="cancel">Hủy</string>
     <string name="stop">Dừng</string>
 
     <string name="your_location">Địa điểm của bạn</string>
@@ -16,6 +21,25 @@
     <string name="settings">Cài đặt</string>
 
     <string name="turning_on">Đang bật</string>
+    
+    <!-- Location Label -->
+    <string-array name="location_label">
+        <item>Không tên</item>
+        <item>Ở nhà</item>
+        <item>Nơi làm việc</item>
+        <item>Rạp chiếu phim</item>
+    </string-array>
+
+    <!--
+        Location Icon ID base on Label
+        https://www.it-swarm.dev/vi/android/luu-tru-id-r.drawable-trong-mang-xml/940601630/
+    -->
+    <string-array name="location_icon_id">
+        <item>@drawable/ic_marker</item>
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_briefcase</item>
+        <item>@drawable/ic_movie_ticket</item>
+    </string-array>
 
     <string name="add_current_location">Thêm địa điểm hiện tại</string>
     <string name="add_new_location">Thêm địa điểm mới</string>

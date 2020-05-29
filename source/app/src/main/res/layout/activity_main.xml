@@ -5,18 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/white">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin" />
+            app:layout_collapseMode="pin"
+            app:titleTextColor="@color/blue_500" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
@@ -25,6 +29,13 @@
         android:layout_height="match_parent"
         android:layout_below="@id/app_bar"
         android:layout_above="@id/bottom_nav"/>
+
+    <FrameLayout
+        android:id="@+id/fragment_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/app_bar"
+        />
 
     <include
         android:id="@+id/include"
@@ -41,5 +52,6 @@
         android:background="#006FFF"
         app:itemIconTint="#fff"
         app:itemTextColor="#fff"
-        app:menu="@menu/bottom_nav" />
+        app:menu="@menu/bottom_nav"
+        app:elevation="0dp"/>
 </RelativeLayout>
