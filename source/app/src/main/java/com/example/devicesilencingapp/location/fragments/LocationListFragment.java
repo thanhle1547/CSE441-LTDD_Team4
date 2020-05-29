@@ -21,7 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 public class LocationListFragment extends Fragment {
 
@@ -95,7 +95,15 @@ public class LocationListFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		mViewModel = ViewModelProviders.of(this).get(LocationListViewModel.class);
+		/**
+		 * use requireActivity() instead of getActivity().
+		 * This way you will ensure that the activity is attached an not getting a NullPointerException.
+		 *
+		 * @see <a href="https://stackoverflow.com/questions/60070233/cannot-resolve-viewmodelprovider-construction-in-a-fragment">
+		 *          Cannot resolve ViewModelProvider construction in a fragment?
+		 *      </a>
+		 */
+		mViewModel = new ViewModelProvider(requireActivity()).get(LocationListViewModel.class);
 
 		lv_Location = (ListView) view.findViewById(R.id.lv_location);
 		data = DBHelper.getInstance().getAllLocations();

@@ -35,6 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/app_bar"
+        android:elevation="16dp"
+        android:scrollbars="vertical"
         />
 
     <include

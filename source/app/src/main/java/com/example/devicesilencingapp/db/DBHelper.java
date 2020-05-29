@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import androidx.annotation.Nullable;
 
 public class DBHelper extends SQLiteOpenHelper {
-	private static final String DB_NAME = "table_contacts";
+	private static final String DB_NAME = "devicesilencingapp";
 	private static final int    DB_VERSION = 1;
 	private static final String TABLE_USER_LOCATION = "user_location";
 	private static final String TABLE_Time = "table_time";
