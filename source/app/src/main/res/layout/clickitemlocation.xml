@@ -29,11 +29,14 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp" />
     </RelativeLayout>
+
+    <!-- The question mark (?) means it's a reference to a resource value in the currently applied theme -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_edit"
-        android:paddingBottom="13dp">
+        android:paddingBottom="13dp"
+        android:background="?android:attr/selectableItemBackground">
 
         <ImageView
             android:id="@+id/imageView"
@@ -54,7 +57,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
-        android:id="@+id/btn_delete">
+        android:id="@+id/btn_delete"
+        android:background="?android:attr/selectableItemBackground">
 
         <ImageView
             android:id="@+id/imageView"

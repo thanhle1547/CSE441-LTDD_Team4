@@ -42,7 +42,13 @@ public class AdapterLocation extends ArrayAdapter<UserLocationModel> {
         TextView tv_tdd = (TextView) convertView.findViewById(R.id.tv_location_label);
         TextView tv_dd = (TextView) convertView.findViewById(R.id.tv_address);
         ImageView img = (ImageView) convertView.findViewById(R.id.iv_subject);
-        tv_trangthai.setText(context.getString(mdl.getStatus() ? R.string.is_on : R.string.is_off));
+        if (mdl.getStatus()) {
+            tv_trangthai.setText(context.getString(R.string.is_on));
+            tv_trangthai.setTextColor(context.getResources().getColor(R.color.deep_purple_300));
+        } else {
+            tv_trangthai.setText(context.getString(R.string.is_off));
+            tv_trangthai.setTextColor(context.getResources().getColor(R.color.grey_300));
+        }
         tv_tdd.setText(mdl.getName());
         tv_dd.setText(mdl.getAddress());
         img.setImageResource(mdl.getLabel());
