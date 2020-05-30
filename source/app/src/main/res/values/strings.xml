@@ -3,8 +3,6 @@
 
     <string name="app">Ứng dụng</string>
     <string name="app_is_on">%1$s đang bật</string>
-    <string name="location">Vị trí</string>
-    <string name="schedule">Lịch trình</string>
 
     <string name="launch_app">Mở ứng dụng</string>
     <string name="is_on">Đang bật</string>
@@ -16,9 +14,14 @@
     <string name="cancel">Hủy</string>
     <string name="stop">Dừng</string>
 
+    <!-- Toolbar & Bottom navigation Title -->
     <string name="your_location">Địa điểm của bạn</string>
-    <string name="time">Thời gian</string>
+    <string name="your_schedule">Lịch trình của bạn</string>
+    <string name="location">Vị trí</string>
+    <string name="schedule">Lịch trình</string>
     <string name="settings">Cài đặt</string>
+
+    <string name="time">Thời gian</string>
 
     <string name="turning_on">Đang bật</string>
     
