@@ -25,7 +25,7 @@ public class AdapterLocation extends ArrayAdapter<UserLocationModel> {
 
 
     public AdapterLocation(Context context, ArrayList<UserLocationModel> data) {
-        super(context, R.layout.list_item_location);
+        super(context, R.layout.list_item_location, data);
         this.context = context;
         this.listData = data;
     }
@@ -33,7 +33,7 @@ public class AdapterLocation extends ArrayAdapter<UserLocationModel> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//        Log.i(TAG, "run getView()"); not called ???
+//        Log.i(TAG, "run getView()"); // not called ???
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.list_item_location, parent, false);

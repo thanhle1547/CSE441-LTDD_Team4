@@ -2,6 +2,7 @@ package com.example.devicesilencingapp.location.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,6 @@ import com.example.devicesilencingapp.location.LocationListViewModel;
 import com.example.devicesilencingapp.models.UserLocationModel;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,9 +24,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 public class LocationListFragment extends Fragment {
+	private static final String TAG = LocationListFragment.class.getSimpleName();
 
 	Context context;
 	private UserLocationModel oldSelected;
+	private int selected_index;
+	private boolean newAdded = false;
 	private AdapterLocation adapter;
 	private ArrayList<UserLocationModel> data;
 	private LocationListViewModel mViewModel;
@@ -46,55 +49,12 @@ public class LocationListFragment extends Fragment {
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		mViewModel.getLocationList().observe(getViewLifecycleOwner(), new Observer<ArrayList<UserLocationModel>>() {
-			@Override
-			public void onChanged(ArrayList<UserLocationModel> locationModelArrayList) {
-				data = locationModelArrayList;
-				adapter.clear();
-				adapter.addAll(locationModelArrayList);
-				adapter.notifyDataSetChanged();
-			}
-		});
-
-		mViewModel.getSelectedItem().observe(getViewLifecycleOwner(), new Observer<UserLocationModel>() {
-			@Override
-			public void onChanged(UserLocationModel locationModel) {
-				if (Objects.deepEquals(locationModel, oldSelected))
-					return;
-
-				int index = data.indexOf(oldSelected);
-
-				if (locationModel == null) {
-					// TH xóa dl
-					data.remove(index);
-					adapter.remove(oldSelected);
-				} else {
-					// TH sửa dl
-					data.set(index, locationModel);
-				}
-
-				// Update the data
-				adapter.clear();
-				adapter.addAll(data);
-				adapter.notifyDataSetChanged();
-			}
-		});
-
-		mViewModel.getNewItem().observe(getViewLifecycleOwner(), new Observer<UserLocationModel>() {
-			@Override
-			public void onChanged(UserLocationModel locationModel) {
-				data.add(locationModel);
-				adapter.clear();
-				adapter.addAll(data);
-				adapter.notifyDataSetChanged();
-			}
-		});
+		registerLiveDataListener();
 	}
 
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-
 		/**
 		 * use requireActivity() instead of getActivity().
 		 * This way you will ensure that the activity is attached an not getting a NullPointerException.
@@ -109,17 +69,55 @@ public class LocationListFragment extends Fragment {
 		data = DBHelper.getInstance().getAllLocations();
 		context = getActivity().getApplicationContext();
 		adapter = new AdapterLocation(context, data);
-		mViewModel.setLocationList(data);
 		lv_Location.setAdapter(adapter);
 
 		lv_Location.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-				UserLocationModel location = data.get(i);
+				UserLocationModel location = (UserLocationModel) adapterView.getItemAtPosition(i);
+				selected_index = i;
 				oldSelected = location;
 				mViewModel.setSelectedItem(location);
 
 				dialogclickitemlocation();
+			}
+		});
+	}
+
+	private void registerLiveDataListener() {
+		mViewModel.getSelectedItem().observe(getViewLifecycleOwner(), new Observer<UserLocationModel>() {
+			@Override
+			public void onChanged(UserLocationModel locationModel) {
+//				Log.i(TAG, "mViewModel.getSelectedItem()");
+
+//				if (oldSelected == null || oldSelected.compareTo(locationModel) == 0)
+//					return;
+
+				if (locationModel == null) {
+					// TH xóa dl
+					adapter.remove(oldSelected);
+				}
+
+				/* no need
+				int index = data.indexOf(oldSelected);
+
+				else {
+					// TH sửa dl
+					data.set(index, locationModel);
+				}*/
+
+				// Update the data
+				adapter.notifyDataSetChanged();
+			}
+		});
+
+		mViewModel.getNewItem().observe(getViewLifecycleOwner(), new Observer<UserLocationModel>() {
+			@Override
+			public void onChanged(UserLocationModel locationModel) {
+				if (mViewModel.isNewItem(locationModel))
+					return;
+				adapter.add(locationModel);
+				adapter.notifyDataSetChanged();
 			}
 		});
 	}

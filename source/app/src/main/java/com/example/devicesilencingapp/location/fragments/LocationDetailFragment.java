@@ -287,6 +287,8 @@ public class LocationDetailFragment extends Fragment
 	            mModelLocation.setStatus(sw_status.isChecked());
 
 	            if (action == ACTION_ADD) {
+	            	// TODO: check data (long, lat) exist in db
+
 	            	long id = helper.addLocation(mModelLocation);
 	            	mModelLocation.setId(id);
 	            	mViewModel.setNewItem(mModelLocation);
