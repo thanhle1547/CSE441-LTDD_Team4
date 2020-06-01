@@ -26,15 +26,9 @@ import androidx.lifecycle.ViewModelProvider;
 public class LocationListFragment extends Fragment {
 	private static final String TAG = LocationListFragment.class.getSimpleName();
 
-	Context context;
 	private UserLocationModel oldSelected;
-	private int selected_index;
-	private boolean newAdded = false;
 	private AdapterLocation adapter;
-	private ArrayList<UserLocationModel> data;
 	private LocationListViewModel mViewModel;
-
-	private ListView lv_Location;
 
 	public static LocationListFragment newInstance() {
 		return new LocationListFragment();
@@ -65,17 +59,15 @@ public class LocationListFragment extends Fragment {
 		 */
 		mViewModel = new ViewModelProvider(requireActivity()).get(LocationListViewModel.class);
 
-		lv_Location = (ListView) view.findViewById(R.id.lv_location);
-		data = DBHelper.getInstance().getAllLocations();
-		context = getActivity().getApplicationContext();
-		adapter = new AdapterLocation(context, data);
+		ListView lv_Location = view.findViewById(R.id.lv_location);
+		Context context = getActivity().getApplicationContext();
+		adapter = new AdapterLocation(context, DBHelper.getInstance().getAllLocations());
 		lv_Location.setAdapter(adapter);
 
 		lv_Location.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 				UserLocationModel location = (UserLocationModel) adapterView.getItemAtPosition(i);
-				selected_index = i;
 				oldSelected = location;
 				mViewModel.setSelectedItem(location);
 
