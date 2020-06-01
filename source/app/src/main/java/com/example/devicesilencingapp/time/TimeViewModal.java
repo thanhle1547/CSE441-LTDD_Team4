@@ -15,7 +15,6 @@ public class TimeViewModal extends ViewModel {
         selected = new MutableLiveData<>();
         newItem = new MutableLiveData<>();
     }
-
     public MutableLiveData<ArrayList<timeModel>> gettimeModelList() {
         return timeModelList;
     }

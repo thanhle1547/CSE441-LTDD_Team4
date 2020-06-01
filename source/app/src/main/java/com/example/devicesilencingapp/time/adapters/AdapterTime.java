@@ -16,20 +16,30 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 //file quan li items
 public class AdapterTime extends ArrayAdapter<timeModel> {
+
+    TextView tv_time;
+    TextView tv_date;
+    TextView tv_status;
     ArrayList<timeModel> dataSet;
     Context mContext;
 
     public Context getContext() {
         return mContext;
     }
-    private static  class ViewHolder{
-        TextView tv_time;
-        TextView tv_date;
-        TextView tv_status;
-    }
+//    private static  class ViewHolder{
+//        TextView tv_time;
+//        TextView tv_date;
+//        TextView tv_status;
+//    }
 
-    public AdapterTime(@NonNull Context context, ArrayList<timeModel> dataSet ) {
-        super(context, R.layout.item_time);
+//    public AdapterTime(@NonNull Context context, ArrayList<timeModel> dataSet ) {
+//        super(context, R.layout.item_time);
+//        this.mContext = context;
+//        this.dataSet = dataSet;
+//    }
+    public AdapterTime(Context context, ArrayList<timeModel> dataSet)
+    {
+        super(context,R.layout.fragment_time,dataSet);
         this.mContext = context;
         this.dataSet = dataSet;
     }
@@ -38,32 +48,42 @@ public class AdapterTime extends ArrayAdapter<timeModel> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         timeModel timeModel = getItem(position);
-        ViewHolder viewHolder;
-        if(convertView == null){
-            viewHolder = new ViewHolder();
+//        ViewHolder viewHolder;
+//        if(convertView == null){
+//            viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());//
             convertView = inflater.inflate(R.layout.item_time, parent, false); //chuyen xml thanh java
-            viewHolder.tv_time = (TextView)  convertView.findViewById(R.id.tv_time);
-            viewHolder.tv_date = (TextView)  convertView.findViewById(R.id.tv_date);
-            viewHolder.tv_status = (TextView)  convertView.findViewById(R.id.tv_status);
-        }
-        else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            tv_time = (TextView)  convertView.findViewById(R.id.tv_time);
+            tv_date = (TextView)  convertView.findViewById(R.id.tv_date);
+            tv_status = (TextView)  convertView.findViewById(R.id.tv_status);
+//        }
+//        else {
+//            viewHolder = (ViewHolder) convertView.getTag();
+//
+//        }
+//        //gan noi dung
+        tv_time.setText(timeModel.getTimeHour() + ":" +timeModel.getTimeMinute());
 
-        }
 
-        //gan noi dung
-        viewHolder.tv_time.setText(timeModel.getTimeHour() + " - " +timeModel.getTimeMinute());
-
-
-        StringBuilder repeatingDays = new StringBuilder();
+        String repeatingDays = "";
         for (int i = 0; i<7; ++i) {
-            repeatingDays.append(timeModel.getRepeatingDay(i)).append(",");
+            if (timeModel.getRepeatingDay(i) == true)
+            {
+                if (i == 0)
+                {
+                    repeatingDays += "CN,";
+                }
+                else if (i == 6)
+                {
+                    repeatingDays += "T7";
+                }
+                else {
+                    repeatingDays += "T"+(i+1)+ ",";
+                }
+            }
         }
-//        boolean[] array = timeModel.getRepeatingDays();
-//        String dates = TextUtils.join(",",array);
-        viewHolder.tv_date.setText((repeatingDays));
-        viewHolder.tv_status.setText(getContext().getString( timeModel.isEnabled()? R.string.is_on : R.string.is_off));
+        tv_date.setText((repeatingDays));
+        tv_status.setText(getContext().getString( timeModel.isEnabled()? R.string.is_on : R.string.is_off));
         return convertView;
     }
 }

@@ -13,7 +13,6 @@ public class timeModel {
     public int timeHour;
     public int timeMinute;
     public boolean[] repeatingDays;
-    public String name;
     public boolean isEnabled;
 
     public timeModel(){repeatingDays = new boolean[7];}
@@ -24,7 +23,13 @@ public class timeModel {
         this.timeHour = timeHour;
         this.timeMinute = timeMinute;
         this.repeatingDays = repeatingDays;
-        this.name = name;
+        this.isEnabled = isEnabled;
+    }
+    public timeModel(int timeHour, int timeMinute,
+                     boolean[] repeatingDays, boolean isEnabled) {
+        this.timeHour = timeHour;
+        this.timeMinute = timeMinute;
+        this.repeatingDays = repeatingDays;
         this.isEnabled = isEnabled;
     }
 
@@ -65,19 +70,15 @@ public class timeModel {
         this.repeatingDays = repeatingDays;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public boolean isEnabled() {
         return isEnabled;
     }
+    public boolean getisEnabled() {
+        return isEnabled;
+    }
 
     public void setEnabled(boolean enabled) {
-        isEnabled = enabled;
+        this.isEnabled = enabled;
     }
 }

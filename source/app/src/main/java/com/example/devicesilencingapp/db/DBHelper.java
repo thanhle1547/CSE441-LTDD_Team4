@@ -98,10 +98,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	/* --------  Schedule  -------- */
 	//Insert
-	public long insertTBTime (timeModel model) {
+	public void insertTBTime (timeModel model) {
 		ContentValues values = populateContent(model);
-		return getWritableDatabase().insert("table_time", null, values);
-	}
+        getWritableDatabase().insert("table_time", null, values);
+    }
 
 	// update
 	public void updateTime(timeModel model) {
@@ -115,7 +115,7 @@ public class DBHelper extends SQLiteOpenHelper {
 				"id = ? ",
 				new String[] { Integer.toString(id) });
 	}
-	public timeModel getTime(long id) {
+	public timeModel getTime(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		String select = "SELECT * FROM table_time WHERE table_time.id  = " + id;
@@ -151,11 +151,11 @@ public class DBHelper extends SQLiteOpenHelper {
 		model.id = c.getLong(c.getColumnIndex("id"));
 		model.timeHour = c.getInt(c.getColumnIndex("gio"));
 		model.timeMinute = c.getInt(c.getColumnIndex("phut"));
-		model.isEnabled = c.getInt(c.getColumnIndex("battat")) != 0;
+		model.isEnabled = c.getInt(c.getColumnIndex("battat")) == 0 ? false : true;
 
 		String[] repeatingDays = c.getString(c.getColumnIndex("nhaclai")).split(",");
 		for (int i = 0; i < repeatingDays.length; ++i) {
-			model.setRepeatingDay(i, !repeatingDays[i].equals("false"));
+			model.setRepeatingDay(i, repeatingDays[i].equals("false") ? false : true);
 		}
 
 		return model;
@@ -167,11 +167,11 @@ public class DBHelper extends SQLiteOpenHelper {
 		values.put("phut", model.timeMinute);
 		values.put("battat", model.isEnabled);
 
-		StringBuilder repeatingDays = new StringBuilder();
+		String repeatingDays = "";
 		for (int i = 0; i<7; ++i) {
-			repeatingDays.append(model.getRepeatingDay(i)).append(",");
+			repeatingDays += model.getRepeatingDay(i) + ",";
 		}
-		values.put("nhaclai", repeatingDays.toString());
+		values.put("nhaclai", repeatingDays);
 
 		return values;
 	}

@@ -25,12 +25,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 //hien thi list view va xu li click vao item
 public class TimeFragment extends Fragment {
+    private int selected_index;
     Context context;
     private timeModel oldSelected; //ktra du lieu co thay doi k
     private AdapterTime adapter;// quan li item trong list
-    private ArrayList<timeModel> data; //du lieu tu csdl
-    private TimeViewModal viewModal; //quan sat du lieu dc chon
-    private ListView listView;
+    private ArrayList<timeModel> data;
+    private TimeViewModal viewModal; //quan sat du lieu dc chon//du lieu tu csdl
 
     //tra ve 1 the hien moi cua lop
     public static TimeFragment newInstance(){
@@ -50,24 +50,37 @@ public class TimeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModal = new ViewModelProvider(this).get(TimeViewModal.class);
-        listView = (ListView) view.findViewById(R.id.lv_time);
+        ListView listView = (ListView) view.findViewById(R.id.lv_time);
 
         DBHelper helper = new DBHelper(getActivity());
+//        boolean[] bl = new boolean[7];
+//        for (int i = 0; i<7 ; i++){
+//            bl[i]=true;
+//        }
+//        timeModel modestine = new timeModel(18 ,36,bl,true);
+//        helper.insertTBTime(modestine);
+//        TimeBroadcastReceiver.setAlarms(getActivity());
         data = helper.getAlarms();
 
-        context = getActivity();
+        context = getActivity().getApplicationContext();
         adapter = new AdapterTime(context, data);
 //        viewModal.settimeModelList(data);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                timeModel timeModel = (timeModel) data.get(position);
+                timeModel timeModel = (timeModel) parent.getItemAtPosition(position);
+                selected_index = position;
                 oldSelected = timeModel;
                 viewModal.setSelected(timeModel);//luu du lieu dc chon
+                dialogclickitemtime();
 
             }
         });
+//        timeModel time1 = helper.getTime(1);
+//        int a =  time1.getTimeHour();
+//        Toast.makeText(context,"abc" + a, Toast.LENGTH_SHORT).show();
+
 
     }
 
@@ -113,8 +126,13 @@ public class TimeFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+
     }
 
 
+    private void dialogclickitemtime(){
 
+        itemclick_bottomSheet clickitem = itemclick_bottomSheet.newInstance();
+        clickitem.show(getChildFragmentManager(), clickitem.getTag());
+    }
 }
