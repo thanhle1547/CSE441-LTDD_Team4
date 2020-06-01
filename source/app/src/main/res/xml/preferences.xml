@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <!--
     android:key: thuộc tính này được sử dụng để lấy giá trị trong đối tượng SharedPreferences.
 -->
@@ -21,6 +23,7 @@
             android:defaultValue="true"
             android:summaryOn="@string/is_on"
             android:summaryOff="@string/is_off"
+            android:icon="@drawable/ic_location"
             />
 
         <SwitchPreference
@@ -31,6 +34,24 @@
             android:defaultValue="true"
             android:summaryOn="@string/is_on"
             android:summaryOff="@string/is_off"
+            android:icon="@drawable/ic_time"
             />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/customize_sound">
+
+        <SwitchPreference
+            android:key="key_mute_mode"
+            android:title="@string/silent_mode"
+            android:summary="@string/silent_mode_summary"/>
+
+        <Preference
+            android:key="key_volume"
+            android:title="@string/adjusted_volume"
+            android:fragment="com.example.audiomanager.SettingsActivity$VolumeSettingsFragment"
+            android:icon="@drawable/ic_adjust_24dp"
+            app:iconSpaceReserved="true">
+        </Preference>
+
     </PreferenceCategory>
 </PreferenceScreen>
