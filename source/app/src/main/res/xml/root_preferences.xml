@@ -48,7 +48,7 @@
         <Preference
             android:key="key_volume"
             android:title="@string/adjusted_volume"
-            android:fragment="com.example.audiomanager.SettingsActivity$VolumeSettingsFragment"
+            android:fragment="com.example.devicesilencingapp.settings.VolumeSettingsFragment"
             android:icon="@drawable/ic_adjust_24dp"
             app:iconSpaceReserved="true">
         </Preference>
