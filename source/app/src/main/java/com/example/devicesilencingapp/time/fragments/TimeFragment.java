@@ -61,11 +61,14 @@ public class TimeFragment extends Fragment {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
+
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 timeModel timeModel = (timeModel) data.get(position);
                 oldSelected = timeModel;
                 viewModal.setSelected(timeModel);//luu du lieu dc chon
-
+                TimeMBSFragment fragment = new TimeMBSFragment();
+                fragment.show(getChildFragmentManager(), fragment.getTag());
             }
         });
 

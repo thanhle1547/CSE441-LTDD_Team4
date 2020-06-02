@@ -97,6 +97,15 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 	/* --------  Schedule  -------- */
+	public void editTimeStatus(timeModel time_modal){
+		ContentValues values = new ContentValues();
+		values.put("battat", time_modal.isEnabled);
+		this.getWritableDatabase().update(
+				TABLE_Time, values, "id=?", new String[]{
+						String.valueOf(time_modal.getId())
+				}
+		);
+	}
 	//Insert
 	public long insertTBTime (timeModel model) {
 		ContentValues values = populateContent(model);

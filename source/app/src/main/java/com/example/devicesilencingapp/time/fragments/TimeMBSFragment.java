@@ -5,14 +5,21 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 
+import com.example.devicesilencingapp.db.DBHelper;
+import com.example.devicesilencingapp.time.TimeViewModal;
+import com.example.devicesilencingapp.time.timeModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.devicesilencingapp.R;
@@ -24,18 +31,13 @@ import com.example.devicesilencingapp.R;
  *     TimeMBSFragment.newInstance(30).show(getSupportFragmentManager(), "dialog");
  * </pre>
  */
-public class TimeMBSFragment extends BottomSheetDialogFragment {
-
-    // TODO: Customize parameter argument names
-    private static final String ARG_ITEM_COUNT = "item_count";
-
+public class TimeMBSFragment extends BottomSheetDialogFragment implements View.OnClickListener{
+    private timeModel modal;
+    private TimeViewModal viewModal;
     // TODO: Customize parameters
-    public static TimeMBSFragment newInstance(int itemCount) {
-        final TimeMBSFragment fragment = new TimeMBSFragment();
-        final Bundle args = new Bundle();
-        args.putInt(ARG_ITEM_COUNT, itemCount);
-        fragment.setArguments(args);
-        return fragment;
+    public static TimeMBSFragment newInstance() {
+
+        return new TimeMBSFragment();
     }
 
     @Nullable
@@ -47,9 +49,24 @@ public class TimeMBSFragment extends BottomSheetDialogFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        final RecyclerView recyclerView = (RecyclerView) view;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new itemAdapter(getArguments().getInt(ARG_ITEM_COUNT)));
+        viewModal = ViewModelProviders.of(requireActivity()).get(TimeViewModal.class);
+        modal = viewModal.getSelected().getValue();
+        SwitchCompat switchCompat = ((SwitchCompat) view.findViewById(R.id.btn_status));
+        switchCompat.setChecked(modal.isEnabled);
+        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                modal.setEnabled(isChecked);
+                DBHelper.getInstance().editTimeStatus(modal);
+                viewModal.setSelected(modal);
+            }
+        });
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
