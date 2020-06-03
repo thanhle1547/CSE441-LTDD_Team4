@@ -1,26 +1,27 @@
-package com.example.devicesilencingapp.time;
+package com.example.devicesilencingapp.time.fragments;
 
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TimePicker;
-
-import com.example.devicesilencingapp.R;
-import com.example.devicesilencingapp.db.DBHelper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
-public class fragment_add_time extends Fragment implements View.OnClickListener , SharedPreferences.OnSharedPreferenceChangeListener,
-        AdapterView.OnItemSelectedListener {
+import com.example.devicesilencingapp.R;
+import com.example.devicesilencingapp.db.DBHelper;
+import com.example.devicesilencingapp.time.TimeManager;
+import com.example.devicesilencingapp.time.TimeViewModal;
+import com.example.devicesilencingapp.time.timeModel;
+
+public class EditTimeFragment extends Fragment implements View.OnClickListener {
     private Button bt_add,bt_cancel;
     private TimePicker timePicker;
 //    private SwitchCompat chkWeekly;
@@ -32,6 +33,9 @@ public class fragment_add_time extends Fragment implements View.OnClickListener 
     private SwitchCompat chkFriday;
     private SwitchCompat chkSaturday;
 
+    private TimeViewModal mViewModal;
+    private timeModel mModel;
+
 
     /**
      * Use this factory method to create a new instance of
@@ -39,8 +43,8 @@ public class fragment_add_time extends Fragment implements View.OnClickListener 
      *
      * @return A new instance of fragment LocationDetailFragment.
      */
-    public static fragment_add_time newInstance(){
-        return new fragment_add_time();
+    public static EditTimeFragment newInstance(){
+        return new EditTimeFragment();
     }
 
 
@@ -54,6 +58,9 @@ public class fragment_add_time extends Fragment implements View.OnClickListener 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mViewModal = new ViewModelProvider(requireActivity()).get(TimeViewModal.class);
+        mModel = mViewModal.getSelected().getValue();
+
         bt_add = (Button) view.findViewById(R.id.btn_add);
         bt_add.setOnClickListener(this);
         bt_cancel = (Button) view.findViewById(R.id.btn_cancel);
@@ -68,7 +75,7 @@ public class fragment_add_time extends Fragment implements View.OnClickListener 
         chkFriday = (SwitchCompat) view.findViewById(R.id.alarm_details_repeat_friday);
         chkSaturday = (SwitchCompat) view.findViewById(R.id.alarm_details_repeat_saturday);
 
-
+        // TODO: hiển thị dữ liệu từ mModel
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -88,8 +95,10 @@ public class fragment_add_time extends Fragment implements View.OnClickListener 
                 int gio = timePicker.getHour();
                 int phutp = timePicker.getMinute();
                 timeModel model = new timeModel(gio, phutp, bl, true);
-                DBHelper dbHelper = new DBHelper(getActivity());
-                dbHelper.insertTBTime(model);
+
+                DBHelper.getInstance().updateTime(model);
+                mViewModal.setSelected(model);
+
                 TimeManager.setAlarms(getActivity());
                 removeThis();
                 break;
@@ -102,21 +111,6 @@ public class fragment_add_time extends Fragment implements View.OnClickListener 
     }
     private void removeThis() {
         // Hủy tất cả các fragment cũng đang được gắn cùng vào trong FrameLayout
-        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
+        requireActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
     }
 }

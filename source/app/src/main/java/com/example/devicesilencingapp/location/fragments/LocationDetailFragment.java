@@ -375,6 +375,6 @@ public class LocationDetailFragment extends Fragment
 
     private void removeThis() {
         // Hủy tất cả các fragment cũng đang được gắn cùng vào trong FrameLayout
-        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+	    requireActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
     }
 }

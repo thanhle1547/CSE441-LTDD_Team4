@@ -107,9 +107,9 @@ public class DBHelper extends SQLiteOpenHelper {
 		);
 	}
 	//Insert
-	public void insertTBTime (timeModel model) {
+	public long insertTBTime (timeModel model) {
 		ContentValues values = populateContent(model);
-        getWritableDatabase().insert("table_time", null, values);
+        return getWritableDatabase().insert("table_time", null, values);
     }
 
 	// update
