@@ -94,4 +94,17 @@
     <!-- Silent Mode -->
     <string name="silent_mode_is_on">Chế độ yên lặng @string/is_on</string>
     <string name="silent_mode_is_off">Chế độ yên lặng @string/is_off</string>
+
+
+    <string name="details_repeat_weekly">Repeat Weekly</string>
+    <string name="details_sunday">Sunday</string>
+    <string name="details_monday">Monday</string>
+    <string name="details_tuesday">Tuesday</string>
+    <string name="details_wednesday">Wednesday</string>
+    <string name="details_thursday">Thursday</string>
+    <string name="details_friday">Friday</string>
+    <string name="details_saturday">Saturday</string>
+    <string name="details_alarm_tone">Alarm Tone</string>
+    <string name="details_alarm_tone_default">Select an alarm tone</string>
+
 </resources>

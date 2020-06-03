@@ -31,6 +31,7 @@ public class TimeFragment extends Fragment {
     private AdapterTime adapter;// quan li item trong list
     private ArrayList<timeModel> data;
     private TimeViewModal viewModal; //quan sat du lieu dc chon//du lieu tu csdl
+    private android.widget.Toast Toast;
 
     //tra ve 1 the hien moi cua lop
     public static TimeFragment newInstance(){
@@ -49,7 +50,7 @@ public class TimeFragment extends Fragment {
     //ddc goi sau oncreatview, nhan vao view chuyen tu xml sang java
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModal = new ViewModelProvider(this).get(TimeViewModal.class);
+        viewModal = new ViewModelProvider(requireActivity()).get(TimeViewModal.class);
         ListView listView = (ListView) view.findViewById(R.id.lv_time);
 
         DBHelper helper = new DBHelper(getActivity());
@@ -59,12 +60,11 @@ public class TimeFragment extends Fragment {
 //        }
 //        timeModel modestine = new timeModel(18 ,36,bl,true);
 //        helper.insertTBTime(modestine);
-//        TimeBroadcastReceiver.setAlarms(getActivity());
+//        TimeManager.setAlarms(getActivity());
         data = helper.getAlarms();
 
         context = getActivity().getApplicationContext();
         adapter = new AdapterTime(context, data);
-//        viewModal.settimeModelList(data);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -88,15 +88,15 @@ public class TimeFragment extends Fragment {
     //quan sat du lieu
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModal.gettimeModelList().observe(getViewLifecycleOwner(), new Observer<ArrayList<timeModel>>() {
-            @Override
-            public void onChanged(ArrayList<timeModel> timeModel) {
-                data = timeModel;
-                adapter.clear();
-                adapter.addAll(timeModel);
-                adapter.notifyDataSetChanged();
-            }
-        });
+//        viewModal.gettimeModelList().observe(getViewLifecycleOwner(), new Observer<ArrayList<timeModel>>() {
+//            @Override
+//            public void onChanged(ArrayList<timeModel> timeModel) {
+//                data = timeModel;
+//                adapter.clear();
+//                adapter.addAll(timeModel);
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
 
         //quan sat cai dc chon
         viewModal.getSelected().observe(getViewLifecycleOwner(), new Observer<timeModel>() {
