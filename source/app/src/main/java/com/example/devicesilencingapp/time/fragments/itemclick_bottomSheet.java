@@ -38,7 +38,7 @@ public class itemclick_bottomSheet extends BottomSheetDialogFragment implements 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_time_mbs_item,container,false);
+        return inflater.inflate(R.layout.mbs_time,container,false);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class itemclick_bottomSheet extends BottomSheetDialogFragment implements 
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(
                                 R.id.fragment_detail,
-                                TimeDetailFragment.newInstance(TimeDetailFragment.ACTION_EDIT))
+                                EditTimeFragment.newInstance())
                         .commit();
                 break;
             case R.id.btn_delete:

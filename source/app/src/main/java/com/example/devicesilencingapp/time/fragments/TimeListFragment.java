@@ -15,7 +15,6 @@ import com.example.devicesilencingapp.time.adapters.AdapterTime;
 import com.example.devicesilencingapp.time.timeModel;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +23,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 //hien thi list view va xu li click vao item
-public class TimeFragment extends Fragment {
+public class TimeListFragment extends Fragment {
     Context context;
     private timeModel oldSelected; //ktra du lieu co thay doi k
     private AdapterTime adapter;// quan li item trong list
@@ -32,8 +31,8 @@ public class TimeFragment extends Fragment {
     private TimeViewModal viewModal; //quan sat du lieu dc chon//du lieu tu csdl
 
     //tra ve 1 the hien moi cua lop
-    public static TimeFragment newInstance(){
-        return new TimeFragment();
+    public static TimeListFragment newInstance(){
+        return new TimeListFragment();
     }
 
 
@@ -41,7 +40,7 @@ public class TimeFragment extends Fragment {
     @Override
     //tra ve 1 view dc chuyen tu xml sang java
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_time,container,false);
+        return inflater.inflate(R.layout.fragment_time_list,container,false);
     }
 
     @Override

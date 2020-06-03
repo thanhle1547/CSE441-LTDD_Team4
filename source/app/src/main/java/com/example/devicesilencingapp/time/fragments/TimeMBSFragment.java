@@ -11,9 +11,7 @@ import com.example.devicesilencingapp.time.timeModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -44,7 +42,7 @@ public class TimeMBSFragment extends BottomSheetDialogFragment implements View.O
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_time_mbs_item, container, false);
+        return inflater.inflate(R.layout.mbs_time, container, false);
     }
 
     @Override
@@ -75,7 +73,7 @@ public class TimeMBSFragment extends BottomSheetDialogFragment implements View.O
 
         ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             // TODO: Customize the item layout
-            super(inflater.inflate(R.layout.fragment_time_mbs_item, parent, false));
+            super(inflater.inflate(R.layout.mbs_time, parent, false));
             text = itemView.findViewById(R.id.text);
         }
     }

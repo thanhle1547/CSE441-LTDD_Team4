@@ -24,7 +24,7 @@ public class AdapterLocation extends ArrayAdapter<UserLocationModel> {
 
 
     public AdapterLocation(Context context, ArrayList<UserLocationModel> data) {
-        super(context, R.layout.list_item_location, data);
+        super(context, R.layout.item_location, data);
         this.context = context;
         this.listData = data;
     }
@@ -35,7 +35,7 @@ public class AdapterLocation extends ArrayAdapter<UserLocationModel> {
 //        Log.i(TAG, "run getView()"); // not called ???
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.list_item_location, parent, false);
+        convertView = inflater.inflate(R.layout.item_location, parent, false);
         UserLocationModel mdl = listData.get(position);
         TextView tv_trangthai = (TextView) convertView.findViewById(R.id.tv_status);
         TextView tv_tdd = (TextView) convertView.findViewById(R.id.tv_location_label);

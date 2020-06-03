@@ -11,7 +11,7 @@ import android.view.View;
 import com.example.devicesilencingapp.libs.Fab;
 import com.example.devicesilencingapp.location.fragments.LocationDetailFragment;
 import com.example.devicesilencingapp.services.GeofencesService;
-import com.example.devicesilencingapp.time.fragment_add_time;
+import com.example.devicesilencingapp.time.fragments.AddTimeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 				getSupportFragmentManager().beginTransaction()
 						.replace(
 								R.id.fragment_detail,
-								fragment_add_time.newInstance())
+								AddTimeFragment.newInstance())
 						.addToBackStack(null)
 						.commit();
 				materialSheetFab.hideSheet();

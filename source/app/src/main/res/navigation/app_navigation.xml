@@ -14,9 +14,9 @@
 
     <fragment
         android:id="@+id/nav_schedule"
-        android:name="com.example.devicesilencingapp.time.fragments.TimeFragment"
+        android:name="com.example.devicesilencingapp.time.fragments.TimeListFragment"
         android:label="@string/your_schedule"
-        tools:layout="@layout/fragment_time"/>
+        tools:layout="@layout/fragment_time_list"/>
 
     <fragment
         android:id="@+id/nav_settings"

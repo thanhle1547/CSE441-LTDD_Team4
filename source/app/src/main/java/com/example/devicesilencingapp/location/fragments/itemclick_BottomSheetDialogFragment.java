@@ -34,7 +34,7 @@ public class itemclick_BottomSheetDialogFragment extends BottomSheetDialogFragme
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.clickitemlocation,container,false);
+        return inflater.inflate(R.layout.mbs_location,container,false);
     }
 
     @Override

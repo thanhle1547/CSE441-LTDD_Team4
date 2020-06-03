@@ -40,7 +40,7 @@ public class AdapterTime extends ArrayAdapter<timeModel> {
 //    }
     public AdapterTime(Context context, ArrayList<timeModel> dataSet)
     {
-        super(context,R.layout.fragment_time,dataSet);
+        super(context,R.layout.fragment_time_list,dataSet);
         this.mContext = context;
         this.dataSet = dataSet;
     }
