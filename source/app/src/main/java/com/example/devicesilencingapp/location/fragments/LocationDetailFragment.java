@@ -41,7 +41,7 @@ import com.example.devicesilencingapp.db.DBHelper;
 import com.example.devicesilencingapp.libs.LocationUtils;
 import com.example.devicesilencingapp.libs.SharedPrefs;
 import com.example.devicesilencingapp.location.LocationListViewModel;
-import com.example.devicesilencingapp.models.UserLocationModel;
+import com.example.devicesilencingapp.location.model.UserLocationModel;
 import com.example.devicesilencingapp.location.service.GPSTrackerService;
 
 import java.util.Arrays;
@@ -80,6 +80,9 @@ public class LocationDetailFragment extends Fragment
     private Spinner sp_label;
     private EditText et_name, et_radius, et_expiration;
     private SwitchCompat sw_status;
+
+    // id of drawable base on selection of spinner
+    private int resourceId;
 
     // Theo dõi trạng thái kêt nối của service.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -224,8 +227,8 @@ public class LocationDetailFragment extends Fragment
             // FIXME: suspicious call list.lastindexof
 	        sp_label.setSelection(Arrays.asList(LOCATION_ICON_ID).lastIndexOf(label), true);
 	        et_name.setText(mModelLocation.getName());
-	        et_radius.setText(mModelLocation.getRadius());
-	        et_expiration.setText(mModelLocation.getExpiration());
+	        et_radius.setText(String.valueOf(mModelLocation.getRadius()));
+	        et_expiration.setText(String.valueOf(mModelLocation.getExpiration()));
 	        sw_status.setChecked(mModelLocation.getStatus());
         }
 
@@ -247,9 +250,9 @@ public class LocationDetailFragment extends Fragment
         if (mBound) {
             mBound = false;
             mGpsTrackerService.removeLocationUpdates();
+            getActivity().unbindService(mServiceConnection);
         }
 	    sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
-        getActivity().unbindService(mServiceConnection);
 	    super.onStop();
     }
 
@@ -278,12 +281,14 @@ public class LocationDetailFragment extends Fragment
 
 	            mModelLocation.setName(et_name.getText().toString());
 	            mModelLocation.setAddress(tv_address.getText().toString());
-	            mModelLocation.setLabel(iv_subject.getId());
+	            mModelLocation.setLabel(resourceId);
 	            mModelLocation.setRadius(Integer.parseInt(et_radius.getText().toString()));
 	            mModelLocation.setExpiration(Integer.parseInt(et_expiration.getText().toString()));
 	            mModelLocation.setStatus(sw_status.isChecked());
 
 	            if (action == ACTION_ADD) {
+	            	// TODO: check data (long, lat) exist in db
+
 	            	long id = helper.addLocation(mModelLocation);
 	            	mModelLocation.setId(id);
 	            	mViewModel.setNewItem(mModelLocation);
@@ -302,7 +307,8 @@ public class LocationDetailFragment extends Fragment
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-    	iv_subject.setImageResource(LOCATION_ICON_ID.getResourceId(position, 0));
+    	resourceId = LOCATION_ICON_ID.getResourceId(position, 0);
+    	iv_subject.setImageResource(resourceId);
 	}
 
 	@Override

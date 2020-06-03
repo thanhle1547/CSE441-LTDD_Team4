@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15dp"
+    android:padding="16dp"
     android:background="@drawable/bkg_item_rounded_rect">
 
     <ImageView
-        android:id="@+id/ic_bkg"
+        android:id="@+id/iv_subject"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:src="@drawable/bkg_ic_rounded_rect"
-        android:layout_marginStart="8dp"
+        app:srcCompat="@drawable/ic_marker"
+        tools:ignore="VectorDrawableCompat"
+        android:scaleType="centerInside"
+        android:background="@drawable/bkg_ic_rounded_rect"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -20,39 +22,34 @@
         app:layout_constraintTop_toTopOf="@+id/tv_location_label"
         app:layout_constraintVertical_bias="0.5" />
 
-    <ImageView
-        android:id="@+id/iv_subject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/ic_bkg"
-        app:layout_constraintEnd_toEndOf="@+id/ic_bkg"
-        app:layout_constraintStart_toStartOf="@+id/ic_bkg"
-        app:layout_constraintTop_toTopOf="@+id/ic_bkg"
-        app:srcCompat="@drawable/ic_marker"
-        tools:ignore="VectorDrawableCompat" />
-
     <TextView
         android:id="@+id/tv_location_label"
         android:layout_width="wrap_content"
         android:maxWidth="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:text="Nhãn địa điểm"
         android:textColor="@color/blue_grey_500"
-        android:textSize="22sp"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-medium"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.165"
-        app:layout_constraintStart_toEndOf="@+id/ic_bkg"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/iv_subject"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/ic_near_me"
         android:layout_width="wrap_content"
         android:layout_height="16dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.088"
-        app:layout_constraintStart_toEndOf="@+id/ic_bkg"
-        app:layout_constraintTop_toTopOf="@+id/tv_address"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/iv_subject"
+        app:layout_constraintTop_toBottomOf="@+id/tv_location_label"
+        app:layout_constraintVertical_bias="0.0"
+        android:src="@drawable/ic_near_me"
         app:srcCompat="@drawable/ic_near_me"
         tools:ignore="VectorDrawableCompat" />
 
@@ -63,7 +60,7 @@
         android:layout_height="wrap_content"
         android:text="Thanh Xuân"
         android:textColor="@color/cyan_300"
-        android:layout_marginStart="18dp"
+        android:layout_marginStart="6dp"
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

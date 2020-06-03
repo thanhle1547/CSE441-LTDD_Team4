@@ -1,5 +1,4 @@
 package com.example.devicesilencingapp.time;
-
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -16,9 +15,9 @@ public class TimeService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.e(
-                "log","in service"
-        );
+        // TODO Auto-generated method stub
+        Log.e("toi trong service","toois trong service");
+        TimeManager.setAlarms(this);
         return super.onStartCommand(intent, flags, startId);
     }
 }

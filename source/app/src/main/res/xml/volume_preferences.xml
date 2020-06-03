@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SeekBarPreference
+        app:key="volume_ring"
+        app:title="@string/volume_ring"
+        app:min="0"
+        app:showSeekBarValue="true"
+        android:icon="@drawable/ic_notifications_24dp"
+        app:iconSpaceReserved="true"/>
+
+    <SeekBarPreference
+        app:key="volume_media"
+        app:title="@string/volume_media"
+        app:min="0"
+        app:showSeekBarValue="true"
+        android:icon="@drawable/ic_volume_up_24dp"
+        app:iconSpaceReserved="true"/>
+
+    <SeekBarPreference
+        app:key="volume_alarm"
+        app:title="@string/volume_alarm"
+        app:min="0"
+        app:showSeekBarValue="true"
+        android:icon="@drawable/ic_alarm_24dp"
+        app:iconSpaceReserved="true"/>
+
+    <SeekBarPreference
+        app:key="volume_notification"
+        app:title="@string/volume_notification"
+        app:min="0"
+        app:showSeekBarValue="true"
+        android:icon="@drawable/ic_chat_24dp"
+        app:iconSpaceReserved="true"/>
+
+    <SeekBarPreference
+        app:key="volume_system"
+        app:title="volume_system"
+        app:min="0"
+        app:showSeekBarValue="true"
+        android:icon="@drawable/ic_stay_primary_portrait_24dp"
+        app:iconSpaceReserved="true"/>
+
+</PreferenceScreen>

@@ -13,19 +13,26 @@ import com.example.devicesilencingapp.db.DBHelper;
 import java.util.Calendar;
 import java.util.List;
 
-public class TimeBroadcastReceiver extends BroadcastReceiver {
+public class TimeManager extends BroadcastReceiver {
+
+
     public static final String ID = "id";
     public static final String TIME_HOUR = "timeHour";
     public static final String TIME_MINUTE = "timeMinute";
 
     String TAG = this.getClass().getSimpleName();
+    @SuppressLint("UnsafeProtectedBroadcastReceiver")
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO Auto-generated method stub
+        Log.i("chay ok","pk toi ok chay");
         setAlarms(context);
     }
 
     public static void setAlarms(Context context) {
+        //Hủy tất cả lịch đã cài đặt
+        //Khởi tạo lại với tất cả alarm đang bật
+        //Kiểm tra ngày của alram và update lại
         cancelAlarms(context);
 
         DBHelper dbHelper = new DBHelper(context);
@@ -48,7 +55,7 @@ public class TimeBroadcastReceiver extends BroadcastReceiver {
                 boolean alarmSet = false;
 
 
-                //kiem tra neu ngày hiện tại mà báo thức chưa đến giờ thì set = true
+                //kiem tra neu  báo thức đã qua thì alarmset = true
                 if ((alarm.timeHour > nowHour) | ((alarm.timeHour == nowHour) && (alarm.timeMinute > nowMinute))){
                     calendar.set(Calendar.DAY_OF_WEEK, nowDay);
                     setAlarm(context, calendar, pIntent);
@@ -72,7 +79,6 @@ public class TimeBroadcastReceiver extends BroadcastReceiver {
                         if (alarm.getRepeatingDay(dayOfWeek -1 ) && dayOfWeek <= nowDay) {
                             calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
                             //calendar.add(Calendar.WEEK_OF_YEAR, 1);
-
                             setAlarm(context, calendar, pIntent);
                             break;
                         }
@@ -99,7 +105,7 @@ public class TimeBroadcastReceiver extends BroadcastReceiver {
         if (alarms != null)
         {
             for (timeModel alarm:alarms) {
-                if (alarm.isEnabled) {
+                if (!alarm.isEnabled) {
                     PendingIntent pIntent = createPendingIntent(context, alarm);
 
                     AlarmManager alarmManager = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);

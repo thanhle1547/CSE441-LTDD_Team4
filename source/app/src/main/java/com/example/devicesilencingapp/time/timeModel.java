@@ -1,6 +1,6 @@
 package com.example.devicesilencingapp.time;
 
-public class timeModel {
+public class timeModel implements Comparable<timeModel>{
     public static final int SUNDAY = 0;
     public static final int MONDAY = 1;
     public static final int TUESDAY = 2;
@@ -13,7 +13,6 @@ public class timeModel {
     public int timeHour;
     public int timeMinute;
     public boolean[] repeatingDays;
-    public String name;
     public boolean isEnabled;
 
     public timeModel(){repeatingDays = new boolean[7];}
@@ -24,9 +23,50 @@ public class timeModel {
         this.timeHour = timeHour;
         this.timeMinute = timeMinute;
         this.repeatingDays = repeatingDays;
-        this.name = name;
         this.isEnabled = isEnabled;
     }
+    public timeModel(int timeHour, int timeMinute,
+                     boolean[] repeatingDays, boolean isEnabled) {
+        this.timeHour = timeHour;
+        this.timeMinute = timeMinute;
+        this.repeatingDays = repeatingDays;
+        this.isEnabled = isEnabled;
+    }
+
+
+    @Override
+    public int compareTo(timeModel model) {
+        if (model == null)
+            return -1;
+        return getId() == model.getId()
+                && getisEnabled() == model.getisEnabled()
+                && getRepeatingDays() == model.getRepeatingDays()
+                && getTimeHour() == model.getTimeHour()
+                && getTimeMinute() == model.getTimeMinute()
+                ? 0 : -1;
+    }
+
+    /**
+     *
+     * @param model the model to be compared
+     * @return a negative integer if not equal or null, zero if equal to
+     * @Override
+     *     public int compareTo(timeModel model) {
+     *         if (model == null)
+     *             return -1;
+     *         return getId() == model.getId()
+     *                 && getName().equals(model.getName())
+     *                 && getAddress().equals(model.getAddress())
+     *                 && getLabel() == model.getLabel()
+     *                 && getLongitude() == model.getLongitude()
+     *                 && getLatitude() == model.getLatitude()
+     *                 && getRadius() == model.getRadius()
+     *                 && getExpiration() == model.getExpiration()
+     *                 && getStatus() == model.getStatus()
+     *                 ? 0 : -1;
+     *     }
+     */
+
 
     public long getId() {
         return id;
@@ -65,19 +105,15 @@ public class timeModel {
         this.repeatingDays = repeatingDays;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public boolean isEnabled() {
         return isEnabled;
     }
+    public boolean getisEnabled() {
+        return isEnabled;
+    }
 
     public void setEnabled(boolean enabled) {
-        isEnabled = enabled;
+        this.isEnabled = enabled;
     }
 }

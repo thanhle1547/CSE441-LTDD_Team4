@@ -1,39 +1,35 @@
 package com.example.devicesilencingapp.location;
 
-import com.example.devicesilencingapp.models.UserLocationModel;
-
-import java.util.ArrayList;
+import com.example.devicesilencingapp.location.model.UserLocationModel;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class LocationListViewModel extends ViewModel {
-    private MutableLiveData<ArrayList<UserLocationModel>> locationList;
-    private MutableLiveData<UserLocationModel> selected;
+    private static final String TAG = LocationListViewModel.class.getSimpleName();
 
+    private MutableLiveData<UserLocationModel> selected;
     private MutableLiveData<UserLocationModel> newItem;
+    private UserLocationModel oldAddItem;
 
     public LocationListViewModel() {
-        locationList = new MutableLiveData<>();
+//        Log.i(TAG, "constructor LocationListViewModel() called");
+
         selected = new MutableLiveData<>();
         newItem = new MutableLiveData<>();
     }
 
-    public MutableLiveData<ArrayList<UserLocationModel>> getLocationList() {
-        return locationList;
-    }
-
-    public void setLocationList(ArrayList<UserLocationModel> location_list) {
-        locationList.setValue(location_list);
-    }
+    public boolean isNewItem(UserLocationModel newItem) {
+    	return newItem.compareTo(oldAddItem) == 0;
+	}
 
     public MutableLiveData<UserLocationModel> getSelectedItem() {
         return selected;
     }
 
-    public void setSelectedItem(@Nullable UserLocationModel contact) {
-        selected.setValue(contact);
+    public void setSelectedItem(@Nullable UserLocationModel locationModel) {
+        selected.setValue(locationModel);
     }
 
     public MutableLiveData<UserLocationModel> getNewItem() {
@@ -42,5 +38,6 @@ public class LocationListViewModel extends ViewModel {
 
     public void setNewItem(UserLocationModel newItem) {
         this.newItem.setValue(newItem);
+        this.oldAddItem = newItem;
     }
 }

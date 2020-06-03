@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.devicesilencingapp.App;
-import com.example.devicesilencingapp.models.UserLocationModel;
+import com.example.devicesilencingapp.location.model.UserLocationModel;
 import com.example.devicesilencingapp.time.timeModel;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import androidx.annotation.Nullable;
 
 public class DBHelper extends SQLiteOpenHelper {
-	private static final String DB_NAME = "table_contacts";
+	private static final String DB_NAME = "devicesilencingapp";
 	private static final int    DB_VERSION = 1;
 	private static final String TABLE_USER_LOCATION = "user_location";
 	private static final String TABLE_Time = "table_time";
@@ -107,15 +107,15 @@ public class DBHelper extends SQLiteOpenHelper {
 		);
 	}
 	//Insert
-	public long insertTBTime (timeModel model) {
+	public void insertTBTime (timeModel model) {
 		ContentValues values = populateContent(model);
-		return getWritableDatabase().insert("table_time", null, values);
-	}
+        getWritableDatabase().insert("table_time", null, values);
+    }
 
 	// update
 	public void updateTime(timeModel model) {
 		ContentValues values = populateContent(model);
-		getWritableDatabase().update("table_time", values, "table_time.id+  = ?", new String[] {String.valueOf(model.id)});
+		getWritableDatabase().update("table_time", values, "table_time.id = ?", new String[] {String.valueOf(model.id)});
 	}
 	//delete
 	public Integer deleteTBTime (Integer id) {
@@ -124,7 +124,7 @@ public class DBHelper extends SQLiteOpenHelper {
 				"id = ? ",
 				new String[] { Integer.toString(id) });
 	}
-	public timeModel getTime(long id) {
+	public timeModel getTime(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		String select = "SELECT * FROM table_time WHERE table_time.id  = " + id;
@@ -160,11 +160,11 @@ public class DBHelper extends SQLiteOpenHelper {
 		model.id = c.getLong(c.getColumnIndex("id"));
 		model.timeHour = c.getInt(c.getColumnIndex("gio"));
 		model.timeMinute = c.getInt(c.getColumnIndex("phut"));
-		model.isEnabled = c.getInt(c.getColumnIndex("battat")) != 0;
+		model.isEnabled = c.getInt(c.getColumnIndex("battat")) == 0 ? false : true;
 
 		String[] repeatingDays = c.getString(c.getColumnIndex("nhaclai")).split(",");
 		for (int i = 0; i < repeatingDays.length; ++i) {
-			model.setRepeatingDay(i, !repeatingDays[i].equals("false"));
+			model.setRepeatingDay(i, repeatingDays[i].equals("false") ? false : true);
 		}
 
 		return model;
@@ -176,11 +176,11 @@ public class DBHelper extends SQLiteOpenHelper {
 		values.put("phut", model.timeMinute);
 		values.put("battat", model.isEnabled);
 
-		StringBuilder repeatingDays = new StringBuilder();
+		String repeatingDays = "";
 		for (int i = 0; i<7; ++i) {
-			repeatingDays.append(model.getRepeatingDay(i)).append(",");
+			repeatingDays += model.getRepeatingDay(i) + ",";
 		}
-		values.put("nhaclai", repeatingDays.toString());
+		values.put("nhaclai", repeatingDays);
 
 		return values;
 	}

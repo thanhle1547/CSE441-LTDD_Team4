@@ -1,27 +1,53 @@
 package com.example.devicesilencingapp;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.os.IBinder;
 import android.view.View;
 
 import com.example.devicesilencingapp.libs.Fab;
 import com.example.devicesilencingapp.location.fragments.LocationDetailFragment;
-import com.example.devicesilencingapp.location.fragments.LocationListFragment;
-import com.example.devicesilencingapp.settings.SettingsFragment;
-import com.example.devicesilencingapp.time.fragments.TimeFragment;
+import com.example.devicesilencingapp.services.GeofencesService;
+import com.example.devicesilencingapp.time.fragment_add_time;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 	private Toolbar toolbar;
 	private MaterialSheetFab materialSheetFab;
 	private int statusBarColor;
+
+	// setup Services Connection
+	private final ServiceConnection mGeofencesConnection = new ServiceConnection() {
+		@Override
+		public void onServiceConnected(ComponentName name, IBinder service) {
+			GeofencesService.LocalBinder binder = (GeofencesService.LocalBinder) service;
+			mGeofencesService = binder.getService();
+			mGeofencesBound = true;
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName name) {
+			mGeofencesService = null;
+			mGeofencesBound = false;
+		}
+	};;
+
+	private GeofencesService mGeofencesService = null;
+
+	// Tracks the bound state of the service.
+	private boolean mGeofencesBound = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +57,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		setupToolbar();
 		setupFab();
 
-		BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
-		bottomNav.setOnNavigationItemSelectedListener(navListener);
-		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, LocationListFragment.newInstance()).commit();
+		BottomNavigationView bottom_nav = findViewById(R.id.bottom_nav);
+		// Passing each  `menu ID`  as a set of Ids because each
+		// menu should be considered as top level destinations.
+		AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+				R.id.nav_location, R.id.nav_schedule, R.id.nav_settings)
+				.build();
+		NavController navController = Navigation.findNavController(this, R.id.fragment_main);
+		NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+		NavigationUI.setupWithNavController(bottom_nav, navController);
+
+		/*bottomNav.setOnNavigationItemSelectedListener(navListener);
+		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, LocationListFragment.newInstance()).commit();*/
 	}
 
+	@Override
+	protected void onStart() {
+		super.onStart();
+		bindService(new Intent(this, GeofencesService.class), mGeofencesConnection, Context.BIND_AUTO_CREATE);
+	}
+
+	@Override
+	protected void onStop() {
+		if (mGeofencesBound) {
+			// Unbind from the service. This signals to the service that this activity is no longer in the foreground
+			unbindService(mGeofencesConnection);
+			mGeofencesBound = false;
+		}
+		super.onStop();
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -53,12 +103,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 				materialSheetFab.hideSheet();
 				break;
 			case R.id.fab_sheet_item_add_new_time:
+				getSupportFragmentManager().beginTransaction()
+						.replace(
+								R.id.fragment_detail,
+								fragment_add_time.newInstance())
+						.addToBackStack(null)
+						.commit();
 				materialSheetFab.hideSheet();
 				break;
 		}
 	}
 
-	private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener(){
+	/*private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener(){
 		@Override
 		public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 			Fragment selectFragment = null;
@@ -82,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, selectFragment).commit();
 			return true;
 		}
-	};
+	};*/
 
 	private void setupToolbar(){
 		toolbar = findViewById(R.id.toolbar);

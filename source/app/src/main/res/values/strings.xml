@@ -3,8 +3,6 @@
 
     <string name="app">Ứng dụng</string>
     <string name="app_is_on">%1$s đang bật</string>
-    <string name="location">Vị trí</string>
-    <string name="schedule">Lịch trình</string>
 
     <string name="launch_app">Mở ứng dụng</string>
     <string name="is_on">Đang bật</string>
@@ -17,9 +15,14 @@
     <string name="stop">Dừng</string>
     <string name="repeat">Lặp lại</string>
 
+    <!-- Toolbar & Bottom navigation Title -->
     <string name="your_location">Địa điểm của bạn</string>
-    <string name="time">Thời gian</string>
+    <string name="your_schedule">Lịch trình của bạn</string>
+    <string name="location">Vị trí</string>
+    <string name="schedule">Lịch trình</string>
     <string name="settings">Cài đặt</string>
+
+    <string name="time">Thời gian</string>
 
     <string name="turning_on">Đang bật</string>
 
@@ -71,8 +74,39 @@
     <string name="stop_location_update">Dừng cập nhật vị trí</string>
 
     <!-- Preferences -->
-    <string name="customize_status">Tùy chỉnh trạng thái</string>
     <string name="switch_summary">Ấn vào để bật hoặc tắt</string>
+    <string name="adjusted_volume">Điều chỉnh âm lượng</string>
+    <string name="silent_mode">Chế độ tắt tiếng</string>
+    <string name="silent_mode_summary">Ngoại trừ âm lượng báo thức và nội dung đa phương tiện</string>
+    <!-- Preferences category title -->
+    <string name="customize_status">Tùy chỉnh trạng thái</string>
+    <string name="customize_sound">Tùy chỉnh chuông</string>
+    <!-- Preferences volume title -->
+    <string name="volume_ring">Âm lượng chuông</string>
+    <string name="volume_media">Âm lượng đa phương tiện</string>
+    <string name="volume_alarm">Âm lượng báo thức</string>
+    <string name="volume_notification">Âm lượng thông báo</string>
+    <string name="volume_system">Âm lượng hệ thống</string>
+
+    <!-- Permission -->
+    <string name="permission_rationale">Location permission is needed for core functionality</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for core functionality.</string>
+
+    <!-- Silent Mode -->
+    <string name="silent_mode_is_on">Chế độ yên lặng @string/is_on</string>
+    <string name="silent_mode_is_off">Chế độ yên lặng @string/is_off</string>
+
+
+    <string name="details_repeat_weekly">Repeat Weekly</string>
+    <string name="details_sunday">Sunday</string>
+    <string name="details_monday">Monday</string>
+    <string name="details_tuesday">Tuesday</string>
+    <string name="details_wednesday">Wednesday</string>
+    <string name="details_thursday">Thursday</string>
+    <string name="details_friday">Friday</string>
+    <string name="details_saturday">Saturday</string>
+    <string name="details_alarm_tone">Alarm Tone</string>
+    <string name="details_alarm_tone_default">Select an alarm tone</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

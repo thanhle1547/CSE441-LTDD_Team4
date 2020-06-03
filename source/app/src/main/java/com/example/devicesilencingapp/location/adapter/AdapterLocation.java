@@ -1,7 +1,6 @@
-package com.example.devicesilencingapp.adapters;
+package com.example.devicesilencingapp.location.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.devicesilencingapp.R;
-import com.example.devicesilencingapp.models.UserLocationModel;
+import com.example.devicesilencingapp.location.model.UserLocationModel;
 
 import java.util.ArrayList;
 
@@ -25,7 +24,7 @@ public class AdapterLocation extends ArrayAdapter<UserLocationModel> {
 
 
     public AdapterLocation(Context context, ArrayList<UserLocationModel> data) {
-        super(context, R.layout.list_item_location);
+        super(context, R.layout.list_item_location, data);
         this.context = context;
         this.listData = data;
     }
@@ -33,7 +32,7 @@ public class AdapterLocation extends ArrayAdapter<UserLocationModel> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//        Log.i(TAG, "run getView()"); not called ???
+//        Log.i(TAG, "run getView()"); // not called ???
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.list_item_location, parent, false);
@@ -42,7 +41,13 @@ public class AdapterLocation extends ArrayAdapter<UserLocationModel> {
         TextView tv_tdd = (TextView) convertView.findViewById(R.id.tv_location_label);
         TextView tv_dd = (TextView) convertView.findViewById(R.id.tv_address);
         ImageView img = (ImageView) convertView.findViewById(R.id.iv_subject);
-        tv_trangthai.setText(context.getString(mdl.getStatus() ? R.string.is_on : R.string.is_off));
+        if (mdl.getStatus()) {
+            tv_trangthai.setText(context.getString(R.string.is_on));
+            tv_trangthai.setTextColor(context.getResources().getColor(R.color.deep_purple_300));
+        } else {
+            tv_trangthai.setText(context.getString(R.string.is_off));
+            tv_trangthai.setTextColor(context.getResources().getColor(R.color.grey_300));
+        }
         tv_tdd.setText(mdl.getName());
         tv_dd.setText(mdl.getAddress());
         img.setImageResource(mdl.getLabel());

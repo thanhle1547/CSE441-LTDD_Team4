@@ -16,6 +16,7 @@ import androidx.core.app.NotificationCompat;
 import com.example.devicesilencingapp.MainActivity;
 import com.example.devicesilencingapp.R;
 import com.example.devicesilencingapp.libs.GeofenceUtils;
+import com.example.devicesilencingapp.receiver.StartJobIntentServiceReceiver;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
@@ -50,6 +51,7 @@ public class GeofencesManagingService extends JobIntentService {
 	 * Android O requires a Notification Channel.
 	 */
 	private static final String CHANNEL_ID = "channel_geofence";
+	private static final int NOTIFICATION_ID = 1;
 
 	private NotificationManager mNotificationManager;
 
@@ -85,10 +87,9 @@ public class GeofencesManagingService extends JobIntentService {
 
 		// Gửi Notification về nếu kiểu di chuyển thuộc loại vào hoặc ra geofence
 		if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
-			// Gửi Notification
-
-		} else if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
-
+			performAction(true);
+		} else {
+			performAction(false);
 		}
 	}
 
@@ -99,67 +100,14 @@ public class GeofencesManagingService extends JobIntentService {
 		enqueueWork(context, GeofencesManagingService.class, JOB_ID, intent);
 	}
 
-	/**
-	 * Posts a notification in the notification bar when a transition is detected.
-	 * If the user clicks the notification, control goes to the MainActivity.
-	 */
-	private void sendNotification(String notificationDetails) {
-		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+	private void performAction(boolean status) {
+		// Gửi Notification
+		Intent intent = new Intent(this, NotificationService.class);
+		intent.putExtra(NotificationService.NOTIFICATION_CONTENT, getString(status ? R.string.silent_mode_is_on : R.string.silent_mode_is_off));
+		sendBroadcast(StartJobIntentServiceReceiver.getIntent(this, intent, JOB_ID));
 
-		// Android O requires a Notification Channel.
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			CharSequence name = getString(R.string.app_name);
-			// Create the channel for the notification
-			NotificationChannel mChannel =
-					new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
-
-			// Set the Notification Channel for the Notification Manager.
-			mNotificationManager.createNotificationChannel(mChannel);
-		}
-
-		/**
-		 * Create an  `explicit content Intent`  that starts the main Activity.
-		 *
-		 * Explicit Intents:
-		 *
-		 * Intent đã được xác định thuộc tính component,
-		 * nghĩa là đã chỉ rõ thành phần sẽ nhận và xử lý intent
-		 * (xác định một cách rõ ràng các thành phần sẽ được gọi bởi hệ thống android).
-		 * Thông thường intent dạng này sẽ không bổ sung thêm các thuộc tính khác như action, data.
-		 * Explicit Intent thương được sử dụng để khởi chạy các activity trong cùng 1 ứng dụng.
-		 *
-		 * @see https://viblo.asia/p/huong-dan-lam-mot-app-nghe-nhac-online-va-offline-don-gian-7prv3PzjRKod
-		*/
-		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
-		// The PendingIntent that leads to a call to onStartCommand() in this service.
-		PendingIntent servicePendingIntent = PendingIntent.getService(this, 0, intent,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-
-		// The PendingIntent to launch activity.
-		PendingIntent activityPendingIntent = PendingIntent.getActivity(this, 0,
-				new Intent(this, MainActivity.class), 0);
-
-		NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-				.addAction(R.drawable.ic_launch, getString(R.string.launch_app),
-						activityPendingIntent)
-				.addAction(R.drawable.ic_cancel, getString(R.string.stop_location_update),
-						servicePendingIntent)
-				.setContentTitle(
-						String.format(
-								this.getString(R.string.app_is_on),
-								this.getString(R.string.app_name)))
-				.setOngoing(true)
-				.setPriority(Notification.PRIORITY_HIGH)
-				.setSmallIcon(R.mipmap.ic_launcher)
-				.setWhen(System.currentTimeMillis());
-
-		// Set the Channel ID for Android O.
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			builder.setChannelId(CHANNEL_ID); // Channel ID
-		}
-
-		// Issue the notification
-		mNotificationManager.notify(0, builder.build());
+		intent = new Intent(this, AudioManagerService.class);
+		intent.putExtra(AudioManagerService.ARG_ACTION, status ? AudioManagerService.ACTION_START : AudioManagerService.ACTION_STOP);
+		sendBroadcast(StartJobIntentServiceReceiver.getIntent(this, intent, JOB_ID));
 	}
 }

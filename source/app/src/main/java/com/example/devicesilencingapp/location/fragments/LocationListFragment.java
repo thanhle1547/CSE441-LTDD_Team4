@@ -8,30 +8,24 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.devicesilencingapp.adapters.AdapterLocation;
+import com.example.devicesilencingapp.location.adapter.AdapterLocation;
 import com.example.devicesilencingapp.R;
 import com.example.devicesilencingapp.db.DBHelper;
 import com.example.devicesilencingapp.location.LocationListViewModel;
-import com.example.devicesilencingapp.models.UserLocationModel;
-
-import java.util.ArrayList;
-import java.util.Objects;
+import com.example.devicesilencingapp.location.model.UserLocationModel;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 public class LocationListFragment extends Fragment {
+	private static final String TAG = LocationListFragment.class.getSimpleName();
 
-	Context context;
 	private UserLocationModel oldSelected;
 	private AdapterLocation adapter;
-	private ArrayList<UserLocationModel> data;
 	private LocationListViewModel mViewModel;
-
-	private ListView lv_Location;
 
 	public static LocationListFragment newInstance() {
 		return new LocationListFragment();
@@ -46,36 +40,62 @@ public class LocationListFragment extends Fragment {
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		mViewModel.getLocationList().observe(getViewLifecycleOwner(), new Observer<ArrayList<UserLocationModel>>() {
+		registerLiveDataListener();
+	}
+
+	@Override
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		/**
+		 * use requireActivity() instead of getActivity().
+		 * This way you will ensure that the activity is attached an not getting a NullPointerException.
+		 *
+		 * @see <a href="https://stackoverflow.com/questions/60070233/cannot-resolve-viewmodelprovider-construction-in-a-fragment">
+		 *          Cannot resolve ViewModelProvider construction in a fragment?
+		 *      </a>
+		 */
+		mViewModel = new ViewModelProvider(requireActivity()).get(LocationListViewModel.class);
+
+		ListView lv_Location = view.findViewById(R.id.lv_location);
+		Context context = getActivity().getApplicationContext();
+		adapter = new AdapterLocation(context, DBHelper.getInstance().getAllLocations());
+		lv_Location.setAdapter(adapter);
+
+		lv_Location.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
-			public void onChanged(ArrayList<UserLocationModel> locationModelArrayList) {
-				data = locationModelArrayList;
-				adapter.clear();
-				adapter.addAll(locationModelArrayList);
-				adapter.notifyDataSetChanged();
+			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+				UserLocationModel location = (UserLocationModel) adapterView.getItemAtPosition(i);
+				oldSelected = location;
+				mViewModel.setSelectedItem(location);
+
+				dialogclickitemlocation();
 			}
 		});
+	}
 
+	private void registerLiveDataListener() {
 		mViewModel.getSelectedItem().observe(getViewLifecycleOwner(), new Observer<UserLocationModel>() {
 			@Override
 			public void onChanged(UserLocationModel locationModel) {
-				if (Objects.deepEquals(locationModel, oldSelected))
-					return;
+//				Log.i(TAG, "mViewModel.getSelectedItem()");
 
-				int index = data.indexOf(oldSelected);
+//				if (oldSelected == null || oldSelected.compareTo(locationModel) == 0)
+//					return;
 
 				if (locationModel == null) {
 					// TH xóa dl
-					data.remove(index);
 					adapter.remove(oldSelected);
-				} else {
-					// TH sửa dl
-					data.set(index, locationModel);
 				}
 
+				/* no need
+				int index = data.indexOf(oldSelected);
+
+				else {
+					// TH sửa dl
+					data.set(index, locationModel);
+				}*/
+
 				// Update the data
-				adapter.clear();
-				adapter.addAll(data);
 				adapter.notifyDataSetChanged();
 			}
 		});
@@ -83,35 +103,10 @@ public class LocationListFragment extends Fragment {
 		mViewModel.getNewItem().observe(getViewLifecycleOwner(), new Observer<UserLocationModel>() {
 			@Override
 			public void onChanged(UserLocationModel locationModel) {
-				data.add(locationModel);
-				adapter.clear();
-				adapter.addAll(data);
+				if (mViewModel.isNewItem(locationModel))
+					return;
+				adapter.add(locationModel);
 				adapter.notifyDataSetChanged();
-			}
-		});
-	}
-
-	@Override
-	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-
-		mViewModel = ViewModelProviders.of(this).get(LocationListViewModel.class);
-
-		lv_Location = (ListView) view.findViewById(R.id.lv_location);
-		data = DBHelper.getInstance().getAllLocations();
-		context = getActivity().getApplicationContext();
-		adapter = new AdapterLocation(context, data);
-		mViewModel.setLocationList(data);
-		lv_Location.setAdapter(adapter);
-
-		lv_Location.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-				UserLocationModel location = data.get(i);
-				oldSelected = location;
-				mViewModel.setSelectedItem(location);
-
-				dialogclickitemlocation();
 			}
 		});
 	}

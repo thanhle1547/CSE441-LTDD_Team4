@@ -1,6 +1,8 @@
-package com.example.devicesilencingapp.models;
+package com.example.devicesilencingapp.location.model;
 
-public class UserLocationModel {
+import androidx.annotation.NonNull;
+
+public class UserLocationModel implements Comparable<UserLocationModel>, Cloneable {
 	private long id;
 	private String name;
 	private String address;
@@ -14,11 +16,6 @@ public class UserLocationModel {
 	public UserLocationModel() {
 	}
 
-	public UserLocationModel(String name, String address) {
-		this.name = name;
-		this.address = address;
-	}
-
 	public UserLocationModel(long id, String name, String address, int label, double longitude, double latitude, int radius, int expiration, boolean status) {
 		this.id = id;
 		this.name = name;
@@ -29,6 +26,33 @@ public class UserLocationModel {
 		this.radius = radius;
 		this.expiration = expiration;
 		this.status = status;
+	}
+
+	/**
+	 *
+	 * @param model the model to be compared
+	 * @return a negative integer if not equal or null, zero if equal to
+	 */
+	@Override
+	public int compareTo(UserLocationModel model) {
+		if (model == null)
+			return -1;
+		return getId() == model.getId()
+				&& getName().equals(model.getName())
+				&& getAddress().equals(model.getAddress())
+				&& getLabel() == model.getLabel()
+				&& getLongitude() == model.getLongitude()
+				&& getLatitude() == model.getLatitude()
+				&& getRadius() == model.getRadius()
+				&& getExpiration() == model.getExpiration()
+				&& getStatus() == model.getStatus()
+				? 0 : -1;
+	}
+
+	@NonNull
+	@Override
+	public UserLocationModel clone() throws CloneNotSupportedException {
+		return (UserLocationModel) super.clone();
 	}
 
 	public long getId() {

@@ -1,4 +1,4 @@
-package com.example.devicesilencingapp.location.fragments;
+package com.example.devicesilencingapp.time.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,8 +8,9 @@ import android.widget.CompoundButton;
 
 import com.example.devicesilencingapp.R;
 import com.example.devicesilencingapp.db.DBHelper;
-import com.example.devicesilencingapp.location.LocationListViewModel;
-import com.example.devicesilencingapp.location.model.UserLocationModel;
+import com.example.devicesilencingapp.time.TimeManager;
+import com.example.devicesilencingapp.time.TimeViewModal;
+import com.example.devicesilencingapp.time.timeModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import androidx.annotation.NonNull;
@@ -17,24 +18,27 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+public class itemclick_bottomSheet extends BottomSheetDialogFragment implements View.OnClickListener {
 
-public class itemclick_BottomSheetDialogFragment extends BottomSheetDialogFragment implements View.OnClickListener {
+    public static final String ID = "id";
+    public static final String TIME_HOUR = "timeHour";
+    public static final String TIME_MINUTE = "timeMinute";
 
-    private UserLocationModel model;
-    private LocationListViewModel viewModel;
+    private timeModel model;
+    private TimeViewModal viewModel;
 
-    public itemclick_BottomSheetDialogFragment() {
+    public itemclick_bottomSheet() {
         // Required empty public constructor
     }
 
-    public static itemclick_BottomSheetDialogFragment newInstance() {
-        return new itemclick_BottomSheetDialogFragment();
+    public static itemclick_bottomSheet newInstance() {
+        return new itemclick_bottomSheet();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.clickitemlocation,container,false);
+        return inflater.inflate(R.layout.fragment_time_mbs_item,container,false);
     }
 
     @Override
@@ -61,40 +65,42 @@ public class itemclick_BottomSheetDialogFragment extends BottomSheetDialogFragme
          *          What is ViewModelStore and viewModelStoreOwner?
          *      </a>
          */
-        viewModel = new ViewModelProvider(requireActivity()).get(LocationListViewModel.class);
-        model = viewModel.getSelectedItem().getValue();
+        viewModel = new ViewModelProvider(requireActivity()).get(TimeViewModal.class);
+        model = viewModel.getSelected().getValue();
 
-        SwitchCompat sw_status = (SwitchCompat) view.findViewById(R.id.sw_status);
-        sw_status.setChecked(model.getStatus());
+        SwitchCompat sw_status = view.findViewById(R.id.btn_status1);
+        sw_status.setChecked(model.getisEnabled());
         sw_status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-	        @Override
-	        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		        model.setStatus(isChecked);
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                model.setEnabled(isChecked);
+                DBHelper.getInstance().updateTime(model);
+                TimeManager.setAlarms(getActivity());
+                viewModel.setSelected(model);
 
-		        DBHelper.getInstance().editLocationStatus(model);
-		        viewModel.setSelectedItem(model);
-	        }
+            }
         });
         view.findViewById(R.id.btn_edit).setOnClickListener(this);
         view.findViewById(R.id.btn_delete).setOnClickListener(this);
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_edit:
                 dismiss();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(
-                                R.id.fragment_detail,
-                                LocationDetailFragment.newInstance(LocationDetailFragment.ACTION_EDIT))
-                        .commit();
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(
+//                                R.id.fragment_detail,
+//                                LocationDetailFragment.newInstance(LocationDetailFragment.ACTION_EDIT))
+//                        .commit();
                 break;
             case R.id.btn_delete:
-                DBHelper.getInstance().removeLocation(model.getId());
-                viewModel.setSelectedItem(null);
+                DBHelper.getInstance().deleteTBTime((int) model.getId());
+                viewModel.setSelected(null);
+                TimeManager.setAlarms(getActivity());
                 dismiss();
                 break;
         }
     }
+
 }
