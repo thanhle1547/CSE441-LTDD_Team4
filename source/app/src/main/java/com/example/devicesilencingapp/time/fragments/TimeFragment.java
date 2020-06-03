@@ -25,13 +25,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 //hien thi list view va xu li click vao item
 public class TimeFragment extends Fragment {
-    private int selected_index;
     Context context;
     private timeModel oldSelected; //ktra du lieu co thay doi k
     private AdapterTime adapter;// quan li item trong list
     private ArrayList<timeModel> data;
     private TimeViewModal viewModal; //quan sat du lieu dc chon//du lieu tu csdl
-    private android.widget.Toast Toast;
 
     //tra ve 1 the hien moi cua lop
     public static TimeFragment newInstance(){
@@ -53,15 +51,7 @@ public class TimeFragment extends Fragment {
         viewModal = new ViewModelProvider(requireActivity()).get(TimeViewModal.class);
         ListView listView = (ListView) view.findViewById(R.id.lv_time);
 
-        DBHelper helper = new DBHelper(getActivity());
-//        boolean[] bl = new boolean[7];
-//        for (int i = 0; i<7 ; i++){
-//            bl[i]=true;
-//        }
-//        timeModel modestine = new timeModel(18 ,36,bl,true);
-//        helper.insertTBTime(modestine);
-//        TimeManager.setAlarms(getActivity());
-        data = helper.getAlarms();
+        data = DBHelper.getInstance().getAlarms();
 
         context = getActivity().getApplicationContext();
         adapter = new AdapterTime(context, data);
@@ -71,16 +61,12 @@ public class TimeFragment extends Fragment {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 timeModel timeModel = (timeModel) parent.getItemAtPosition(position);
-                selected_index = position;
                 oldSelected = timeModel;
                 viewModal.setSelected(timeModel);//luu du lieu dc chon
                 dialogclickitemtime();
 
             }
         });
-//        timeModel time1 = helper.getTime(1);
-//        int a =  time1.getTimeHour();
-//        Toast.makeText(context,"abc" + a, Toast.LENGTH_SHORT).show();
 
 
     }
@@ -89,30 +75,13 @@ public class TimeFragment extends Fragment {
     //quan sat du lieu
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        viewModal.gettimeModelList().observe(getViewLifecycleOwner(), new Observer<ArrayList<timeModel>>() {
-//            @Override
-//            public void onChanged(ArrayList<timeModel> timeModel) {
-//                data = timeModel;
-//                adapter.clear();
-//                adapter.addAll(timeModel);
-//                adapter.notifyDataSetChanged();
-//            }
-//        });
 
         //quan sat cai dc chon
         viewModal.getSelected().observe(getViewLifecycleOwner(), new Observer<timeModel>() {
             @Override
             public void onChanged(timeModel timeModel) {
-                if(Objects.deepEquals(timeModel, oldSelected)){
-                    return;
-                }
-                int index = data.indexOf(oldSelected);
                 if(timeModel == null){
-                    data.remove(index);
                     adapter.remove(oldSelected);
-                }
-                else {
-                    data.set(index, timeModel);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -123,7 +92,9 @@ public class TimeFragment extends Fragment {
         viewModal.getNewItem().observe(getViewLifecycleOwner(), new Observer<timeModel>() {
             @Override
             public void onChanged(timeModel timeModel) {
-                data.add(timeModel);
+                if (!viewModal.isNewItem(timeModel))
+                    return;
+                adapter.add(timeModel);
                 adapter.notifyDataSetChanged();
             }
         });

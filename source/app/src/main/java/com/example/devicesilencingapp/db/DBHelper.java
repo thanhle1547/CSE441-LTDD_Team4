@@ -118,11 +118,11 @@ public class DBHelper extends SQLiteOpenHelper {
 		getWritableDatabase().update("table_time", values, "table_time.id = ?", new String[] {String.valueOf(model.id)});
 	}
 	//delete
-	public Integer deleteTBTime (Integer id) {
-		SQLiteDatabase db = this.getWritableDatabase();
-		return db.delete(TABLE_Time,
+	public void deleteTBTime (long id) {
+		getWritableDatabase().delete(TABLE_Time,
 				"id = ? ",
-				new String[] { Integer.toString(id) });
+				new String[] { String.valueOf(id) }
+		);
 	}
 	public timeModel getTime(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();

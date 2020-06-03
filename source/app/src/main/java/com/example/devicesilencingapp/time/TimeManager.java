@@ -35,9 +35,7 @@ public class TimeManager extends BroadcastReceiver {
         //Kiểm tra ngày của alram và update lại
         cancelAlarms(context);
 
-        DBHelper dbHelper = new DBHelper(context);
-
-        List<timeModel> alarms = dbHelper.getAlarms();
+        List<timeModel> alarms = DBHelper.getInstance().getAlarms();
 
         for (timeModel alarm:alarms) {
             if (alarm.isEnabled) {
@@ -98,9 +96,7 @@ public class TimeManager extends BroadcastReceiver {
     }
 
     public static void cancelAlarms(Context context) {
-        DBHelper dbHelper = new DBHelper(context);
-
-        List<timeModel> alarms = dbHelper.getAlarms();
+        List<timeModel> alarms = DBHelper.getInstance().getAlarms();
 
         if (alarms != null)
         {

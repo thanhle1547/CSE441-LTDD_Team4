@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_583" data-name="Rectangle 583" width="40" height="40" transform="translate(50 958)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Alarm_Clock_Edit" data-name="Alarm Clock Edit" transform="translate(-50 -958)" clip-path="url(#clip-path)">
+    <g id="Alarm_Clock_Edit-2" data-name="Alarm Clock Edit" transform="translate(35 943)">
+      <g id="Group_28" data-name="Group 28" opacity="0">
+        <image id="Rectangle_592" data-name="Rectangle 592" width="36.667" height="36.667" transform="translate(15 15)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAF0lEQVQ4jWNgGAWjYBSMglEwCkbB4AQAB6YAAdbx1zIAAAAASUVORK5CYII="/>
+      </g>
+      <g id="Group_29" data-name="Group 29" transform="translate(13.333 13.333)">
+        <path id="Path_114" data-name="Path 114" d="M12.636,5.052,4.977,11.494,2.832,8.945,10.491,2.5l2.145,2.549m24.53,3.893-2.145,2.549L27.362,5.052,29.507,2.5l7.659,6.442M35,21.666q0,.262-.009.521a4.155,4.155,0,0,0-.924.7L30.753,26.2a11.657,11.657,0,1,0-6.222,6.222l-1.888,1.888a3.335,3.335,0,0,0-.975,2.266A15.192,15.192,0,0,1,20,36.665a15,15,0,1,1,15-15h0M21.666,13.333V22.3l5.745,2.871L25.92,28.156l-7.588-3.8V13.333h3.333" fill="#607d8b"/>
+      </g>
+      <g id="Group_30" data-name="Group 30" transform="translate(13.333 13.333)">
+        <path id="Path_115" data-name="Path 115" d="M33.575,28.088l3.333,3.333L28.331,40H25V36.665l8.577-8.577m2.847-2.847-1.667,1.667,3.333,3.333,1.667-1.667a.834.834,0,0,0,0-1.178L37.6,25.242a.834.834,0,0,0-1.178,0h0" fill="#607d8b"/>
+      </g>
+      <g id="Group_31" data-name="Group 31" opacity="0">
+        <image id="Rectangle_593" data-name="Rectangle 593" width="21.667" height="21.667" transform="translate(33.333 33.333)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAWklEQVQokbXQsQmAMBAF0Fe6noUQdTe3cCFLJ7AJWgVEIzGCB7+7B/+On6bFgg0TmhIIiNhPmWtBSjXIohK4oTcgfgEhga4WwPoC9NdbSmDIfawaPNWLGHPLB49EWWwXIZtbAAAAAElFTkSuQmCC"/>
+      </g>
+    </g>
+  </g>
+</svg>

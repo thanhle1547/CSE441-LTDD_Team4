@@ -21,7 +21,7 @@ public class LocationListViewModel extends ViewModel {
     }
 
     public boolean isNewItem(UserLocationModel newItem) {
-    	return newItem.compareTo(oldAddItem) == 0;
+    	return newItem.compareTo(oldAddItem) != 0;
 	}
 
     public MutableLiveData<UserLocationModel> getSelectedItem() {

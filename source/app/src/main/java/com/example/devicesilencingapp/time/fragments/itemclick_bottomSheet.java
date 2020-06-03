@@ -88,14 +88,14 @@ public class itemclick_bottomSheet extends BottomSheetDialogFragment implements 
         switch (v.getId()) {
             case R.id.btn_edit:
                 dismiss();
-//                getActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(
-//                                R.id.fragment_detail,
-//                                LocationDetailFragment.newInstance(LocationDetailFragment.ACTION_EDIT))
-//                        .commit();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(
+                                R.id.fragment_detail,
+                                TimeDetailFragment.newInstance(TimeDetailFragment.ACTION_EDIT))
+                        .commit();
                 break;
             case R.id.btn_delete:
-                DBHelper.getInstance().deleteTBTime((int) model.getId());
+                DBHelper.getInstance().deleteTBTime(model.getId());
                 viewModel.setSelected(null);
                 TimeManager.setAlarms(getActivity());
                 dismiss();

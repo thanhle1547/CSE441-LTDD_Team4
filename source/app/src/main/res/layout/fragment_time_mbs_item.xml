@@ -10,20 +10,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/turning_on"
+            android:text="@string/status"
             android:textSize="28sp"
+            android:layout_marginLeft="50dp"
             android:textColor="@color/blue_grey_500"/>
+
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/btn_status1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
             />
+
     </RelativeLayout>
+
     <TextView
         android:id="@+id/btn_edit"
         android:layout_width="match_parent"
@@ -31,9 +37,11 @@
         android:text="Sửa"
         android:textSize="28sp"
         android:textColor="@color/blue_grey_500"
-        android:drawableLeft="@drawable/ic_map_editing"
+        android:drawableLeft="@drawable/ic_alarm_clock_edit"
         android:drawablePadding="20dp"
-        android:padding="15dp"/>
+        android:padding="15dp"
+        android:background="?android:attr/selectableItemBackground"/>
+
     <TextView
         android:id="@+id/btn_delete"
         android:layout_width="match_parent"
@@ -43,8 +51,7 @@
         android:textColor="@color/blue_grey_500"
         android:drawableLeft="@drawable/ic_delete_bin"
         android:drawablePadding="20dp"
-        android:padding="15dp"/>
-
-
+        android:padding="15dp"
+        android:background="?android:attr/selectableItemBackground"/>
 
 </LinearLayout>

@@ -103,7 +103,7 @@ public class LocationListFragment extends Fragment {
 		mViewModel.getNewItem().observe(getViewLifecycleOwner(), new Observer<UserLocationModel>() {
 			@Override
 			public void onChanged(UserLocationModel locationModel) {
-				if (mViewModel.isNewItem(locationModel))
+				if (!mViewModel.isNewItem(locationModel))
 					return;
 				adapter.add(locationModel);
 				adapter.notifyDataSetChanged();

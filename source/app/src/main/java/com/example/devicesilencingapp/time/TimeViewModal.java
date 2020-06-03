@@ -15,7 +15,7 @@ public class TimeViewModal extends ViewModel {
         newItem = new MutableLiveData<>();
     }
     public boolean isNewItem(timeModel newItem) {
-        return newItem.compareTo(oldAddItem) == 0;
+        return newItem.compareTo(oldAddItem) != 0;
     }
 
     public MutableLiveData<timeModel> getSelected() {

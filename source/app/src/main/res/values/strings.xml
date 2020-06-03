@@ -5,12 +5,16 @@
     <string name="app_is_on">%1$s đang bật</string>
 
     <string name="launch_app">Mở ứng dụng</string>
+
+    <!-- Status -->
+    <string name="status">Trạng thái</string>
     <string name="is_on">Đang bật</string>
     <string name="is_off">Đang tắt</string>
 
     <!-- Action -->
     <string name="add">Thêm</string>
     <string name="edit">Sửa</string>
+    <string name="delete">Xóa</string>
     <string name="cancel">Hủy</string>
     <string name="stop">Dừng</string>
     <string name="repeat">Lặp lại</string>

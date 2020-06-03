@@ -16,12 +16,12 @@ import java.util.Map;
 
 public class AudioManagerService extends JobIntentService {
 	private static final String TAG = AudioManagerService.class.getSimpleName();
-	private static final int JOB_ID = 10;
 
 	public static final int ACTION_START = 0;
 	public static final int ACTION_STOP = 1;
 
 	public static final String ARG_ACTION = "action";
+	private static final String KEY_SILENT_MODE_STATUS = "silent_mode_status";
 
 	private AudioManager mAudioManager;
 	private SharedPreferences mSharedPrefs;
@@ -32,9 +32,15 @@ public class AudioManagerService extends JobIntentService {
 		mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		if (intent.getIntExtra(ARG_ACTION, 0) == ACTION_START) {
-			startSilentMode();
+			if (!mSharedPrefs.getBoolean(KEY_SILENT_MODE_STATUS, true)) {
+				startSilentMode();
+				saveSilentModeStatus(true);
+			}
 		} else {
-			stopSilentMode();
+			if (mSharedPrefs.getBoolean(KEY_SILENT_MODE_STATUS, true)) {
+				stopSilentMode();
+				saveSilentModeStatus(false);
+			}
 		}
 	}
 
@@ -49,6 +55,12 @@ public class AudioManagerService extends JobIntentService {
 							Integer.parseInt(e.getValue().toString())
 			));
 
+		editor.apply();
+	}
+
+	private void saveSilentModeStatus(boolean status) {
+		SharedPreferences.Editor editor = mSharedPrefs.edit();
+		editor.putBoolean(KEY_SILENT_MODE_STATUS, status);
 		editor.apply();
 	}
 
