@@ -16,6 +16,7 @@ import androidx.core.app.NotificationCompat;
 import com.example.devicesilencingapp.MainActivity;
 import com.example.devicesilencingapp.R;
 import com.example.devicesilencingapp.libs.GeofenceUtils;
+import com.example.devicesilencingapp.libs.SilentModeManagerUtil;
 import com.example.devicesilencingapp.receiver.StartJobIntentServiceReceiver;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
@@ -45,15 +46,6 @@ public class GeofencesManagingService extends JobIntentService {
 	private static final String TAG = GeofencesManagingService.class.getSimpleName();
 
 	private static final int JOB_ID = 1;
-
-	/**
-	 * The name of the channel for notifications.
-	 * Android O requires a Notification Channel.
-	 */
-	private static final String CHANNEL_ID = "channel_geofence";
-	private static final int NOTIFICATION_ID = 1;
-
-	private NotificationManager mNotificationManager;
 
 	/**
 	 * Handles incoming intents.
@@ -87,9 +79,9 @@ public class GeofencesManagingService extends JobIntentService {
 
 		// Gửi Notification về nếu kiểu di chuyển thuộc loại vào hoặc ra geofence
 		if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
-			performAction(true);
+			SilentModeManagerUtil.performAction(this, true);
 		} else {
-			performAction(false);
+			SilentModeManagerUtil.performAction(this, false);
 		}
 	}
 
@@ -98,17 +90,5 @@ public class GeofencesManagingService extends JobIntentService {
 	 */
 	public static void enqueueWork(Context context, Intent intent) {
 		enqueueWork(context, GeofencesManagingService.class, JOB_ID, intent);
-	}
-
-	private void performAction(boolean status) {
-		// Gửi Notification
-		Intent intent = new Intent(this, NotificationService.class);
-		intent.putExtra(NotificationService.NOTIFICATION_CONTENT, getString(status ? R.string.silent_mode_is_on : R.string.silent_mode_is_off));
-		intent.putExtra(NotificationService.SILENT_MODE_STATUS, status);
-		sendBroadcast(StartJobIntentServiceReceiver.getIntent(this, intent, JOB_ID));
-
-		intent = new Intent(this, AudioManagerService.class);
-		intent.putExtra(AudioManagerService.ARG_ACTION, status ? AudioManagerService.ACTION_START : AudioManagerService.ACTION_STOP);
-		sendBroadcast(StartJobIntentServiceReceiver.getIntent(this, intent, JOB_ID));
 	}
 }
