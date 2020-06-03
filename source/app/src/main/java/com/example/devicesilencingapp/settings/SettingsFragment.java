@@ -13,6 +13,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.devicesilencingapp.BuildConfig;
@@ -38,6 +39,28 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         addPreferencesFromResource(R.xml.root_preferences);
         preference = getPreferenceScreen().getSharedPreferences();
         preference.registerOnSharedPreferenceChangeListener(this);
+
+	    /**
+	     * @see <a href="https://stackoverflow.com/a/47229704">
+	     *          Preference with custom Fragment
+	     *      </a>
+	     *
+	     * NOT TRY YET
+	     * @see <a href="https://stackoverflow.com/questions/61525297/nested-preferences-inside-fragment-from-bottom-navigation-back-stack-not-wor">
+	     *          Nested preferences inside fragment (from bottom navigation) - back stack not working
+	     *      </a>
+	     */
+	    // FIXME: back stack not working
+	    findPreference("key_volume").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+	        @Override
+	        public boolean onPreferenceClick(Preference preference) {
+	        	getParentFragmentManager().beginTransaction()
+				        .replace(R.id.fragment_main, new VolumeSettingsFragment())
+				        .addToBackStack(null)
+				        .commit();
+		        return true;
+	        }
+        });
     }
 
     @Override
