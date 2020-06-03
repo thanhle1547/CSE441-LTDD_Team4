@@ -8,6 +8,7 @@ import android.widget.CompoundButton;
 
 import com.example.devicesilencingapp.R;
 import com.example.devicesilencingapp.db.DBHelper;
+import com.example.devicesilencingapp.time.TimeManager;
 import com.example.devicesilencingapp.time.TimeViewModal;
 import com.example.devicesilencingapp.time.timeModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -18,6 +19,11 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 public class itemclick_bottomSheet extends BottomSheetDialogFragment implements View.OnClickListener {
+
+    public static final String ID = "id";
+    public static final String TIME_HOUR = "timeHour";
+    public static final String TIME_MINUTE = "timeMinute";
+
     private timeModel model;
     private TimeViewModal viewModel;
 
@@ -68,15 +74,15 @@ public class itemclick_bottomSheet extends BottomSheetDialogFragment implements 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 model.setEnabled(isChecked);
-
                 DBHelper.getInstance().updateTime(model);
+                TimeManager.setAlarms(getActivity());
                 viewModel.setSelected(model);
+
             }
         });
         view.findViewById(R.id.btn_edit).setOnClickListener(this);
         view.findViewById(R.id.btn_delete).setOnClickListener(this);
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -91,8 +97,10 @@ public class itemclick_bottomSheet extends BottomSheetDialogFragment implements 
             case R.id.btn_delete:
                 DBHelper.getInstance().deleteTBTime((int) model.getId());
                 viewModel.setSelected(null);
+                TimeManager.setAlarms(getActivity());
                 dismiss();
                 break;
         }
     }
+
 }

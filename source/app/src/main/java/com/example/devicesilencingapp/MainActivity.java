@@ -1,22 +1,17 @@
 package com.example.devicesilencingapp;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.example.devicesilencingapp.libs.Fab;
 import com.example.devicesilencingapp.location.fragments.LocationDetailFragment;
-import com.example.devicesilencingapp.location.fragments.LocationListFragment;
-import com.example.devicesilencingapp.settings.SettingsFragment;
-import com.example.devicesilencingapp.time.fragments.TimeFragment;
+import com.example.devicesilencingapp.time.fragment_add_time;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -66,6 +61,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 				materialSheetFab.hideSheet();
 				break;
 			case R.id.fab_sheet_item_add_new_time:
+				getSupportFragmentManager().beginTransaction()
+						.replace(
+								R.id.fragment_detail,
+								fragment_add_time.newInstance())
+						.addToBackStack(null)
+						.commit();
 				materialSheetFab.hideSheet();
 				break;
 		}
