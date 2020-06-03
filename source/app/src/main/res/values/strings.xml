@@ -4,7 +4,9 @@
     <string name="app">Ứng dụng</string>
     <string name="app_is_on">%1$s đang bật</string>
 
+    <!-- Notification -->
     <string name="launch_app">Mở ứng dụng</string>
+    <string name="stop_silent_mode">Dừng chế độ yên lặng</string>
 
     <!-- Status -->
     <string name="status">Trạng thái</string>
@@ -111,8 +113,5 @@
     <string name="details_saturday">Saturday</string>
     <string name="details_alarm_tone">Alarm Tone</string>
     <string name="details_alarm_tone_default">Select an alarm tone</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

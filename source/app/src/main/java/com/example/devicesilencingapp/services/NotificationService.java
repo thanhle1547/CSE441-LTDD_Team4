@@ -16,6 +16,7 @@ import com.example.devicesilencingapp.R;
 
 public class NotificationService extends JobIntentService {
 	public static final String NOTIFICATION_CONTENT = "notification_content";
+	public static final String SILENT_MODE_STATUS = "silent_mode_status";
 
 	/**
 	 * The name of the channel for notifications.
@@ -44,13 +45,16 @@ public class NotificationService extends JobIntentService {
 		}
 
 		// Issue the notification
-		mNotificationManager.notify(NOTIFICATION_ID, getNotification(intent.getStringExtra(NOTIFICATION_CONTENT)));
+		mNotificationManager.notify(NOTIFICATION_ID, getNotification(
+				intent.getStringExtra(NOTIFICATION_CONTENT),
+				intent.getBooleanExtra(SILENT_MODE_STATUS, true)
+		));
 	}
 
 	/**
 	 * Returns the {@link NotificationCompat} used as part of the foreground service.
 	 */
-	private Notification getNotification(CharSequence contentText) {
+	private Notification getNotification(CharSequence contentText, boolean silentModeStatus) {
 		CharSequence text = this.getString(R.string.app_is_on, this.getString(R.string.app_name));
 		// The PendingIntent to launch activity.
 		PendingIntent activityPendingIntent = PendingIntent.getActivity(
@@ -69,6 +73,18 @@ public class NotificationService extends JobIntentService {
 				.setSmallIcon(R.mipmap.ic_launcher)
 				.setTicker(text)
 				.setWhen(System.currentTimeMillis());
+
+		// Dừng chế độ yên lặng nếu đang được bật
+		if (silentModeStatus) {
+			Intent intent = new Intent(this, AudioManagerService.class);
+			intent.putExtra(AudioManagerService.ARG_ACTION, AudioManagerService.ACTION_STOP);
+			PendingIntent servicePendingIntent = PendingIntent.getBroadcast(
+					this,
+					0,
+					intent,
+					PendingIntent.FLAG_UPDATE_CURRENT);
+			builder.addAction(R.drawable.ic_cancel, getString(R.string.stop_silent_mode), servicePendingIntent);
+		}
 
 		// Set the Channel ID for Android O.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

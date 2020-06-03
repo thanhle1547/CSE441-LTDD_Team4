@@ -104,6 +104,7 @@ public class GeofencesManagingService extends JobIntentService {
 		// Gửi Notification
 		Intent intent = new Intent(this, NotificationService.class);
 		intent.putExtra(NotificationService.NOTIFICATION_CONTENT, getString(status ? R.string.silent_mode_is_on : R.string.silent_mode_is_off));
+		intent.putExtra(NotificationService.SILENT_MODE_STATUS, status);
 		sendBroadcast(StartJobIntentServiceReceiver.getIntent(this, intent, JOB_ID));
 
 		intent = new Intent(this, AudioManagerService.class);
