@@ -6,8 +6,11 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Binder;
 import android.os.Build;
@@ -18,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.PreferenceManager;
 
 import com.example.devicesilencingapp.db.DBHelper;
 import com.example.devicesilencingapp.models.UserLocationModel;
@@ -26,52 +30,32 @@ import com.example.devicesilencingapp.MainActivity;
 import com.example.devicesilencingapp.R;
 import com.example.devicesilencingapp.libs.GeofenceUtils;
 import com.example.devicesilencingapp.libs.SharedPrefs;
+import com.example.devicesilencingapp.settings.SettingsFragment;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
-public class GeofencesService extends Service implements OnCompleteListener<Void> {
+public class GeofencesService extends Service implements OnCompleteListener<Void>, OnFailureListener {
 	private static final String PACKAGE_NAME = "com.example.devicesilencingapp.services";
 	private final String TAG = GeofencesService.class.getSimpleName();
 
-	/**
-	 * The name of the channel for notifications.
-	 * Android O requires a Notification Channel.
-	 */
-	private static final String CHANNEL_ID = "channel_geofences";
-
-	/**
-	 * The identifier for the notification displayed for the foreground service.
-	 */
-	private static final int NOTIFICATION_ID = 1;
-
-	public static final String EXTRA_LOCATION = PACKAGE_NAME + ".location";
-	public static final String KEY_REQUESTING_LOCATION_UPDATES = "requesting_location_updates";
-	private static final String EXTRA_STARTED_FROM_NOTIFICATION = PACKAGE_NAME + ".started_from_notification";
-	private static final String GEOFENCES_ADDED_KEY = PACKAGE_NAME + ".GEOFENCES_ADDED_KEY";
+	public static final String KEY_IS_LOCATION_LIST_UPDATE = "is_location_list_update";
+	public static final String EXTRA_TASK = "extra_task";
 
 	/**
 	 * Tracks whether the user requested to add or remove geofences, or to do neither.
 	 */
-	private enum PendingGeofenceTask {
+	public enum PendingGeofenceTask {
 		ADD, REMOVE, NONE
 	}
 
 	private final IBinder mBinder = new LocalBinder();
-
-
-	private NotificationManager mNotificationManager;
-
-	/**
-	 * Used to check whether the bound activity has really gone away and not unbound as part of an
-	 * orientation change. We create a foreground service notification only if the former takes place.
-	 */
-	private boolean mChangingConfiguration = false;
 
 	/**
 	 * Provides access to the Geofencing API.
@@ -85,16 +69,31 @@ public class GeofencesService extends Service implements OnCompleteListener<Void
 
 	private PendingGeofenceTask mPendingGeofenceTask = PendingGeofenceTask.NONE;
 
+	// The BroadcastReceiver used to listen from broadcasts from the service.
+	private Receiver receiver;
+
 	/**
 	 * The list of geofences.
 	 */
 	private ArrayList<Geofence> mGeofenceList;
+
+	private class Receiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (!intent.hasExtra(EXTRA_TASK))
+				return;
+			mPendingGeofenceTask = (PendingGeofenceTask) intent.getSerializableExtra(EXTRA_TASK);
+			performPendingGeofenceTask();
+		}
+	}
 
 	public GeofencesService() {
 	}
 
 	@Override
 	public void onCreate() {
+		receiver = new Receiver();
+
 		mGeofenceList = new ArrayList<>();
 
 		// Initially set the PendingIntent used in addGeofences() and removeGeofences() to null.
@@ -105,32 +104,15 @@ public class GeofencesService extends Service implements OnCompleteListener<Void
 
 		mGeofencingClient = LocationServices.getGeofencingClient(this);
 
-		mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-		// Android O requires a Notification Channel.
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			CharSequence name = getString(R.string.app_name);
-			// Create the channel for the notification
-			NotificationChannel mChannel =
-					new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
-
-			// Set the Notification Channel for the Notification Manager.
-			mNotificationManager.createNotificationChannel(mChannel);
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		if (sharedPrefs.getBoolean(SettingsFragment.KEY_APP_STATUS, true)
+				&& sharedPrefs.getBoolean(SettingsFragment.KEY_LOCATION_STATUS, true)) {
+			mPendingGeofenceTask = PendingGeofenceTask.ADD;
 		}
-
-		LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(new Intent());
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		boolean startedFromNotification = intent.getBooleanExtra(EXTRA_STARTED_FROM_NOTIFICATION, false);
-
-		// If the user decided to remove location updates from the notification.
-		if (startedFromNotification) {
-			removeLocationUpdates();
-			stopSelf();
-		}
-
 		performPendingGeofenceTask();
 
 		/**
@@ -151,40 +133,26 @@ public class GeofencesService extends Service implements OnCompleteListener<Void
 	@Nullable
 	@Override
 	public IBinder onBind(Intent intent) {
-		// Called when a client (MainActivity in case of this sample) comes to the foreground
-		// and binds with this service. The service should cease to be a foreground service
-		// when that happens.
-		stopForeground(true);
-		mChangingConfiguration = false;
 		return mBinder;
 	}
 
 	@Override
 	public void onRebind(Intent intent) {
-		// Called when a client (MainActivity in case of this sample) returns to the foreground
-		// and binds   `once again`   with this service. The service should cease to be a foreground
-		// service when that happens
-		stopForeground(true);
-		mChangingConfiguration = false;
+		LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter(SettingsFragment.ACTION_BROADCAST));
 		super.onRebind(intent);
 	}
 
 	@Override
 	public boolean onUnbind(Intent intent) {
-		// Called when the last client (MainActivity in case of this sample) unbinds from this
-		// service. If this method is called due to a configuration change in MainActivity, we
-		// do nothing. Otherwise, we make this service a foreground service.
-		if (!mChangingConfiguration && requestingLocationUpdates())
-			startForeground(NOTIFICATION_ID, getNotification());
+		if (isLocationListUpdate()) {
+			removeGeofences();
+			addGeofences();
+		}
+
+		LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
 
 		// Ensures onRebind() is called when a client re-binds.
 		return true;
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		mChangingConfiguration = true;
 	}
 
 	/**
@@ -194,12 +162,15 @@ public class GeofencesService extends Service implements OnCompleteListener<Void
 	@Override
 	public void onComplete(@NonNull Task<Void> task) {
 		mPendingGeofenceTask = PendingGeofenceTask.NONE;
-		if (task.isSuccessful()) {
-			boolean isGeofencesAdded = getGeofencesAdded();
-			updateGeofencesAdded(!isGeofencesAdded);
-
-		} else
+		if (!task.isSuccessful()) {
 			Log.w(TAG, GeofenceUtils.getErrorString(this, task.getException()));
+			Log.w(TAG, task.getException());
+		}
+	}
+
+	@Override
+	public void onFailure(@NonNull Exception e) {
+		Log.e(TAG, e.getMessage());
 	}
 
 	@Override
@@ -207,108 +178,8 @@ public class GeofencesService extends Service implements OnCompleteListener<Void
 
 	}
 
-	public void requestLocationUpdates(){
-		SharedPrefs.getInstance().put(KEY_REQUESTING_LOCATION_UPDATES, true);
-		startService(new Intent(getApplicationContext(), GeofencesService.class));
-		try {
-
-		} catch (SecurityException unlikely) {
-			SharedPrefs.getInstance().put(KEY_REQUESTING_LOCATION_UPDATES, false);
-			Log.e(TAG, "Lost location permission. Could not request updates. " + unlikely);
-		}
-	}
-
-	public void removeLocationUpdates(){
-		try {
-			SharedPrefs.getInstance().put(KEY_REQUESTING_LOCATION_UPDATES, false);
-			stopSelf();
-		} catch (SecurityException unlikely) {
-			SharedPrefs.getInstance().put(KEY_REQUESTING_LOCATION_UPDATES, true);
-			Log.e(TAG, "Lost location permission. Could not request updates. " + unlikely);
-		}
-	}
-
-	/**
-	 * Returns true if requesting location updates, otherwise returns false.
-	 */
-	private boolean requestingLocationUpdates() {
-		return SharedPrefs.getInstance().get(KEY_REQUESTING_LOCATION_UPDATES, Boolean.class);
-	}
-
-	/**
-	 * Returns the {@link NotificationCompat} used as part of the foreground service.
-	 */
-	private Notification getNotification() {
-		Intent intent = new Intent(this, GeofencesService.class);
-
-		CharSequence text = this.getString(R.string.monitoring_your_location);
-
-		// Extra to help us figure out if we arrived in onStartCommand via the notification or not.
-		intent.putExtra(EXTRA_STARTED_FROM_NOTIFICATION, true);
-
-		// The PendingIntent that leads to a call to onStartCommand() in this service.
-		PendingIntent servicePendingIntent = PendingIntent.getService(this, 0, intent,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-
-		// The PendingIntent to launch activity.
-		PendingIntent activityPendingIntent = PendingIntent.getActivity(this, 0,
-				new Intent(this, MainActivity.class), 0);
-
-		NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-				.addAction(R.drawable.ic_launch, getString(R.string.launch_app),
-						activityPendingIntent)
-				.addAction(R.drawable.ic_cancel, getString(R.string.stop),
-						servicePendingIntent)
-				.setContentText(text)
-				.setContentTitle(this.getString(R.string.app_is_on, this.getString(R.string.app_name)))
-				.setOngoing(true)
-				.setPriority(Notification.PRIORITY_HIGH)
-				.setSmallIcon(R.mipmap.ic_launcher)
-				.setTicker(text)
-				.setWhen(System.currentTimeMillis());
-
-		// Set the Channel ID for Android O.
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			builder.setChannelId(CHANNEL_ID); // Channel ID
-		}
-
-		return builder.build();
-	}
-
-	/**
-	 * Returns true if this is a foreground service.
-	 *
-	 * @param context The {@link Context}.
-	 */
-	public boolean serviceIsRunningInForeground(Context context) {
-		ActivityManager manager = (ActivityManager) context.getSystemService(
-				Context.ACTIVITY_SERVICE);
-		String thisClassName = getClass().getName();
-
-		for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-			if (thisClassName.equals(service.service.getClassName())) {
-				if (service.foreground) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Returns true if geofences were added, otherwise false.
-	 */
-	private boolean getGeofencesAdded() {
-		return SharedPrefs.getInstance().get(GEOFENCES_ADDED_KEY, Boolean.class);
-	}
-
-	/**
-	 * Stores whether geofences were added ore removed in {@link SharedPreferences};
-	 *
-	 * @param added Whether geofences were added or removed.
-	 */
-	private void updateGeofencesAdded (boolean added) {
-		SharedPrefs.getInstance().put(GEOFENCES_ADDED_KEY, added);
+	private boolean isLocationListUpdate() {
+		return SharedPrefs.getInstance().get(KEY_IS_LOCATION_LIST_UPDATE, Boolean.class);
 	}
 
 	private void populateGeofenceList(ArrayList<UserLocationModel> modelList) {
@@ -385,7 +256,9 @@ public class GeofencesService extends Service implements OnCompleteListener<Void
 	}
 
 	private void addGeofences() {
-		mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent()).addOnCompleteListener(this);
+		mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
+				.addOnCompleteListener(this)
+				.addOnFailureListener(this);
 	}
 
 	private void removeGeofences() {
@@ -397,7 +270,7 @@ public class GeofencesService extends Service implements OnCompleteListener<Void
 	 * clients, we don't need to deal with IPC.
 	 */
 	public class LocalBinder extends Binder {
-		GeofencesService getService() {
+		public GeofencesService getService() {
 			return GeofencesService.this;
 		}
 	}

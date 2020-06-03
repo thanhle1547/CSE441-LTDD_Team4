@@ -87,4 +87,11 @@
     <string name="volume_notification">Âm lượng thông báo</string>
     <string name="volume_system">Âm lượng hệ thống</string>
 
+    <!-- Permission -->
+    <string name="permission_rationale">Location permission is needed for core functionality</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for core functionality.</string>
+
+    <!-- Silent Mode -->
+    <string name="silent_mode_is_on">Chế độ yên lặng @string/is_on</string>
+    <string name="silent_mode_is_off">Chế độ yên lặng @string/is_off</string>
 </resources>

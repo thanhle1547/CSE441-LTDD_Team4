@@ -21,7 +21,7 @@ public class AudioManagerService extends JobIntentService {
 	public static final int ACTION_START = 0;
 	public static final int ACTION_STOP = 1;
 
-	private static final String ARG_ACTION = "action";
+	public static final String ARG_ACTION = "action";
 
 	private AudioManager mAudioManager;
 	private SharedPreferences mSharedPrefs;
