@@ -1,7 +1,6 @@
-package com.example.devicesilencingapp.adapters;
+package com.example.devicesilencingapp.location.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.devicesilencingapp.R;
-import com.example.devicesilencingapp.models.UserLocationModel;
+import com.example.devicesilencingapp.location.model.UserLocationModel;
 
 import java.util.ArrayList;
 

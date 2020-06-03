@@ -1,11 +1,6 @@
 package com.example.devicesilencingapp.location;
 
-import android.util.Log;
-
-import com.example.devicesilencingapp.db.DBHelper;
-import com.example.devicesilencingapp.models.UserLocationModel;
-
-import java.util.ArrayList;
+import com.example.devicesilencingapp.location.model.UserLocationModel;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;

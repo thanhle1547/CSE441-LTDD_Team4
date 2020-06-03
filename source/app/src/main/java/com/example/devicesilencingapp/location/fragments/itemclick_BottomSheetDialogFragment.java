@@ -9,7 +9,7 @@ import android.widget.CompoundButton;
 import com.example.devicesilencingapp.R;
 import com.example.devicesilencingapp.db.DBHelper;
 import com.example.devicesilencingapp.location.LocationListViewModel;
-import com.example.devicesilencingapp.models.UserLocationModel;
+import com.example.devicesilencingapp.location.model.UserLocationModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import androidx.annotation.NonNull;

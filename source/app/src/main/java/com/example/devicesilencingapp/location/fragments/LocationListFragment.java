@@ -2,20 +2,17 @@ package com.example.devicesilencingapp.location.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.devicesilencingapp.adapters.AdapterLocation;
+import com.example.devicesilencingapp.location.adapter.AdapterLocation;
 import com.example.devicesilencingapp.R;
 import com.example.devicesilencingapp.db.DBHelper;
 import com.example.devicesilencingapp.location.LocationListViewModel;
-import com.example.devicesilencingapp.models.UserLocationModel;
-
-import java.util.ArrayList;
+import com.example.devicesilencingapp.location.model.UserLocationModel;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

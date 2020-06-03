@@ -1,9 +1,5 @@
 package com.example.devicesilencingapp.services;
 
-import android.app.ActivityManager;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -11,23 +7,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Binder;
-import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
 
 import com.example.devicesilencingapp.db.DBHelper;
-import com.example.devicesilencingapp.models.UserLocationModel;
+import com.example.devicesilencingapp.location.model.UserLocationModel;
 import com.example.devicesilencingapp.receiver.GeofenceBroadcastReceiver;
-import com.example.devicesilencingapp.MainActivity;
-import com.example.devicesilencingapp.R;
 import com.example.devicesilencingapp.libs.GeofenceUtils;
 import com.example.devicesilencingapp.libs.SharedPrefs;
 import com.example.devicesilencingapp.settings.SettingsFragment;

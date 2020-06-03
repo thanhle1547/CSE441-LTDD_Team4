@@ -1,4 +1,4 @@
-package com.example.devicesilencingapp.time.modal;
+package com.example.devicesilencingapp.time.model;
 
 public class ScheduleModal {
     long id;

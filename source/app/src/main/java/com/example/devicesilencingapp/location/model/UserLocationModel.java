@@ -1,4 +1,4 @@
-package com.example.devicesilencingapp.models;
+package com.example.devicesilencingapp.location.model;
 
 import androidx.annotation.NonNull;
 
