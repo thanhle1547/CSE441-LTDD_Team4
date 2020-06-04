@@ -93,7 +93,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="16dp"
-            android:text="Thanh Xuân"
             android:textColor="@color/cyan_300"
             android:maxLines="2"
             android:layout_toEndOf="@id/ic_near_me"/>
@@ -104,7 +103,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="51'00'04'7'N 51.00'04'7'E"
             android:textColor="@color/cyan_300"
             android:layout_below="@id/tv_address"
             android:layout_toEndOf="@id/iv_subject"/>

@@ -78,7 +78,6 @@ public class AddTimeFragment extends Fragment implements View.OnClickListener , 
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(View view) {
         switch (view.getId()){

@@ -106,7 +106,7 @@ public class EditTimeFragment extends Fragment implements View.OnClickListener {
                 timeModel model = new timeModel(mModel.getId(),gio, phutp, bl, true);
                 DBHelper.getInstance().updateTime(model);
                 mViewModal.setSelected(model);
-                mViewModal.setNewItem(model);
+//                mViewModal.setNewItem(model);
                 TimeManager.setAlarms(getActivity());
                 removeThis();
                 break;
