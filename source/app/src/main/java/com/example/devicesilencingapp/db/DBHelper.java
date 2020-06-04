@@ -149,11 +149,7 @@ public class DBHelper extends SQLiteOpenHelper {
 			alarmList.add(populateModel(c));
 		}
 
-		if (!alarmList.isEmpty()) {
-			return alarmList;
-		}
-
-		return null;
+		return alarmList;
 	}
 	private timeModel populateModel(Cursor c) {
 		timeModel model = new timeModel();
