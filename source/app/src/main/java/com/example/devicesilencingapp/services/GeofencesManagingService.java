@@ -79,9 +79,9 @@ public class GeofencesManagingService extends JobIntentService {
 
 		// Gửi Notification về nếu kiểu di chuyển thuộc loại vào hoặc ra geofence
 		if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
-			SilentModeManagerUtil.performAction(this, true);
+			SilentModeManagerUtil.performAction(getApplicationContext(), true);
 		} else {
-			SilentModeManagerUtil.performAction(this, false);
+			SilentModeManagerUtil.performAction(getApplicationContext(), false);
 		}
 	}
 

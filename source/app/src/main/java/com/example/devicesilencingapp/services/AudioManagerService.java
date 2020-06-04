@@ -32,11 +32,12 @@ public class AudioManagerService extends JobIntentService {
 		mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		if (intent.getIntExtra(ARG_ACTION, 0) == ACTION_START) {
-			if (!mSharedPrefs.getBoolean(KEY_SILENT_MODE_STATUS, true)) {
+			if (!mSharedPrefs.getBoolean(KEY_SILENT_MODE_STATUS, false)) {
 				startSilentMode();
 				saveSilentModeStatus(true);
 			}
-		} else {
+		}
+		else {
 			if (mSharedPrefs.getBoolean(KEY_SILENT_MODE_STATUS, true)) {
 				stopSilentMode();
 				saveSilentModeStatus(false);

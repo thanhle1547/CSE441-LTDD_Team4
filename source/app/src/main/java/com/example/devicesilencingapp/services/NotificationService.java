@@ -78,8 +78,8 @@ public class NotificationService extends JobIntentService {
 		if (silentModeStatus) {
 			Intent intent = new Intent(this, AudioManagerService.class);
 			intent.putExtra(AudioManagerService.ARG_ACTION, AudioManagerService.ACTION_STOP);
-			PendingIntent servicePendingIntent = PendingIntent.getBroadcast(
-					this,
+			PendingIntent servicePendingIntent = PendingIntent.getService(
+					getApplicationContext(),
 					0,
 					intent,
 					PendingIntent.FLAG_UPDATE_CURRENT);
