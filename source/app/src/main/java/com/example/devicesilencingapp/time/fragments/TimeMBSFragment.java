@@ -1,6 +1,19 @@
 package com.example.devicesilencingapp.time.fragments;
 
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
+
+import com.example.devicesilencingapp.db.DBHelper;
+import com.example.devicesilencingapp.time.TimeViewModal;
+import com.example.devicesilencingapp.time.timeModel;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,16 +21,6 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.devicesilencingapp.R;
-import com.example.devicesilencingapp.db.DBHelper;
-import com.example.devicesilencingapp.time.TimeViewModal;
-import com.example.devicesilencingapp.time.timeModel;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * <p>A fragment that shows a list of items as a modal bottom sheet.</p>
@@ -46,7 +49,7 @@ public class TimeMBSFragment extends BottomSheetDialogFragment implements View.O
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         viewModal = ViewModelProviders.of(requireActivity()).get(TimeViewModal.class);
         modal = viewModal.getSelected().getValue();
-        SwitchCompat switchCompat = ((SwitchCompat) view.findViewById(R.id.btn_status1));
+        SwitchCompat switchCompat = ((SwitchCompat) view.findViewById(R.id.btn_status));
         switchCompat.setChecked(modal.isEnabled);
         switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

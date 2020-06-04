@@ -54,9 +54,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#006FFF"
+        android:background="@drawable/bkg_bottom_navigation_view"
         app:itemIconTint="#fff"
         app:itemTextColor="#fff"
         app:menu="@menu/bottom_nav"
-        app:elevation="0dp"/>
+        app:elevation="14dp"/>
 </RelativeLayout>

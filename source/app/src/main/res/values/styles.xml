@@ -13,14 +13,6 @@
         <item name="android:colorPrimary">@color/blue_500</item>
     </style>
 
-    <style name="ColorSecondary" parent="Base.ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:colorPrimary">@color/green_500</item>
-    </style>
-
-    <style name="ColorTertiary" parent="Base.ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:colorPrimary">@color/blue_500</item>
-    </style>
-
     <style name="Widget.MaterialSheetFab.Fab" parent="">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

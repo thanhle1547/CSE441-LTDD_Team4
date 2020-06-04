@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			mGeofencesService = null;
 			mGeofencesBound = false;
 		}
-	};;
+	};
 
 	private GeofencesService mGeofencesService = null;
 
@@ -97,9 +97,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 								LocationDetailFragment.newInstance(LocationDetailFragment.ACTION_ADD))
 						.addToBackStack(null)
 						.commit();
-				materialSheetFab.hideSheet();
-				break;
-			case R.id.fab_sheet_item_add_new_location:
 				materialSheetFab.hideSheet();
 				break;
 			case R.id.fab_sheet_item_add_new_time:
@@ -179,7 +176,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 		// Set material sheet item click listeners
 		findViewById(R.id.fab_sheet_item_add_current_location).setOnClickListener(this);
-		findViewById(R.id.fab_sheet_item_add_new_location).setOnClickListener(this);
 		findViewById(R.id.fab_sheet_item_add_new_time).setOnClickListener(this);
 	}
 
