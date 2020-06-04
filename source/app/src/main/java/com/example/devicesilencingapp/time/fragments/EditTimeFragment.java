@@ -101,8 +101,8 @@ public class EditTimeFragment extends Fragment implements View.OnClickListener {
                 bl[4] = chkThursday.isChecked();
                 bl[5] = chkFriday.isChecked();
                 bl[6] = chkSaturday.isChecked();
-                int gio = timePicker.getHour();
-                int phutp = timePicker.getMinute();
+                int gio = timePicker.getCurrentHour();
+                int phutp = timePicker.getCurrentMinute();
                 timeModel model = new timeModel(mModel.getId(),gio, phutp, bl, true);
                 DBHelper.getInstance().updateTime(model);
                 mViewModal.setSelected(model);
