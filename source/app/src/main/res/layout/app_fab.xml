@@ -46,12 +46,6 @@
                     android:text="@string/add_current_location" />
 
                 <TextView
-                    android:id="@+id/fab_sheet_item_add_new_location"
-                    style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
-                    android:drawableStart="@drawable/ic_map_marker"
-                    android:text="@string/add_new_location" />
-
-                <TextView
                     android:id="@+id/fab_sheet_item_add_new_time"
                     style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
                     android:drawableStart="@drawable/ic_alarm_add"
