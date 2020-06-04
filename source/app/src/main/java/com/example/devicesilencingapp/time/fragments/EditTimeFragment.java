@@ -8,18 +8,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TimePicker;
 
+import com.example.devicesilencingapp.R;
+import com.example.devicesilencingapp.db.DBHelper;
+import com.example.devicesilencingapp.time.TimeManager;
+import com.example.devicesilencingapp.time.TimeViewModal;
+import com.example.devicesilencingapp.time.timeModel;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import com.example.devicesilencingapp.R;
-import com.example.devicesilencingapp.db.DBHelper;
-import com.example.devicesilencingapp.time.TimeManager;
-import com.example.devicesilencingapp.time.TimeViewModal;
-import com.example.devicesilencingapp.time.timeModel;
 
 public class EditTimeFragment extends Fragment implements View.OnClickListener {
     private Button bt_add,bt_cancel;
@@ -62,11 +62,11 @@ public class EditTimeFragment extends Fragment implements View.OnClickListener {
         mModel = mViewModal.getSelected().getValue();
 
         bt_add = (Button) view.findViewById(R.id.btn_add);
+        bt_add.setText("Sửa");
         bt_add.setOnClickListener(this);
         bt_cancel = (Button) view.findViewById(R.id.btn_cancel);
         bt_cancel.setOnClickListener(this);
         timePicker = (TimePicker) view.findViewById(R.id.alarm_details_time_picker);
-//        chkWeekly = (SwitchCompat) view.findViewById(R.id.alarm_details_repeat_weekly);
         chkSunday = (SwitchCompat) view.findViewById(R.id.alarm_details_repeat_sunday);
         chkMonday = (SwitchCompat) view.findViewById(R.id.alarm_details_repeat_monday);
         chkTuesday = (SwitchCompat) view.findViewById(R.id.alarm_details_repeat_tuesday);
@@ -74,6 +74,15 @@ public class EditTimeFragment extends Fragment implements View.OnClickListener {
         chkThursday = (SwitchCompat) view.findViewById(R.id.alarm_details_repeat_thursday);
         chkFriday = (SwitchCompat) view.findViewById(R.id.alarm_details_repeat_friday);
         chkSaturday = (SwitchCompat) view.findViewById(R.id.alarm_details_repeat_saturday);
+
+        timePicker.setCurrentHour(mModel.getTimeHour());
+        timePicker.setCurrentMinute(mModel.getTimeMinute());
+        chkSunday.setChecked(mModel.getRepeatingDay(timeModel.SUNDAY));
+        chkMonday.setChecked(mModel.getRepeatingDay(timeModel.MONDAY));
+        chkTuesday.setChecked(mModel.getRepeatingDay(timeModel.TUESDAY));
+        chkWednesday.setChecked(mModel.getRepeatingDay(timeModel.WEDNESDAY));
+        chkThursday.setChecked(mModel.getRepeatingDay(timeModel.THURSDAY));
+        chkFriday.setChecked(mModel.getRepeatingDay(timeModel.FRDIAY));
 
         // TODO: hiển thị dữ liệu từ mModel
     }
@@ -94,11 +103,10 @@ public class EditTimeFragment extends Fragment implements View.OnClickListener {
                 bl[6] = chkSaturday.isChecked();
                 int gio = timePicker.getHour();
                 int phutp = timePicker.getMinute();
-                timeModel model = new timeModel(gio, phutp, bl, true);
-
+                timeModel model = new timeModel(mModel.getId(),gio, phutp, bl, true);
                 DBHelper.getInstance().updateTime(model);
                 mViewModal.setSelected(model);
-
+                mViewModal.setNewItem(model);
                 TimeManager.setAlarms(getActivity());
                 removeThis();
                 break;

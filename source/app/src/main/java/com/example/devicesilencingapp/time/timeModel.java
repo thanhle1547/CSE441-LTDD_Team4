@@ -17,8 +17,7 @@ public class timeModel implements Comparable<timeModel>{
 
     public timeModel(){repeatingDays = new boolean[7];}
     public timeModel(long id, int timeHour, int timeMinute,
-                      boolean[] repeatingDays,
-                      String name, boolean isEnabled) {
+                      boolean[] repeatingDays, boolean isEnabled) {
         this.id = id;
         this.timeHour = timeHour;
         this.timeMinute = timeMinute;
@@ -32,6 +31,7 @@ public class timeModel implements Comparable<timeModel>{
         this.repeatingDays = repeatingDays;
         this.isEnabled = isEnabled;
     }
+
 
 
     @Override

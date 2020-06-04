@@ -115,7 +115,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	// update
 	public void updateTime(timeModel model) {
 		ContentValues values = populateContent(model);
-		getWritableDatabase().update("table_time", values, "table_time.id = ?", new String[] {String.valueOf(model.id)});
+		getWritableDatabase().update("table_time", values, "id = ?", new String[]{String.valueOf(model.getId())});
 	}
 	//delete
 	public void deleteTBTime (long id) {
