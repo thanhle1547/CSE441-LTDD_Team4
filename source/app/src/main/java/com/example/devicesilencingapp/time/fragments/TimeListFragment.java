@@ -81,6 +81,12 @@ public class TimeListFragment extends Fragment {
             public void onChanged(timeModel timeModel) {
                 if(timeModel == null){
                     adapter.remove(oldSelected);
+                } else if (timeModel.compareTo(oldSelected) != 0) {
+                    int index = adapter.getPosition(oldSelected);
+                    if (index < 0)
+                        return;
+                    adapter.remove(oldSelected);
+                    adapter.insert(timeModel, index);
                 }
                 adapter.notifyDataSetChanged();
             }
