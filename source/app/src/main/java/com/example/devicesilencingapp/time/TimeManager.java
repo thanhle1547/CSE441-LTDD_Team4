@@ -25,7 +25,6 @@ public class TimeManager extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO Auto-generated method stub
-        Log.i("chay ok","pk toi ok chay");
         setAlarms(context);
     }
 
@@ -53,14 +52,15 @@ public class TimeManager extends BroadcastReceiver {
                 boolean alarmSet = false;
 
 
-                //kiem tra neu  báo thức đã qua thì alarmset = true
+                //kiem tra neu  báo thức đã qua trong ngay thì alarmset = true nowday, ngay nay tuan sau
                 if ((alarm.timeHour > nowHour) | ((alarm.timeHour == nowHour) && (alarm.timeMinute > nowMinute))){
                     calendar.set(Calendar.DAY_OF_WEEK, nowDay);
                     setAlarm(context, calendar, pIntent);
                     alarmSet = true;
                 } else {
                     for (int dayOfWeek = Calendar.SUNDAY; dayOfWeek <= Calendar.SATURDAY; ++ dayOfWeek) {
-                        if ( alarm.getRepeatingDay(dayOfWeek -1 ) && dayOfWeek >= nowDay && !(dayOfWeek == nowDay && alarm.timeHour < nowHour)
+                        if ( alarm.getRepeatingDay(dayOfWeek -1 )
+                                && dayOfWeek >= nowDay && !(dayOfWeek == nowDay && alarm.timeHour < nowHour)
                                 && !(dayOfWeek == nowDay && alarm.timeHour == nowHour && alarm.timeMinute <= nowMinute)) {
                             calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
                             Log.i("abc123", "set Alarmed: " + nowDay + " : " + alarm.timeHour + " : " + alarm.timeMinute);
@@ -76,7 +76,6 @@ public class TimeManager extends BroadcastReceiver {
                     for (int dayOfWeek = Calendar.SUNDAY; dayOfWeek <= Calendar.SATURDAY; ++ dayOfWeek) {
                         if (alarm.getRepeatingDay(dayOfWeek -1 ) && dayOfWeek <= nowDay) {
                             calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
-                            //calendar.add(Calendar.WEEK_OF_YEAR, 1);
                             setAlarm(context, calendar, pIntent);
                             break;
                         }
@@ -91,8 +90,6 @@ public class TimeManager extends BroadcastReceiver {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pIntent);
-//		alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), PendingIntent.getBroadcast(this, 1, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
-//		Toast.makeText(this, "Alarm scheduled for tomorrow", Toast.LENGTH_SHORT).show();
     }
 
     public static void cancelAlarms(Context context) {
