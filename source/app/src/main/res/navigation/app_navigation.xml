@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/nav_location">
+
+    <!-- Same ID as the menu item ID -->
+    <fragment
+        android:id="@+id/nav_location"
+        android:name="com.example.devicesilencingapp.location.fragments.LocationListFragment"
+        android:label="@string/your_location"
+        tools:layout="@layout/fragment_location_list"/>
+
+    <fragment
+        android:id="@+id/nav_schedule"
+        android:name="com.example.devicesilencingapp.time.fragments.TimeListFragment"
+        android:label="@string/your_schedule"
+        tools:layout="@layout/fragment_time_list"/>
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.devicesilencingapp.settings.SettingsFragment"
+        android:label="@string/settings"/>
+</navigation>

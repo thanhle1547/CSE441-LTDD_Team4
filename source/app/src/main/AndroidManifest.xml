@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.devicesilencingapp">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Required if your app targets Android 10 (API level 29) or higher -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <!-- Required for foreground services on P+. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,6 +32,58 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <receiver android:name=".time.TimeBroadcastReceiver">
+            <intent-filter >
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receiver.GeofenceBroadcastReceiver"/>
+        <receiver android:name=".receiver.StartJobIntentServiceReceiver"/>
+
+        <service android:name=".time.TimeService"
+            android:enabled="true" />
+
+        <!--
+        * The "exported" attribute describes whether or not someone else can be allowed to use it.
+
+        * So if you have "exported=false" on an Activity, no other app, or even the Android system itself, can launch it.
+        * Only you can do that, from inside your own application.
+
+        * So settings "exported=false" on the Activity marked as the LAUNCHER Activity
+          would basically tell the system that it cant launch your application
+
+        * https://stackoverflow.com/questions/49471423/android-manifests-androidexported-false-prevents-app-from-running-on-device
+
+        * https://developer.android.com/guide/topics/manifest/service-element
+        -->
+        <service
+            android:name=".location.service.GPSTrackerService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location"/>
+
+        <service
+            android:name=".services.GeofencesService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location"/>
+
+        <service
+            android:name=".services.GeofencesManagingService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location"/>
+
+        <service android:name=".services.AudioManagerService"
+            android:enabled="true"
+            android:exported="false"/>
+
+        <service android:name=".services.NotificationService" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+    </application>
 </manifest>

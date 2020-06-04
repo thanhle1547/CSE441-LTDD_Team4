@@ -1,3 +1,117 @@
 <resources>
     <string name="app_name">Device Silencing App</string>
+
+    <string name="app">Ứng dụng</string>
+    <string name="app_is_on">%1$s đang bật</string>
+
+    <!-- Notification -->
+    <string name="launch_app">Mở ứng dụng</string>
+    <string name="stop_silent_mode">Dừng chế độ yên lặng</string>
+
+    <!-- Status -->
+    <string name="status">Trạng thái</string>
+    <string name="is_on">Đang bật</string>
+    <string name="is_off">Đang tắt</string>
+
+    <!-- Action -->
+    <string name="add">Thêm</string>
+    <string name="edit">Sửa</string>
+    <string name="delete">Xóa</string>
+    <string name="cancel">Hủy</string>
+    <string name="stop">Dừng</string>
+    <string name="repeat">Lặp lại</string>
+
+    <!-- Toolbar & Bottom navigation Title -->
+    <string name="your_location">Địa điểm của bạn</string>
+    <string name="your_schedule">Lịch trình của bạn</string>
+    <string name="location">Vị trí</string>
+    <string name="schedule">Lịch trình</string>
+    <string name="settings">Cài đặt</string>
+
+    <string name="time">Thời gian</string>
+
+    <string name="turning_on">Đang bật</string>
+
+    <!-- Location Label -->
+    <string-array name="location_label">
+        <item>Không tên</item>
+        <item>Ở nhà</item>
+        <item>Nơi làm việc</item>
+        <item>Rạp chiếu phim</item>
+    </string-array>
+
+    <!--
+        Location Icon ID base on Label
+        https://www.it-swarm.dev/vi/android/luu-tru-id-r.drawable-trong-mang-xml/940601630/
+    -->
+    <string-array name="location_icon_id">
+        <item>@drawable/ic_marker</item>
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_briefcase</item>
+        <item>@drawable/ic_movie_ticket</item>
+    </string-array>
+
+    <string name="add_current_location">Thêm địa điểm hiện tại</string>
+    <string name="add_new_location">Thêm địa điểm mới</string>
+    <string name="add_new_time">Thêm thời gian</string>
+
+    <string name="monitoring_your_location">Đang theo dõi vị trí của bạn</string>
+
+    <!-- Geofence Error strings -->
+    <string name="geofence_not_available">Geofence service is not available now</string>
+    <string name="geofence_too_many_geofences">Your app has registered too many geofences</string>
+    <string name="geofence_too_many_pending_intents">
+        You have provided too many PendingIntents to the addGeofences() call
+    </string>
+    <string name="unknown_geofence_error">
+        Unknown error: the Geofence service is not available now
+    </string>
+    <string name="geofence_transition_invalid_type">
+        Geofence transition error: invalid transition type %1$d
+    </string>
+
+    <!-- Transition type strings -->
+    <string name="geofence_transition_entered">Entered</string>
+    <string name="geofence_transition_exited">Exited</string>
+    <string name="unknown_geofence_transition">Unknown Transition</string>
+
+    <!-- Location -->
+    <string name="update_current_location">Cập nhật vị trí hiện tại</string>
+    <string name="stop_location_update">Dừng cập nhật vị trí</string>
+
+    <!-- Preferences -->
+    <string name="switch_summary">Ấn vào để bật hoặc tắt</string>
+    <string name="adjusted_volume">Điều chỉnh âm lượng</string>
+    <string name="silent_mode">Chế độ tắt tiếng</string>
+    <string name="silent_mode_summary">Ngoại trừ âm lượng báo thức và nội dung đa phương tiện</string>
+    <!-- Preferences category title -->
+    <string name="customize_status">Tùy chỉnh trạng thái</string>
+    <string name="customize_sound">Tùy chỉnh chuông</string>
+    <!-- Preferences volume title -->
+    <string name="volume_ring">Âm lượng chuông</string>
+    <string name="volume_media">Âm lượng đa phương tiện</string>
+    <string name="volume_alarm">Âm lượng báo thức</string>
+    <string name="volume_notification">Âm lượng thông báo</string>
+    <string name="volume_system">Âm lượng hệ thống</string>
+
+    <!-- Permission -->
+    <string name="permission_rationale">Location permission is needed for core functionality</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for core functionality.</string>
+
+    <!-- Silent Mode -->
+    <string name="silent_mode_is_on">Chế độ yên lặng @string/is_on</string>
+    <string name="silent_mode_is_off">Chế độ yên lặng @string/is_off</string>
+
+
+    <string name="details_repeat_weekly">Repeat Weekly</string>
+    <string name="details_sunday">Sunday</string>
+    <string name="details_monday">Monday</string>
+    <string name="details_tuesday">Tuesday</string>
+    <string name="details_wednesday">Wednesday</string>
+    <string name="details_thursday">Thursday</string>
+    <string name="details_friday">Friday</string>
+    <string name="details_saturday">Saturday</string>
+    <string name="details_alarm_tone">Alarm Tone</string>
+    <string name="details_alarm_tone_default">Select an alarm tone</string>
+
 </resources>

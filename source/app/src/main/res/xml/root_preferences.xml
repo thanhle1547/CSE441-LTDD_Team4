@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--
+    android:key: thuộc tính này được sử dụng để lấy giá trị trong đối tượng SharedPreferences.
+-->
+    <PreferenceCategory android:title="@string/customize_status">
+        <SwitchPreference
+            android:key="app_status"
+            android:title="@string/app"
+            android:summary="@string/switch_summary"
+            android:defaultValue="true"
+            android:summaryOn="@string/is_on"
+            android:summaryOff="@string/is_off"
+            />
+
+        <SwitchPreference
+            android:key="location_status"
+            android:dependency="app_status"
+            android:title="@string/location"
+            android:summary="@string/switch_summary"
+            android:defaultValue="true"
+            android:summaryOn="@string/is_on"
+            android:summaryOff="@string/is_off"
+            android:icon="@drawable/ic_location"
+            />
+
+        <SwitchPreference
+            android:key="schedule_status"
+            android:dependency="app_status"
+            android:title="@string/schedule"
+            android:summary="@string/switch_summary"
+            android:defaultValue="true"
+            android:summaryOn="@string/is_on"
+            android:summaryOff="@string/is_off"
+            android:icon="@drawable/ic_time"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/customize_sound">
+
+        <SwitchPreference
+            android:key="key_mute_mode"
+            android:title="@string/silent_mode"
+            android:summary="@string/silent_mode_summary"/>
+
+        <Preference
+            android:key="key_volume"
+            android:title="@string/adjusted_volume"
+            android:fragment="com.example.devicesilencingapp.settings.VolumeSettingsFragment"
+            android:icon="@drawable/ic_adjust_24dp"
+            app:iconSpaceReserved="true">
+        </Preference>
+
+    </PreferenceCategory>
+</PreferenceScreen>

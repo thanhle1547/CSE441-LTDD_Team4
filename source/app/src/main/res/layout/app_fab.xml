@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.example.devicesilencingapp.libs.Fab
+        android:id="@+id/fab"
+        style="@style/Widget.MaterialSheetFab.Fab"
+        android:layout_gravity="bottom|end"
+        app:backgroundTint="#FFFFFF" />
+
+    <!-- Overlay that dims the screen -->
+    <com.gordonwong.materialsheetfab.DimOverlayFrameLayout
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Circular reveal container for the sheet -->
+    <io.codetail.widget.RevealLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="end|bottom"
+        android:orientation="vertical">
+
+        <!-- Sheet that contains your items -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/fab_sheet"
+            style="@style/Widget.MaterialSheetFab.Sheet"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content">
+
+            <!-- Sheet items -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/fab_sheet_item_add_current_location"
+                    style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
+                    android:drawableStart="@drawable/ic_gps_fixed"
+                    android:text="@string/add_current_location" />
+
+                <TextView
+                    android:id="@+id/fab_sheet_item_add_new_time"
+                    style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
+                    android:drawableStart="@drawable/ic_alarm_add"
+                    android:text="@string/add_new_time" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+    </io.codetail.widget.RevealLinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
